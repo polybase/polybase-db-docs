@@ -28,16 +28,18 @@ const db = new Spacetime({
 
 You can create a collection in our [explorer](https://explorer.testnet.spacetime.is), or using the the following:
 
-```typescript
-Spacetime.createCollection('org/books', {
+```ts
+Spacetime.createCollection('org/places', {
+  v: "0",
   schema: {
+    type: "object",
     properties: {
-      title: {
+      id: {
         type: "string"
       },
-      author: {
+      name: {
         type: "string"
-      }
+      },
     }
   },
 
@@ -52,23 +54,21 @@ For more details on creating collections, see the [collection](/collections) ove
 ## Write data to a collection
 
 ```typescript
-Spacetime.collection('org/books').set('bitcoin', { 
-  title: 'Bitcoin',
-  author: 'Satoshi Nakamoto',
+Spacetime.collection("org/places").doc("london").set({ 
+  name: 'London',
 })
-Spacetime.collection('org/books').set('hitchhiker', { 
-  title: 'The Hitchhiker\'s Guide to the Galaxy',
-  author: 'Douglas Adams',
+
+// OR
+Spacetime.collection('org/places').set({ 
+  id: "new-york",
+  name: "New York",
 })
 ```
 
 ## Read a record
 
 ```typescript
-const res = await Spacetime.collection('org/books').get('bitcoin')
-
-const id = res.id // bitcoin
-const data = res.data // { title: 'Bitcoin', ... }
+const data = await Spacetime.collection("org/books").doc("bitcoin").get()
 ```
 
 ## Next Step
