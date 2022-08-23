@@ -22,6 +22,10 @@ const config = {
     locales: ['en'],
   },
 
+  plugins: [
+    'posthog-docusaurus'
+  ],
+
   presets: [
     [
       'classic',
@@ -33,7 +37,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           // editUrl:
-            // 'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          // 'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         },
         blog: false,
         theme: {
@@ -111,6 +115,11 @@ const config = {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
       },
+      posthog: {
+        apiKey: "phc_DBZY8MbRdRIIwSwX4ZSwTAjy5ogdQPDMVdPObOuQQf",
+        // appUrl: "https://docs.spacetime.is",  // optional
+        enableInDevelopment: false  // optional
+      }
     }),
 };
 
