@@ -71,7 +71,7 @@ The schema is defined using the `schema` property of your collection definition.
 
 Indexes are a list of fields in addition to the document's `id` field that should be indexed. You need to ensure that all fields that are included in a `where` or `sort` clause are included in the indexes.
 
-For example, if you 
+For example, if you
 
 ```ts
 const collectionReference = db.collection("test/cities")
