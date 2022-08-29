@@ -16,7 +16,7 @@ There are two ways to retrieve data in Spacetime.
 You can read data once, by calling `.doc(id: string).get()` on a collection.
 
 ```ts
-const collectionReference = db.collection('test/cities')
+const collectionReference = db.collection('test-cities')
 const doc = await collectionReference.doc("id").get()
 
 const { id, ...data } = doc
@@ -26,7 +26,7 @@ const { id, ...data } = doc
 ## Listen for updates on a document
 
 ```ts
-const collectionReference = db.collection('test/cities').doc("id")
+const collectionReference = db.collection('test-cities').doc("id")
 .onChange((newDoc, previousDoc) => {
   // Handle the change
 })
@@ -35,7 +35,7 @@ const collectionReference = db.collection('test/cities').doc("id")
 ## List documents in a collection
 
 ```ts
-const collectionReference = db.collection('test/cities')
+const collectionReference = db.collection('test-cities')
 const docs = await collectionReference.get()
 ```
 
@@ -44,7 +44,7 @@ const docs = await collectionReference.get()
 To use the `where()` filter, you must have a corresponding index specified on the collection.
 
 ```ts
-const collectionReference = db.collection('test/cities')
+const collectionReference = db.collection('test-cities')
 const docs = await collectionReference.where("country", "==", "uk").get()
 ```
 
@@ -52,7 +52,7 @@ const docs = await collectionReference.where("country", "==", "uk").get()
 ## Listen for updates on a collection
 
 ```ts
-const collectionReference = db.collection('test/cities')
+const collectionReference = db.collection('test-cities')
 .onChange((newDoc, previousDoc) => {
   // Handle the change
 })
@@ -61,7 +61,7 @@ const collectionReference = db.collection('test/cities')
 You can also watch for changes on a filtered query.
 
 ```ts
-const collectionReference = db.collection('test/cities')
+const collectionReference = db.collection('test-cities')
 .where("country", "==", "uk")
 .onChange((newDoc, previousDoc) => {
   // Handle the change

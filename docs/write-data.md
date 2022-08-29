@@ -8,7 +8,7 @@ sidebar_position: 2
 You can perform a set by calling `.set(data)` on a collection:
 
 ```ts
-const collectionReference = db.collection('test/cities')
+const collectionReference = db.collection('test-cities')
 const doc = await collectionReference.set({
   id: "london",
   name: "London",
@@ -19,7 +19,7 @@ const doc = await collectionReference.set({
 Or `.set(data)` on a specific document:
 
 ```ts
-const collectionReference = db.collection('test/cities')
+const collectionReference = db.collection('test-cities')
 const doc = await collectionReference.doc("london").set({
   name: "London",
   country: "UK",

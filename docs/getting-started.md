@@ -32,7 +32,7 @@ You can create a collection in the [Spacetime Explorer](https://explorer.testnet
 
 ```ts
 const metadata: CollectionMeta = {
-    id: 'test/cities',
+    id: 'test-cities',
     schema: {
         type: 'object',
         properties: {
@@ -62,7 +62,7 @@ For more details on creating collections, see the [collection](/collections) ove
 ## Write data to a collection
 
 ```ts
-db.collection('test/cities').set({ 
+db.collection('test-cities').set({ 
   id: "new-york",
   name: "New York",
   url: 'https://en.wikipedia.org/wiki/New_York_City'
@@ -70,7 +70,7 @@ db.collection('test/cities').set({
 
 // Or
 
-db.collection("test/cities").doc("london").set({ 
+db.collection("test-cities").doc("london").set({ 
   id: 'london',
   name: 'London',
   url: 'https://en.wikipedia.org/wiki/London'
@@ -80,7 +80,7 @@ db.collection("test/cities").doc("london").set({
 ## Read a document
 
 ```ts
-const data = await db.collection('test/cities').doc('london').get()
+const data = await db.collection('test-cities').doc('london').get()
 ```
 
 ## Next step
