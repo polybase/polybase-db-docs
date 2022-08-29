@@ -23,12 +23,16 @@ yarn add @spacetimexyz/client
 ## Initialize the library
 
 ```ts
-const db = new Spacetime({})
+const db = new Spacetime()
 ```
 
 ## Create a collection
 
-You can create a collection in the [Spacetime Explorer](https://explorer.testnet.spacetime.xyz), or using the library.
+You can create a collection using the library.
+
+:::info
+Creating a collection via the [Spacetime Explorer](https://explorer.testnet.spacetime.xyz) is coming soon.
+:::
 
 ```ts
 const metadata: CollectionMeta = {
@@ -58,29 +62,19 @@ const response = await db.createCollection(metadata)
 
 For more details on creating collections, see the [collection](/collections) overview.
 
-
 ## Write data to a collection
 
 ```ts
-db.collection('test-cities').set({ 
-  id: "new-york",
+db.collection('test-cities').doc('new-york').set({ 
   name: "New York",
   url: 'https://en.wikipedia.org/wiki/New_York_City'
-})
-
-// Or
-
-db.collection("test-cities").doc("london").set({ 
-  id: 'london',
-  name: 'London',
-  url: 'https://en.wikipedia.org/wiki/London'
 })
 ```
 
 ## Read a document
 
 ```ts
-const data = await db.collection('test-cities').doc('london').get()
+const data = await db.collection('test-cities').doc('new-york').get()
 ```
 
 ## Next step
@@ -90,3 +84,4 @@ Learn more about Spacetime:
 * [Write data](/write)
 * [Read data](/read)
 * [Understand collections](/read)
+* [Known issues](/known-issues)
