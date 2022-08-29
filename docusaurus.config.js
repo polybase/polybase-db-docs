@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'Spacetime Documentation',
   tagline: 'Spacetime is the decentralized storage, index and query protocol for structured data.',
-  url: 'https://spacetime.is',
+  url: 'https://spacetime.xyz',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -95,7 +95,7 @@ const config = {
               },
               {
                 label: 'Twitter',
-                href: 'https://twitter.com/spacetime_is',
+                href: 'https://twitter.com/spacetime_xyz',
               },
             ],
           },
@@ -117,7 +117,7 @@ const config = {
       },
       posthog: {
         apiKey: "phc_DBZY8MbRdRIIwSwX4ZSwTAjy5ogdQPDMVdPObOuQQf",
-        // appUrl: "https://docs.spacetime.is",  // optional
+        // appUrl: "https://docs.spacetime.xyz",  // optional
         enableInDevelopment: false  // optional
       }
     }),

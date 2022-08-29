@@ -5,82 +5,88 @@ sidebar_position: 1
 
 # Getting started
 
-In 5 minutes we will import Spacetime javascript/typescript SDK, write some data and read it back!
+Spacetime is a decentralized database that lets developers build decentralized apps with trustless automation at 1000x lower cost than on-chain storage.
+
+Spacetime client libraries communicate directly with the peer-to-peer Spacetime indexer network. The indexers store, index and allow you to query your data. You can always view the network status using the [Spacetime Explorer](https://explorer.testnet.spacetime.xyz).
+
+In the next 5 minutes we will import the Spacetime Javascript/Typescript library, write some data to the decentralized database and read it back.
 
 ## Install Spacetime
 
 ```bash
-npm install @spacetimehq/spacetime
+npm install @spacetimexyz/client
 ```
 ```bash
-yarn add @spacetimehq/spacetime
+yarn add @spacetimexyz/client
 ```
 
-## Initialize the SDK
+## Initialize the library
 
-```typescript
-const db = new Spacetime({
-  ...config
-})
+```ts
+const db = new Spacetime({})
 ```
 
 ## Create a collection
 
-You can create a collection in our [explorer](https://explorer.testnet.spacetime.is), or using the the following:
+You can create a collection in the [Spacetime Explorer](https://explorer.testnet.spacetime.xyz), or using the library.
 
 ```ts
-Spacetime.createCollection('org/places', {
-  v: "0",
-  schema: {
-    type: "object",
-    properties: {
-      id: {
-        type: "string"
-      },
-      name: {
-        type: "string"
-      },
-    }
-  },
+const metadata: CollectionMeta = {
+    id: 'test/cities',
+    schema: {
+        type: 'object',
+        properties: {
+            name: {
+                type: 'string'
+            },
+            url: {
+                type: 'string'
+            }
+        }
+    },
+    indexes: [{
+      fields: [{ field: 'name' }],
+    }],
+}
 
-  // Creates an index for title, and combined index for 
-  indexes: ["title", ["author", "title"]],
-})
+const response = await db.createCollection(metadata)
 ```
+
+:::note
+`id`s must be globally unique across all Spacetime collections. We suggest using a namespace (we use `test` here) for your organization.
+:::
 
 For more details on creating collections, see the [collection](/collections) overview.
 
 
 ## Write data to a collection
 
-```typescript
-Spacetime.collection("org/places").doc("london").set({ 
-  name: 'London',
-})
-
-// OR
-Spacetime.collection('org/places').set({ 
+```ts
+db.collection('test/cities').set({ 
   id: "new-york",
   name: "New York",
+  url: 'https://en.wikipedia.org/wiki/New_York_City'
+})
+
+// Or
+
+db.collection("test/cities").doc("london").set({ 
+  id: 'london',
+  name: 'London',
+  url: 'https://en.wikipedia.org/wiki/London'
 })
 ```
 
-## Read a record
+## Read a document
 
-```typescript
-const data = await Spacetime.collection("org/books").doc("bitcoin").get()
+```ts
+const data = await db.collection('test/cities').doc('london').get()
 ```
 
-## Next Step
+## Next step
 
 Learn more about Spacetime:
 
 * [Write data](/write)
 * [Read data](/read)
 * [Understand collections](/read)
-
----
-
-[Join our Discord](https://discord.com/invite/DrXkRpCFDX)
-
-[Follow us on Twitter]( https://twitter.com/spacetime_is)
