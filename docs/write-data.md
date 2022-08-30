@@ -25,9 +25,11 @@ const doc = await collectionReference.doc("london").set({
 All data on Spacetime is publicly accessible (like a blockchain). Therefore it is important to ensure private information is encrypted. You can encrypt data however you like, including using a user wallet's public key.
 
 
-### 1/ Wallet only
+### Option 1: User's wallet through an extension
 
-You can send a request to metamask (or other compatible wallet) to obtain an encryption key, which can be used to encrypt values. However, decryption is only possible by sending a secondary request to the wallet (which results in permission window being presented to the user) to ask for permission for each value to be decrypted. This can result in a poor user experience, if there are a number of different values to decrypt, as the user will have to give permission separately for each value.
+You can send a request to Metamask (or other compatible wallet) to obtain an encryption key which can be used to encrypt values. However, decryption is only possible by sending a secondary request to the wallet (which results in the permission popup) to ask for permission for each value to be decrypted. 
+
+This can result in a poor user experience if there are a number of different values to decrypt, as the user will have to give permission separately for each value.
 
 Here is an example:
 
@@ -46,20 +48,20 @@ const accounts = await eth.requestAccounts()
 const account = accounts[0]
 
 // A permission dialog will be presented to the user
-const encryptedValue = await eth.encrypt(account, value)
+const encryptedValue = await eth.encrypt(account, "top secret info")
 
-await db.collection("org/places").doc("london").set({
-  name: "London",
-  location: encryptedValue
+await db.collection("user-info").doc("user-1").set({
+  name: "Awesome User",
+  secretInfo: encryptedValue
 })
 
 // Later...
 
 // Get the data from Spacetime as normal
-const london = await db.collection("org/places").doc("london").get()
+const userData = await db.collection("user-info").doc("user-1").get()
 
 // Get the encrypted value
-const encryptedValue = london.data.location
+const encryptedValue = userData.data.secretInfo
 
  // A permission dialog will be presented to the user every time this method 
  // is called
@@ -67,9 +69,11 @@ const decryptedValue = await eth.decrypt(account, encryptedValue)
 ```
 
 
-### 2/ Create your own wallet
+### Option 2: Create your own wallet
 
-You can create your own wallet (public/private key), allowing you to encrypt/decrypt values without having to ask the user for explicit permission each time. The private key should still be encrypted using a users existing wallet or a password, but rather than encrypting a specific value, you encrypt the private key. That means you only need to ask the user a single time for permission to decrypt their private key, and then use that private key to decrypt all other received values. It is then your responsibility to ensure that the encrypted private key is kept safe.
+You can create your own app-owned wallet (public/private key) allowing you to encrypt/decrypt values without having to ask the user for explicit permission each time. The private key should still be encrypted using a users existing wallet or a password, but rather than encrypting a specific value, you encrypt the private key. 
+
+That means you only need to ask the user a single time for permission to decrypt their private key, and then use that private key to decrypt all other received values. It is then your responsibility to ensure that the encrypted private key is kept safe.
 
 Here is an example:
 
@@ -86,20 +90,20 @@ const publicKey = wallet.getPublicKey()
 const privateKey = wallet.getPrivateKey()
 
 // Encrypted value will be returned as a hex string 0x...
-const encryptedValueAsHexStr = encryptToHex(publicKey, value)
+const encryptedValueAsHexStr = encryptToHex(publicKey, "top secret info")
 
-await db.collection("org/places").doc("london").set({
-  name: "London",
-  location: encryptedValue
+await db.collection("user-info").doc("user-1").set({
+  name: "Awesome User",
+  secretInfo: encryptedValueAsHexStr
 })
 
 // Later...
 
 // Get the data from Spacetime as normal
-const london = await db.collection("org/places").doc("london").get()
+const userData = await db.collection("user-info").doc("user-1").get()
 
 // Get the encrypted value
-const encryptedValue = london.data.location
+const encryptedValue = userData.data.secretInfo
 
 // Original value returned
 const decryptedValue = decrypt(privateKey, decryptFromHex(encryptedValue))
