@@ -10,10 +10,10 @@ In 5 minutes we will import Spacetime javascript/typescript SDK, write some data
 ## Install Spacetime
 
 ```bash
-npm install @spacetimehq/spacetime
+npm install @spacetimexyz/spacetime
 ```
 ```bash
-yarn add @spacetimehq/spacetime
+yarn add @spacetimexyz/spacetime
 ```
 
 ## Initialize the SDK
