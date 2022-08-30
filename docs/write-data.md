@@ -34,8 +34,6 @@ Here is an example:
 ```ts
 import { Spacetime } from '@spacetimexyz/client'
 import eth from '@spacetimexyz/eth'
-// import { encryptSafely } from '@metamask/eth-sig-util'
-// import Eth from 'web3-eth'
 
 // Init
 const db = new Spacetime()
@@ -48,8 +46,7 @@ const accounts = await eth.requestAccounts()
 const account = accounts[0]
 
 // A permission dialog will be presented to the user
-const encryptionKey = await eth.getEncryptionKey(account)
-const encryptedValue = await eth.encrypt(encryptionKey, value)
+const encryptedValue = await eth.encrypt(account, value)
 
 await db.collection("org/places").doc("london").set({
   name: "London",
@@ -66,7 +63,7 @@ const encryptedValue = london.data.location
 
  // A permission dialog will be presented to the user every time this method 
  // is called
-const decryptedValue = await eth.decryptWithAccount(account, encryptedValue)
+const decryptedValue = await eth.decrypt(account, encryptedValue)
 ```
 
 
@@ -78,6 +75,8 @@ Here is an example:
 
 ```ts
 import Wallet from 'ethereumjs-wallet'
+import { Spacetime } from '@spacetimexyz/client'
+import { encryptToHex, decryptFromHex } from '@spacetimexyz/util'
 
 // First time the user signs up to your dapp
 const wallet = Wallet.generate()
@@ -86,7 +85,8 @@ const publicKey = wallet.getPublicKey()
 // Encrypt (e.g. using approach above) and save the private key somewhere safe 
 const privateKey = wallet.getPrivateKey()
 
-const encryptedValue = await encrypt(publicKey, value)
+// Encrypted value will be returned as a hex string 0x...
+const encryptedValueAsHexStr = encryptToHex(publicKey, value)
 
 await db.collection("org/places").doc("london").set({
   name: "London",
@@ -101,9 +101,8 @@ const london = await db.collection("org/places").doc("london").get()
 // Get the encrypted value
 const encryptedValue = london.data.location
 
- // A permission dialog will be presented to the user every time this method 
- // is called
-const decryptedValue = await eth.decrypt(privateKey, encryptedValue)
+// Original value returned
+const decryptedValue = decrypt(privateKey, decryptFromHex(encryptedValue))
 ```
 
 There are a number of different places to store the encrypted private key that lead to different trade offs. You must find a tradeoff that is acceptable for your specific application.
