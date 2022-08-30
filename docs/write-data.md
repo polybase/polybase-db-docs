@@ -5,33 +5,25 @@ sidebar_position: 2
 
 # Write data
 
-You can perform a set by calling `.set(data)` on a collection:
+You can perform a set by calling `.set(data)` on a specific document.
 
 ```ts
-const colRef = db.collection("org/places")
-const doc = await colRef.set({
-  id: "london",
+const collectionReference = db.collection('test-cities')
+const doc = await collectionReference.doc("london").set({
   name: "London",
-  country: "UK",
+  url: "https://en.wikipedia.org/wiki/London",
 })
 ```
 
-Or `.set(data)` on a specific document:
+:::caution
+`$` is not allowed at the start of field names, as this is reserved for internal use.
+:::
 
-```ts
-const colRef = db.collection("org/places")
-const doc = await colRef.doc("london").set({
-  name: "London",
-  country: "UK",
-})
-```
-
-> **Note**
-> `$` is not allowed at the start of field names, as this is reserved for internal use.
 
 ## Encrypt data
 
-As all data is public and accessible, it's important to ensure private information is encrypted. There are a number of different ways to achieve this.
+All data on Spacetime is publicly accessible (like a blockchain). Therefore it is important to ensure private information is encrypted. You can encrypt data however you like, including using a user wallet's public key.
+
 
 ### 1/ Wallet only
 
@@ -46,7 +38,6 @@ import eth from '@spacetimexyz/eth'
 // import Eth from 'web3-eth'
 
 // Init
-// const eth = new Eth()
 const db = new Spacetime()
 
  // A permission dialog will be presented to the user
@@ -125,4 +116,3 @@ You could store the encrypted private key locally on the browser device (e.g. in
 #### Store on Spacetime
 
 You could store the encrypted private key on Spacetime, this allow the encrypted private key to obtained by the user and then decrypted on any device.
-
