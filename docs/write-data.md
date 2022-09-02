@@ -24,6 +24,8 @@ const doc = await collectionReference.doc("london").set({
 
 All data on Spacetime is publicly accessible (like a blockchain). Therefore it is important to ensure private information is encrypted. You can encrypt data however you like, including using a user wallet's public key.
 
+You can also view a [demo app for Spacetime](https://social.testnet.spacetime.xyz) to see it working in action.
+
 
 ### Option 1: User's wallet through an extension
 
