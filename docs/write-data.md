@@ -19,15 +19,85 @@ const doc = await collectionReference.doc("london").set({
 `$` is not allowed at the start of field names, as this is reserved for internal use.
 :::
 
+You can view our [demo app for Spacetime](https://social.testnet.spacetime.xyz) to see it working in action.
+
+
+## Permissions
+
+You can control who is allowed to make changes to a document by providing a publicKey when calling `.set(data, publicKey)`. Once a publicKey is set on a doc, changes to the doc must be accompanied by a signature created using that publicKey. You can provide a `.signer(data)` function to the Spacetime client library that will be used to create the signature.
+
+:::info
+More granular permissions will be released soon.
+:::
+
+
+
+### Using wallet through an extension
+
+Using the signing process provided by a user's browser extension (every write must be signed individually).
+
+```ts
+import { Spacetime } from '@spacetimexyz/client'
+import * as eth from '@spacetimexyz/eth'
+
+// Init
+const db = new Spacetime()
+
+// Set data with publicKey
+await db.collection("user-info").doc("user-1").set({
+  name: "Awesome User",
+  secretInfo: encryptedValue
+}, publicKey)
+
+// Add signer fn
+db.signer(async (data: string) => {
+   // A permission dialog will be presented to the user
+  const accounts = await eth.requestAccounts()
+
+  // If there is more than one account, you may wish to ask the user which 
+  // account they would like to use
+  const account = accounts[0]
+
+  const sig = await eth.sign(data, account)
+
+  return {  h: 'eth-personal-sign', sig }
+})
+```
+
+
+### Creating your own wallet
+
+If you want to manage the wallet/privateKey yourself, you must ensure you store the private key safely.
+
+
+```ts
+import Wallet from 'ethereumjs-wallet'
+import { Spacetime } from '@spacetimexyz/client'
+import { ethPersonalSign } from '@spacetimexyz/eth'
+
+// First time the user signs up to your dapp
+const wallet = Wallet.generate()
+const publicKey = wallet.getPublicKey()
+
+// Add data with publicKey that will own the doc
+db.collection('test-cities').doc("london").set({
+  name: "London",
+  url: "https://en.wikipedia.org/wiki/London",
+}, publicKey)
+
+// Add signer fn
+db.signer(async (data: string) => {
+  return {  h: 'eth-personal-sign', sig: ethPersonalSign(wallet.privateKey()), data) }
+})
+```
+
 
 ## Encrypt data
 
 All data on Spacetime is publicly accessible (like a blockchain). Therefore it is important to ensure private information is encrypted. You can encrypt data however you like, including using a user wallet's public key.
 
-You can also view a [demo app for Spacetime](https://social.testnet.spacetime.xyz) to see it working in action.
 
-
-### Option 1: User's wallet through an extension
+### Using wallet through an extension
 
 You can send a request to Metamask (or other compatible wallet) to obtain an encryption key which can be used to encrypt values. However, decryption is only possible by sending a secondary request to the wallet (which results in the permission popup) to ask for permission for each value to be decrypted. 
 
@@ -37,7 +107,7 @@ Here is an example:
 
 ```ts
 import { Spacetime } from '@spacetimexyz/client'
-import eth from '@spacetimexyz/eth'
+import * as eth from '@spacetimexyz/eth'
 
 // Init
 const db = new Spacetime()
@@ -71,7 +141,7 @@ const decryptedValue = await eth.decrypt(account, encryptedValue)
 ```
 
 
-### Option 2: Create your own wallet
+### Creating your own wallet
 
 You can create your own app-owned wallet (public/private key) allowing you to encrypt/decrypt values without having to ask the user for explicit permission each time. The private key should still be encrypted using a users existing wallet or a password, but rather than encrypting a specific value, you encrypt the private key. 
 
@@ -83,6 +153,9 @@ Here is an example:
 import Wallet from 'ethereumjs-wallet'
 import { Spacetime } from '@spacetimexyz/client'
 import { encryptToHex, decryptFromHex } from '@spacetimexyz/util'
+
+// Init
+const db = new Spacetime()
 
 // First time the user signs up to your dapp
 const wallet = Wallet.generate()

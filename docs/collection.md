@@ -7,6 +7,8 @@ sidebar_position: 5
 
 Collections are the main construct in Spacetime for storing and retrieving data. They are conceptually similar to a database table.
 
+You can view a [demo app for Spacetime](https://social.testnet.spacetime.xyz) to see it working in action.
+
 ## Creating a collection
 
 You can create a collection in the [Spacetime Explorer](https://explorer.testnet.spacetime.xyz) or using the client library.
