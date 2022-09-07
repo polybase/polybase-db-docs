@@ -19,9 +19,7 @@ You can read data once, by calling `.doc(id: string).get()` on a collection.
 
 ```ts
 const collectionReference = db.collection('test-cities')
-const doc = await collectionReference.doc("id").get()
-
-const { id, ...data } = doc
+const { data, block } = await collectionReference.doc("id").get()
 ```
 
 
@@ -29,8 +27,10 @@ const { id, ...data } = doc
 
 ```ts
 const collectionReference = db.collection('test-cities').doc("id")
-.onChange((newDoc, previousDoc) => {
+.onSnapshot((newDoc) => {
   // Handle the change
+}, (err) => { 
+  // Optional error handler
 })
 ```
 
@@ -55,8 +55,10 @@ const docs = await collectionReference.where("country", "==", "uk").get()
 
 ```ts
 const collectionReference = db.collection('test-cities')
-.onChange((newDoc, previousDoc) => {
+.onSnapshot((newDoc) => {
   // Handle the change
+}, (err) => { 
+  // Optional error handler
 })
 ```
 
@@ -65,7 +67,9 @@ You can also watch for changes on a filtered query.
 ```ts
 const collectionReference = db.collection('test-cities')
 .where("country", "==", "uk")
-.onChange((newDoc, previousDoc) => {
+.onSnapshot((newDoc) => {
   // Handle the change
+}, (err) => { 
+  // Optional error handler
 })
 ```
