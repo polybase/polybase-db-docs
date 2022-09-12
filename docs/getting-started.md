@@ -7,9 +7,7 @@ sidebar_position: 1
 
 Spacetime is a decentralized database that lets developers build decentralized apps with trustless automation at 1000x lower cost than on-chain storage.
 
-Spacetime client libraries communicate directly with the peer-to-peer Spacetime indexer network. The indexers store, index and allow you to query your data. You can always view the network status using the [Spacetime Explorer](https://explorer.testnet.spacetime.xyz). 
-
-You can view our [demo app for Spacetime](https://social.testnet.spacetime.xyz) to see it working in action.
+You can view the [demo app for Spacetime](https://social.testnet.spacetime.xyz) to see it working in action.
 
 In the next 5 minutes we will import the Spacetime Javascript/Typescript library, write some data to the decentralized database and read it back.
 
@@ -38,14 +36,14 @@ Creating a collection via the [Spacetime Explorer](https://explorer.testnet.spac
 
 ```ts
 const metadata: CollectionMeta = {
-    id: 'test-cities',
+    id: 'my-org/cities',
     schema: {
         type: 'object',
         properties: {
             name: {
                 type: 'string'
             },
-            url: {
+            country: {
                 type: 'string'
             }
         }
@@ -67,16 +65,16 @@ For more details on creating collections, see the [collection](/collections) ove
 ## Write data to a collection
 
 ```ts
-db.collection('test-cities').doc('new-york').set({ 
-  name: "New York",
-  url: 'https://en.wikipedia.org/wiki/New_York_City'
+db.collection('my-org/cities').doc('new-york').set({ 
+  name: 'New York',
+  country: 'USA'
 })
 ```
 
 ## Read a document
 
 ```ts
-const data = await db.collection('test-cities').doc('new-york').get()
+const data = await db.collection('my-org/cities').doc('new-york').get()
 ```
 
 ## Next step

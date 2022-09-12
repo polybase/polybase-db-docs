@@ -18,7 +18,7 @@ You can view our [demo app for Spacetime](https://social.testnet.spacetime.xyz) 
 You can read data once, by calling `.doc(id: string).get()` on a collection.
 
 ```ts
-const collectionReference = db.collection('test-cities')
+const collectionReference = db.collection('my-org/cities')
 const { data, block } = await collectionReference.doc("id").get()
 ```
 
@@ -26,7 +26,7 @@ const { data, block } = await collectionReference.doc("id").get()
 ## Listen for updates on a document
 
 ```ts
-const collectionReference = db.collection('test-cities').doc("id")
+const collectionReference = db.collection('my-org/cities').doc("id")
 .onSnapshot((newDoc) => {
   // Handle the change
 }, (err) => { 
@@ -37,7 +37,7 @@ const collectionReference = db.collection('test-cities').doc("id")
 ## List documents in a collection
 
 ```ts
-const collectionReference = db.collection('test-cities')
+const collectionReference = db.collection('my-org/cities')
 const docs = await collectionReference.get()
 ```
 
@@ -46,15 +46,15 @@ const docs = await collectionReference.get()
 To use the `where()` filter, you must have a corresponding index specified on the collection.
 
 ```ts
-const collectionReference = db.collection('test-cities')
-const docs = await collectionReference.where("country", "==", "uk").get()
+const collectionReference = db.collection('my-org/cities')
+const docs = await collectionReference.where("country", "==", "UK").get()
 ```
 
 
 ## Listen for updates on a collection
 
 ```ts
-const collectionReference = db.collection('test-cities')
+const collectionReference = db.collection('my-org/cities')
 .onSnapshot((newDoc) => {
   // Handle the change
 }, (err) => { 
@@ -65,8 +65,8 @@ const collectionReference = db.collection('test-cities')
 You can also watch for changes on a filtered query.
 
 ```ts
-const collectionReference = db.collection('test-cities')
-.where("country", "==", "uk")
+const collectionReference = db.collection('my-org/cities')
+.where("country", "==", "UK")
 .onSnapshot((newDoc) => {
   // Handle the change
 }, (err) => { 

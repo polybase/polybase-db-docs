@@ -8,10 +8,10 @@ sidebar_position: 2
 You can perform a set by calling `.set(data)` on a specific document.
 
 ```ts
-const collectionReference = db.collection('test-cities')
+const collectionReference = db.collection('my-org/cities')
 const doc = await collectionReference.doc("london").set({
   name: "London",
-  url: "https://en.wikipedia.org/wiki/London",
+  country: "UK",
 })
 ```
 
@@ -80,9 +80,9 @@ const wallet = Wallet.generate()
 const publicKey = wallet.getPublicKey()
 
 // Add data with publicKey that will own the doc
-db.collection('test-cities').doc("london").set({
-  name: "London",
-  url: "https://en.wikipedia.org/wiki/London",
+db.collection('my-org/cities').doc('london').set({
+  name: 'London',
+  country: 'UK',
 }, publicKey)
 
 // Add signer fn

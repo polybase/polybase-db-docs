@@ -15,14 +15,14 @@ You can create a collection in the [Spacetime Explorer](https://explorer.testnet
 
 ```ts
 const createMeta: CollectionMeta = {
-    id: 'test-cities',
+    id: 'my-org/cities',
     schema: {
         type: 'object',
         properties: {
             name: {
                 type: 'string'
             },
-            url: {
+            country: {
                 type: 'string'
             }
         }
@@ -76,7 +76,7 @@ Indexes are a list of fields in addition to the document's `id` field that shoul
 For example, if you
 
 ```ts
-const collectionReference = db.collection("test-cities")
+const collectionReference = db.collection("my-org/cities")
 const docs = await collectionReference.where("field", "==", "abc").get()
 ```
 
