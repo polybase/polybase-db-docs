@@ -71,16 +71,19 @@ db.collection('my-org/cities').doc('new-york').set({
 })
 ```
 
+:::note
+Now go view the collection in the [Explorer](https://explorer.testnet.spacetime.xyz).
+:::
+
 ## Read a document
 
 ```ts
 const data = await db.collection('my-org/cities').doc('new-york').get()
 ```
 
-## Next step
+## Next steps
 
-Learn more about Spacetime:
-
+* Read the [Spacetime whitepaper](https://bit.ly/spctmwp)
 * [Write data](/write)
 * [Read data](/read)
 * [Understand collections](/read)
