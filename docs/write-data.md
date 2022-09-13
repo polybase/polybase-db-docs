@@ -1,6 +1,6 @@
 ---
 slug: /write
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 # Write data
@@ -8,7 +8,7 @@ sidebar_position: 2
 You can perform a set by calling `.set(data)` on a specific document.
 
 ```ts
-const collectionReference = db.collection('my-org/cities')
+const collectionReference = db.collection('your-namespace/cities')
 const doc = await collectionReference.doc("london").set({
   name: "London",
   country: "UK",
@@ -80,7 +80,7 @@ const wallet = Wallet.generate()
 const publicKey = wallet.getPublicKey()
 
 // Add data with publicKey that will own the doc
-db.collection('my-org/cities').doc('london').set({
+db.collection('your-namespace/cities').doc('london').set({
   name: 'London',
   country: 'UK',
 }, publicKey)

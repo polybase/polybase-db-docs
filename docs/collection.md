@@ -1,9 +1,9 @@
 ---
 slug: /collections
-sidebar_position: 5
+sidebar_position: 2
 ---
 
-# Collection definition
+# Collections
 
 Collections are the main construct in Spacetime for storing and retrieving data. They are conceptually similar to a database table.
 
@@ -15,7 +15,7 @@ You can create a collection in the [Spacetime Explorer](https://explorer.testnet
 
 ```ts
 const createMeta: CollectionMeta = {
-    id: 'my-org/cities',
+    id: 'your-namespace/cities',
     schema: {
         type: 'object',
         properties: {
@@ -76,7 +76,7 @@ Indexes are a list of fields in addition to the document's `id` field that shoul
 For example, if you
 
 ```ts
-const collectionReference = db.collection("my-org/cities")
+const collectionReference = db.collection("your-namespace/cities")
 const docs = await collectionReference.where("field", "==", "abc").get()
 ```
 
