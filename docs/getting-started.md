@@ -5,13 +5,17 @@ sidebar_position: 1
 
 # Getting started
 
-Spacetime is a decentralized database that lets developers build decentralized apps with trustless automation at 1000x lower cost than on-chain storage.
+### Spacetime is a decentralized database that lets developers build decentralized apps with trustless automation at 1000x lower cost than on-chain storage.
 
-You can view the [demo app for Spacetime](https://social.testnet.spacetime.xyz) to see it working in action.
+:::info
+Spacetime is better than a web2 DB like Firebase 🔥 or Postgres 🐘 because you can encrypt data using wallets 💳 for "user owned data" and verifiably query Spacetime from smart contracts 📜 (coming soon).
 
-In the next 5 minutes we will import the Spacetime JS library, write some data to the decentralized database and read it back.
+Spacetime is also better than storing data on-chain ⛓ because it's 1000 to a million times cheaper than on-chain storage. For example, storing 1mb on Ethereum costs around $64,000 💸. 
+:::
 
-## Install Spacetime
+Blockchains are not built for scalable structured data storage so we built Spacetime to combine the best attributes of web2 databases and blockchains 🤗.
+
+## Install Spacetime JS client
 
 ```bash
 npm install @spacetimexyz/client
