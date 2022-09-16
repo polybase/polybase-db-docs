@@ -57,12 +57,16 @@ const config = {
           src: 'img/logo.svg',
         },
         items: [
-          // {
-          //   type: 'doc',
-          //   docId: 'intro',
-          //   position: 'left',
-          //   label: 'Tutorial',
-          // },
+          {
+            href: 'https://spacetime.xyz',
+            label: 'Home',
+            position: 'right',
+          },
+          {
+            href: 'https://twitter.com/spacetime_xyz',
+            label: 'Twitter',
+            position: 'right',
+          },
           {
             href: 'https://github.com/spacetimehq',
             label: 'GitHub',
@@ -73,41 +77,19 @@ const config = {
       footer: {
         style: 'dark',
         links: [
-          // {
-          //   title: 'Docs',
-          //   items: [
-          //     {
-          //       label: 'Tutorial',
-          //       to: '/docs/intro',
-          //     },
-          //   ],
-          // },
           {
             title: 'Community',
             items: [
-              // {
-              //   label: 'Stack Overflow',
-              //   href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-              // },
-              {
-                label: 'Discord',
-                href: 'https://discord.gg/DrXkRpCFDX',
-              },
               {
                 label: 'Twitter',
                 href: 'https://twitter.com/spacetime_xyz',
               },
+              {
+                label: 'Discord',
+                href: 'https://discord.gg/DrXkRpCFDX',
+              },
             ],
           },
-          // {
-          //   title: 'More',
-          //   items: [
-          //     {
-          //       label: 'GitHub',
-          //       href: 'https://github.com/facebook/docusaurus',
-          //     },
-          //   ],
-          // },
         ],
         copyright: `© ${new Date().getFullYear()} Zeplo, Inc. / Spacetime`,
       },
