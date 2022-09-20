@@ -37,7 +37,7 @@ More granular permissions will be released soon.
 Using the signing process provided by a user's browser extension (every write must be signed individually).
 
 ```ts
-import { Spacetime } from '@spacetimexyz/client'
+import { Spacetime } from '@spacetimexyz/client/web'
 import * as eth from '@spacetimexyz/eth'
 
 // Init
@@ -72,7 +72,7 @@ If you want to manage the wallet/privateKey yourself, you must ensure you store 
 
 ```ts
 import Wallet from 'ethereumjs-wallet'
-import { Spacetime } from '@spacetimexyz/client'
+import { Spacetime } from '@spacetimexyz/client/web'
 import { ethPersonalSign } from '@spacetimexyz/eth'
 
 // First time the user signs up to your dapp
@@ -106,7 +106,7 @@ This can result in a poor user experience if there are a number of different val
 Here is an example:
 
 ```ts
-import { Spacetime } from '@spacetimexyz/client'
+import { Spacetime } from '@spacetimexyz/client/web'
 import * as eth from '@spacetimexyz/eth'
 
 // Init
@@ -151,7 +151,7 @@ Here is an example:
 
 ```ts
 import Wallet from 'ethereumjs-wallet'
-import { Spacetime } from '@spacetimexyz/client'
+import { Spacetime } from '@spacetimexyz/client/web'
 import { encryptToHex, decryptFromHex } from '@spacetimexyz/util'
 
 // Init

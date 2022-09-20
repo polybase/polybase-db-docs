@@ -15,7 +15,7 @@ Spacetime is also better than storing data on-chain ⛓ because it's 1000 to a m
 
 Blockchains are not built for scalable structured data storage so we built Spacetime to combine the best attributes of web2 databases and blockchains 🤗.
 
-## Install Spacetime JS client
+## Install Spacetime Node/Browser client
 
 ```bash
 npm install @spacetimexyz/client
@@ -27,10 +27,17 @@ yarn add @spacetimexyz/client
 ## Initialize the library
 
 ```ts
-import { Spacetime } from '@spacetimexyz/client'
+import { Spacetime } from '@spacetimexyz/client/web'
+// import { Spacetime } from '@spacetimexyz/client/node' for nodejs
 
-const db = new Spacetime()
+const db = new Spacetime({
+  defaultNamespace: "your-namespace"
+})
 ```
+
+:::note
+Namespace must be used for collections. If you specify a defaultNamespace, it will be automatically added for you for all collection calls.
+:::
 
 ## Create a collection
 
@@ -41,37 +48,23 @@ Creating a collection via the [Spacetime Explorer](https://explorer.testnet.spac
 :::
 
 ```ts
-const metadata: CollectionMeta = {
-    id: 'your-namespace/cities',
-    schema: {
-        type: 'object',
-        properties: {
-            name: {
-                type: 'string'
-            },
-            country: {
-                type: 'string'
-            }
-        }
-    },
-    indexes: [{
-      fields: [{ field: 'name' }],
-    }],
-}
+const createResponse = await db.applySchema(`
+  collection Cities {
+    id: string!;
+    name: string;
+    country: string;
 
-const response = await db.createCollection(metadata)
+    @index(name);
+  }
+`, 'your-namespace') // your-namespace is optional if you have defined a default namespace
 ```
-
-:::note
-`id`s must be globally unique across all Spacetime collections. We suggest using a namespace (we use `test` here) for your organization.
-:::
 
 For more details on creating collections, see the [collection](/collections) overview.
 
 ## Write data to a collection
 
 ```ts
-await db.collection('your-namespace/cities').doc('new-york').set({ 
+await db.collection('your-namespace/Cities').doc('new-york').set({ 
   name: 'New York',
   country: 'USA'
 })
@@ -84,7 +77,7 @@ Now go view the collection in the [Explorer](https://explorer.testnet.spacetime.
 ## Read a document
 
 ```ts
-const data = await db.collection('your-namespace/cities').doc('new-york').get()
+const data = await db.collection('your-namespace/Cities').doc('new-york').get()
 ```
 
 ## Next steps

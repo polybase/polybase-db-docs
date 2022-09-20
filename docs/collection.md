@@ -14,44 +14,27 @@ You can view our [demo app for Spacetime](https://social.testnet.spacetime.xyz) 
 You can create a collection in the [Spacetime Explorer](https://explorer.testnet.spacetime.xyz) or using the client library.
 
 ```ts
-const createMeta: CollectionMeta = {
-    id: 'your-namespace/cities',
-    schema: {
-        type: 'object',
-        properties: {
-            name: {
-                type: 'string'
-            },
-            country: {
-                type: 'string'
-            }
-        }
-    },
-    indexes: [{
-      fields: [{ field: 'name' }],
-    }],
-}
+const createResponse = await db.applySchema(`
+  collection Col {
+    id: string!;
+    country: string;
+    $pk: string;
 
-const createResponse = await db.createCollection(createMeta)
+    @index(name);
+  }
+`)
 ```
 
 ## Collection definition
 
-Collections are defined using JSON, they allow you define the rules and indexes for your collection. The following is a valid collection definition.
+Collections are defined using the Spacetime Schema Language (SSL), they allow you define the rules and indexes for your collection. The following is a valid collection definition.
 
-```json
-{
-  "schema": {
-    "type": "object",
-    "properties": {
-      "name": {
-        "type": "string"
-      }
-    },
-  },
-  "indexes": [{
-    "fields": [{ "field": "name" }]
-  }],
+```graphql
+collection ColName {
+  id: string!;
+  name: string;
+
+  @index(name);
 }
 ```
 

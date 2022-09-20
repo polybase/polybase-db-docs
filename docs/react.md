@@ -23,7 +23,7 @@ yarn add @spacetimexyz/react
 ```tsx
 import * as React from 'react'
 import { SpacetimeProvider } from '@spacetimexyz/react'
-import { Spacetime } from '@spacetimexyz/client'
+import { Spacetime } from '@spacetimexyz/client/web'
 
 const spacetime = new Spacetime()
 
