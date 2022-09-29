@@ -3,14 +3,14 @@ slug: /read
 sidebar_position: 4
 ---
 
-# Read data
+# Read Data
 
 There are two ways to retrieve data in Spacetime. 
 
 1. Fetch data once with `.get()`
 2. Listen for real time updates with `.onSnapshot()`
 
-You can view our [demo app for Spacetime](https://social.testnet.spacetime.xyz) to see it working in action.
+You can view our example app [Spacetime Social](https://social.testnet.spacetime.xyz) to see it working in action.
 
 
 ## Get a single document

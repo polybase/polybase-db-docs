@@ -15,6 +15,12 @@
   --ifm-color-primary-lightest: #ac3dae;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --ifm-toc-border-color: #eeeeeefa;
+  --ifm-h1-font-size: 2rem;
+  --ifm-h4-font-size: 1.2rem;
+  --ifm-color-content: #2c3e50;
+  --ifm-menu-link-padding-horizontal: 0.75rem;
+  --ifm-menu-link-padding-vertical: 0.5rem;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -27,4 +33,86 @@
   --ifm-color-primary-lighter: #fca7fd;
   --ifm-color-primary-lightest: #fec5ff;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-color-content: #e2e2e4;
+}
+
+
+.markdown h1:first-child {
+  font-size: 2.8rem;
+}
+
+.markdown h2 {
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid #eaecef;
+  font-size: 1.8rem;
+}
+
+.markdown a {
+  font-weight: 500;
+}
+
+.markdown {
+  --ifm-h1-vertical-rhythm-top: 2;
+  --ifm-h2-vertical-rhythm-top: 2;
+  --ifm-h3-vertical-rhythm-top: 1.5;
+  --ifm-heading-vertical-rhythm-top: 1.25;
+  --ifm-h1-vertical-rhythm-bottom: 1.25;
+  --ifm-heading-vertical-rhythm-bottom: 1;
+}
+
+.navbar.navbar--fixed-top {
+  box-shadow: none;
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+}
+
+.navbar__title {
+  font-size: 1.2em;
+}
+
+.theme-doc-sidebar-menu.menu__list {
+  padding: 0.5em;
+}
+
+.menu__list-item:not(:first-child) {
+  margin-top: 0.4rem;
+}
+
+.theme-doc-breadcrumbs {
+  display: none;
+}
+
+.pagination-nav__link  {
+  border: 0;
+}
+
+.pagination-nav__sublabel {
+  color: #888;
+}
+
+.pagination-nav__link:hover .pagination-nav__label  {
+  text-decoration: underline;
+}
+
+nav.menu.node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-Content-styles-module {
+  padding: 1rem;
+}
+
+.docItemContainer_node_modules-\@docusaurus-theme-classic-lib-theme-DocItem-Layout-styles-module {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 46em;
+}
+
+.generatedIndexPage_node_modules-\@docusaurus-theme-classic-lib-theme-DocCategoryGeneratedIndexPage-styles-module {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 46em;
+}
+
+.docMainContainer_node_modules-\@docusaurus-theme-classic-lib-theme-DocPage-Layout-Main-styles-module {
+  margin-top: 1em;
+}
+
+.card.cardContainer_node_modules-\@docusaurus-theme-classic-lib-theme-DocCard-styles-module {
+  box-shadow: none !important;
 }

@@ -3,7 +3,7 @@ slug: /write
 sidebar_position: 3
 ---
 
-# Write data
+# Write Data
 
 You can perform a set by calling `.set(data)` on a specific document.
 
@@ -19,7 +19,7 @@ const doc = await collectionReference.doc("london").set({
 `$` is not allowed at the start of field names, as this is reserved for internal use.
 :::
 
-You can view our [demo app for Spacetime](https://social.testnet.spacetime.xyz) to see it working in action.
+You can view our example app [Spacetime Social](https://social.testnet.spacetime.xyz) to see it working in action.
 
 
 ## Permissions

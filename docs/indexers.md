@@ -3,7 +3,7 @@ slug: /indexers
 sidebar_position: 7
 ---
 
-# Indexer network
+# Indexer Network
 
 As Spacetime infrastructure progresses towards more decentralization, client libraries will communicate directly with the peer-to-peer Spacetime indexer network. The indexers store, index and allow you to query your data. More information on the architecture of the network can be found in the [whitepaper](https://bit.ly/spctmwp).
 

@@ -6,7 +6,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Spacetime Documentation',
+  title: 'Spacetime Docs',
   tagline: 'Spacetime is the decentralized storage, index and query protocol for structured data.',
   url: 'https://spacetime.xyz',
   baseUrl: '/',
@@ -33,6 +33,7 @@ const config = {
       ({
         docs: {
           routeBasePath: '/',
+          breadcrumbs: false,
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
@@ -51,7 +52,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'Spacetime Documentation',
+        title: 'Spacetime Docs',
         logo: {
           alt: 'Spacetime Logo',
           src: 'img/logo.svg',
@@ -91,7 +92,7 @@ const config = {
             ],
           },
         ],
-        copyright: `© ${new Date().getFullYear()} Zeplo, Inc. / Spacetime`,
+        copyright: `© ${new Date().getFullYear()} Spacetime`,
       },
       prism: {
         theme: lightCodeTheme,
