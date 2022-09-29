@@ -93,30 +93,27 @@
   text-decoration: underline;
 }
 
-nav.menu.node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-Content-styles-module {
+nav[class*='menu'] {
   padding: 1rem;
 }
 
-.docItemContainer_node_modules-\@docusaurus-theme-classic-lib-theme-DocItem-Layout-styles-module {
+[class*='docItemContainer'] {
   margin-left: auto;
   margin-right: auto;
   max-width: 46em;
+  min-height: 100vh;
 }
 
-.generatedIndexPage_node_modules-\@docusaurus-theme-classic-lib-theme-DocCategoryGeneratedIndexPage-styles-module {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 46em;
+[class*='generatedIndexPage'] {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  max-width: 46em !important;
 }
 
-.docMainContainer_node_modules-\@docusaurus-theme-classic-lib-theme-DocPage-Layout-Main-styles-module {
+.article {
   margin-top: 1em;
 }
 
-.card.cardContainer_node_modules-\@docusaurus-theme-classic-lib-theme-DocCard-styles-module {
+.card {
   box-shadow: none !important;
-}
-
-.docMainContainer_node_modules-\@docusaurus-theme-classic-lib-theme-DocPage-Layout-Main-styles-module {
-  min-height: 100vh;
 }
