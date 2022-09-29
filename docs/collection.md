@@ -73,4 +73,4 @@ As new features are added to Spacetime, the collection definition schema will be
 
 You can view the current collection definition schema at:
 
-https://testnet.spacetime.xyz/v0/data/$collections/$collections
+https://testnet.spacetime.xyz/v0/collections/$collections/records
