@@ -16,23 +16,13 @@ Blockchains are not built for scalable structured data storage so we built Space
 
 ## Install Spacetime
 
-**Install browser client:**
-
 ```bash
-npm install @spacetimexyz/client/web
+npm install @spacetimexyz/client
 ```
 ```bash
-yarn add @spacetimexyz/client/web
+yarn add @spacetimexyz/client
 ```
 
-**Install node client:**
-
-```bash
-npm install @spacetimexyz/client/node
-```
-```bash
-yarn add @spacetimexyz/client/node
-```
 
 ## Initialize the library
 
