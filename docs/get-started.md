@@ -7,7 +7,9 @@ sidebar_position: 1
 
 ## Why Spacetime?
 
-Spacetime is better than a web2 database like Firebase 🔥 or Postgres 🐘 because you can encrypt data using wallets 💳 for "user owned data" and verifiably query Spacetime from smart contracts 📜 (coming soon).
+Spacetime is the database for all of humanity’s data. Fast, decentralized and designed from the ground up to scale beyond 1M transactions per second. 
+
+Spacetime is better than using a centralized database like Firebase 🔥 or Postgres 🐘 because you can encrypt data using wallets 💳 for "user owned data" and verifiably query Spacetime from smart contracts 📜 (coming soon).
 
 Spacetime is better than storing data on-chain ⛓ because it's 1000 to a million times cheaper than on-chain storage. For example, storing 1MB on Ethereum costs around $64,000 💸. 
 
@@ -36,7 +38,7 @@ const db = new Spacetime({
 ```
 
 :::note
-Namespace must be used for collections. If you specify a defaultNamespace, it will be automatically added for you for all collection calls.
+Namespace must be used for collections. If you specify a defaultNamespace, it will be automatically added for you when you [create a collection instance](/collections#get-a-collection).
 :::
 
 ## Create a collection

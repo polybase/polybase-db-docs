@@ -18,7 +18,8 @@ You can view our example app [Spacetime Social](https://social.testnet.spacetime
 You can read data once, by calling `.doc(id: string).get()` on a collection.
 
 ```ts
-const collectionReference = db.collection('your-namespace/cities')
+const db = new Spacetime({ defaultNamespace: "your-namespace" })
+const collectionReference = db.collection('cities')
 const { data, block } = await collectionReference.doc("id").get()
 ```
 
@@ -28,7 +29,8 @@ const { data, block } = await collectionReference.doc("id").get()
 The `.onSnapshot()` handler is called on every update for the doc after the write is confirmed.
 
 ```ts
-const collectionReference = db.collection('your-namespace/cities').doc("id")
+const db = new Spacetime({ defaultNamespace: "your-namespace" })
+const collectionReference = db.collection('cities').doc("id")
 .onSnapshot((newDoc) => {
   // Handle the change
 }, (err) => { 
@@ -39,7 +41,8 @@ const collectionReference = db.collection('your-namespace/cities').doc("id")
 ## List documents in a collection
 
 ```ts
-const collectionReference = db.collection('your-namespace/cities')
+const db = new Spacetime({ defaultNamespace: "your-namespace" })
+const collectionReference = db.collection('cities')
 const docs = await collectionReference.get()
 ```
 
@@ -48,7 +51,8 @@ const docs = await collectionReference.get()
 To use the `where()` filter, you must have a corresponding index specified on the collection.
 
 ```ts
-const collectionReference = db.collection('your-namespace/cities')
+const db = new Spacetime({ defaultNamespace: "your-namespace" })
+const collectionReference = db.collection('cities')
 const docs = await collectionReference.where("country", "==", "UK").get()
 ```
 
@@ -56,7 +60,8 @@ const docs = await collectionReference.where("country", "==", "UK").get()
 ## Listen for updates on a collection
 
 ```ts
-const collectionReference = db.collection('your-namespace/cities')
+const db = new Spacetime({ defaultNamespace: "your-namespace" })
+const collectionReference = db.collection('cities')
 .onSnapshot((newDoc) => {
   // Handle the change
 }, (err) => { 
@@ -67,7 +72,8 @@ const collectionReference = db.collection('your-namespace/cities')
 You can also watch for changes on a filtered query.
 
 ```ts
-const collectionReference = db.collection('your-namespace/cities')
+const db = new Spacetime({ defaultNamespace: "your-namespace" })
+const collectionReference = db.collection('cities')
 .where("country", "==", "UK")
 .onSnapshot((newDoc) => {
   // Handle the change

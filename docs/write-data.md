@@ -8,7 +8,8 @@ sidebar_position: 3
 You can perform a set by calling `.set(data)` on a specific document.
 
 ```ts
-const collectionReference = db.collection('your-namespace/cities')
+const db = new Spacetime({ defaultNamespace: "your-namespace" })
+const collectionReference = db.collection('cities')
 const doc = await collectionReference.doc("london").set({
   name: "London",
   country: "UK",
@@ -41,7 +42,7 @@ import { Spacetime } from '@spacetimexyz/client/web'
 import * as eth from '@spacetimexyz/eth'
 
 // Init
-const db = new Spacetime()
+const db = new Spacetime({ defaultNamespace: "your-namespace" })
 
 // Set data with publicKey
 await db.collection("user-info").doc("user-1").set({
@@ -79,6 +80,8 @@ import { ethPersonalSign } from '@spacetimexyz/eth'
 const wallet = Wallet.generate()
 const publicKey = wallet.getPublicKey()
 
+const db = new Spacetime({ defaultNamespace: "your-namespace" })
+
 // Add data with publicKey that will own the doc
 db.collection('your-namespace/cities').doc('london').set({
   name: 'London',
@@ -110,7 +113,7 @@ import { Spacetime } from '@spacetimexyz/client/web'
 import * as eth from '@spacetimexyz/eth'
 
 // Init
-const db = new Spacetime()
+const db = new Spacetime({ defaultNamespace: "your-namespace" })
 
  // A permission dialog will be presented to the user
 const accounts = await eth.requestAccounts()
@@ -155,7 +158,7 @@ import { Spacetime } from '@spacetimexyz/client/web'
 import { encryptToHex, decryptFromHex } from '@spacetimexyz/util'
 
 // Init
-const db = new Spacetime()
+const db = new Spacetime({ defaultNamespace: "your-namespace" })
 
 // First time the user signs up to your dapp
 const wallet = Wallet.generate()
