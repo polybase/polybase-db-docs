@@ -66,7 +66,8 @@ For more details on creating collections, see the [collection](/collections) ove
 ## Write data to a collection
 
 ```ts
-await db.collection('your-namespace/Cities').doc('new-york').set({ 
+const db = new Spacetime({ defaultNamespace: "your-namespace" })
+await db.collection('Cities').doc('new-york').set({ 
   name: 'New York',
   country: 'USA'
 })
@@ -79,7 +80,8 @@ Now go view the collection in the [Explorer](https://explorer.testnet.spacetime.
 ## Read a document
 
 ```ts
-const data = await db.collection('your-namespace/Cities').doc('new-york').get()
+const db = new Spacetime({ defaultNamespace: "your-namespace" })
+const data = await db.collection('Cities').doc('new-york').get()
 ```
 
 ## Next steps

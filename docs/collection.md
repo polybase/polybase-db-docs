@@ -58,7 +58,8 @@ Indexes are a list of fields in addition to the document's `id` field that shoul
 
 
 ```ts
-const collectionReference = db.collection("your-namespace/cities")
+const db = new Spacetime({ defaultNamespace: "your-namespace" })
+const collectionReference = db.collection("cities")
 const docs = await collectionReference.where("field", "==", "abc").get()
 ```
 
