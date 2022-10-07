@@ -117,3 +117,27 @@ nav[class*='menu'] {
 .card {
   box-shadow: none !important;
 }
+
+[class*='announcementBarContent'] {
+  padding: 0 !important;
+}
+
+.twitter-announcement {
+  width: 100%; 
+  display:block;
+  text-decoration: none !important;
+  font-size: 1.1em;
+  font-weight: 700;
+  padding: 0.3em;
+  vertical-align: middle;
+}
+
+.twitter-announcement > svg {
+  fill: #fff;
+  position: relative;
+  top: 2px;
+}
+
+.twitter-announcement > span {
+  margin-left: 4px;
+}
