@@ -22,7 +22,7 @@ const createResponse = await db.applySchema(`
 
     @index(name);
   }
-`)
+`, 'your-namespace') // your-namespace is optional if you have defined a default namespace
 ```
 
 ## Define a Collection
