@@ -98,12 +98,56 @@ The following annotations are available:
 
 
 #### Permissions
+
  * `@creator` - automatically set to public key of the creator when record is created, cannot be edited thereafter
  * `@readonly` - value cannot be changed using .set()
 
 
 :::info
 Additional annotations will be added soon.
+:::
+
+
+### Functions
+
+If you need to enforce custom rules, you can define functions that allow you to perform custom updates and validation.
+
+
+```graphql
+collection account {
+  # These @ rules only apply when calling .set()
+  name: string @regex(/^Cool.*/)
+  age: number @min(10)
+  balance: number @readonly @min(0)
+  publicKey: string @creator
+
+  # Fn ignores all above rules, so anything needed must be reimplemented
+  function transfer (a: record, b: record, amount: number) {
+    # $auth is in global scope of fn
+    # error() is in global scope of fn
+    if (a.publicKey == $auth.publicKey) throw error('invalid user')
+
+    # can edit both records
+    a.balance -= amount
+    b.balance += amount
+
+    # min has to be reimplemented/declared b/c field @ rules do not apply
+    # inside fns
+    if (a.balance < 0) throw error('insufficient balance')
+  }
+}
+```
+
+You can call your custom functions using:
+
+```ts
+const db = new Spacetime({ defaultNamespace: "your-namespace" })
+const col = db.collection("account")
+await col.call('transfer', [c.doc('id1'), c.doc('id2') 10], pk)
+```
+
+:::danger
+Functions override any field level `@` validation annotations. You must re-apply any checks you wish to enforce in the function.
 :::
 
 

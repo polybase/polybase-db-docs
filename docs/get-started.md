@@ -90,5 +90,5 @@ const data = await db.collection('cities').doc('new-york').get()
 ## Next steps
 
 * Read the [Spacetime Whitepaper](https://bit.ly/spctmwp)
-* [Understand Collections](/read)
+* [Understand Collections](/collections)
 * [Known Issues](/known-issues)

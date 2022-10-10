@@ -5,7 +5,7 @@ sidebar_position: 3
 
 # Write Data
 
-You can perform a set by calling `.set(data)` on a specific document.
+You can perform a set by calling `.set(data)` on a specific document. You must [define a collection](/collections) before writing data.
 
 ```ts
 const db = new Spacetime({ defaultNamespace: "your-namespace" })
