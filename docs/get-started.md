@@ -29,8 +29,7 @@ yarn add @spacetimexyz/client
 ## Initialize the library
 
 ```ts
-import { Spacetime } from '@spacetimexyz/client/web'
-// import { Spacetime } from '@spacetimexyz/client/node' for nodejs
+import { Spacetime } from '@spacetimexyz/client'
 
 const db = new Spacetime({
   defaultNamespace: "your-namespace"
