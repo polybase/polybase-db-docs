@@ -19,7 +19,7 @@ You can read data once, by calling `.doc(id: string).get()` on a collection.
 
 ```ts
 const db = new Spacetime({ defaultNamespace: "your-namespace" })
-const collectionReference = db.collection('cities')
+const collectionReference = db.collection("cities")
 const { data, block } = await collectionReference.doc("id").get()
 ```
 
@@ -30,7 +30,7 @@ The `.onSnapshot()` handler is called on every update for the doc after the writ
 
 ```ts
 const db = new Spacetime({ defaultNamespace: "your-namespace" })
-const collectionReference = db.collection('cities').doc("id")
+const collectionReference = db.collection("cities").doc("id")
 .onSnapshot((newDoc) => {
   // Handle the change
 }, (err) => { 
@@ -42,7 +42,7 @@ const collectionReference = db.collection('cities').doc("id")
 
 ```ts
 const db = new Spacetime({ defaultNamespace: "your-namespace" })
-const collectionReference = db.collection('cities')
+const collectionReference = db.collection("cities")
 const docs = await collectionReference.get()
 ```
 
@@ -52,7 +52,7 @@ To use the `where()` filter, you must have a corresponding index specified on th
 
 ```ts
 const db = new Spacetime({ defaultNamespace: "your-namespace" })
-const collectionReference = db.collection('cities')
+const collectionReference = db.collection("cities")
 const docs = await collectionReference.where("country", "==", "UK").get()
 ```
 
@@ -61,7 +61,7 @@ const docs = await collectionReference.where("country", "==", "UK").get()
 
 ```ts
 const db = new Spacetime({ defaultNamespace: "your-namespace" })
-const collectionReference = db.collection('cities')
+const collectionReference = db.collection("cities")
 .onSnapshot((newDoc) => {
   // Handle the change
 }, (err) => { 
@@ -73,7 +73,7 @@ You can also watch for changes on a filtered query.
 
 ```ts
 const db = new Spacetime({ defaultNamespace: "your-namespace" })
-const collectionReference = db.collection('cities')
+const collectionReference = db.collection("cities")
 .where("country", "==", "UK")
 .onSnapshot((newDoc) => {
   // Handle the change

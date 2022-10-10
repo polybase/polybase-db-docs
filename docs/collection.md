@@ -30,9 +30,10 @@ const createResponse = await db.applySchema(`
 Collections are defined using the Spacetime Schema Language (SSL), they allow you define the rules and indexes for your collection. The following is a valid collection definition.
 
 ```graphql
-collection ColName {
+collection colname {
   id: string!;
   name: string;
+  age: number;
 
   @index(name);
 }
@@ -47,24 +48,107 @@ The above would allow you to insert a document with a `name` property of type `s
 ```
 
 
-### Schema
+### Fields
 
-The schema is defined using the `schema` property of your collection definition. It defines the structure of data that can be stored in the collection, as well as the rules for reading and writing to it.
+You can specify the fields that are allowed in your collection. These should be at the 
+
+```graphql
+collection colname {
+  id: string!;
+  age: number;
+}
+```
+
+:::info
+Additional types such as arrays, maps and dates will be added soon.
+:::
+
+#### Required Fields
+
+Required fields are specified by appending an exclamation mark (`!`) after the field type, such as `number!`. If a field is not marked as required, then it is optional.
+
+
+### Validation
+
+Validation rules can be applied to a field by using the `@` annotation.
+
+```graphql
+collection colname {
+  # These rules would only apply when calling collection(col).doc(id).set()
+  id: string!;
+  name: string @regex(/^Cool.*/);
+  age: number @min(18) @max(100);
+  pk: string @creator;
+}
+```
+
+The following annotations are available:
+
+#### String
+
+ * `@regex(str)` - a regex that must match the string
+ * `@min(num)` - minimum length of the string
+ * `@max(num)` - maximum length of the string
+
+
+#### Number
+
+ * `@min(num)` - minimum number
+ * `@max(num)` - minimum number
+
+
+#### Permissions
+ * `@creator` - automatically set to public key of the creator when record is created, cannot be edited thereafter
+ * `@readonly` - value cannot be changed using .set()
+
+
+:::info
+Additional annotations will be added soon.
+:::
 
 
 ### Indexes
 
 Indexes are a list of fields in addition to the document's `id` field that should be indexed. You need to ensure that all fields that are included in a `where` or `sort` clause are included in the indexes.
 
+```ts
+const db = new Spacetime({ defaultNamespace: "your-namespace" })
+const collectionReference = db.collection("cities")
+const docs = await collectionReference.where("name", "==", "abc").get()
+```
+
+You would need the following schema:
+
+```graphql
+collection cities {
+  name: string!;
+
+  @index(name);
+}
+```
+
+If you want to order your results, you also need to include that in the index:
 
 ```ts
 const db = new Spacetime({ defaultNamespace: "your-namespace" })
 const collectionReference = db.collection("cities")
-const docs = await collectionReference.where("field", "==", "abc").get()
+const docs = await collectionReference
+  .where("name", "==", "abc")
+  .sort('population', 'desc')
+  .get()
 ```
 
-You would need the following schema.
+You would need the following schema:
 
+
+```graphql
+collection cities {
+  name: string!;
+  population: number;
+
+  @index(name, [population, desc]);
+}
+```
 
 
 ## Get a collection

@@ -9,7 +9,7 @@ You can perform a set by calling `.set(data)` on a specific document.
 
 ```ts
 const db = new Spacetime({ defaultNamespace: "your-namespace" })
-const collectionReference = db.collection('cities')
+const collectionReference = db.collection("cities")
 const doc = await collectionReference.doc("london").set({
   name: "London",
   country: "UK",

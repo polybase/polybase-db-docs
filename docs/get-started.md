@@ -36,8 +36,12 @@ const db = new Spacetime({
 })
 ```
 
-:::note
-Namespace must be used for collections. If you specify a defaultNamespace, it will be automatically added for you when you [create a collection instance](/collections#get-a-collection).
+:::caution
+Namespace must be used for collections.
+:::
+
+:::info
+ If you specify a defaultNamespace, it will be automatically added for you when you [create a collection instance](/collections#get-a-collection).
 :::
 
 ## Create a collection
@@ -50,7 +54,7 @@ Creating a collection via the [Spacetime Explorer](https://explorer.testnet.spac
 
 ```ts
 const createResponse = await db.applySchema(`
-  collection Cities {
+  collection cities {
     id: string!;
     name: string;
     country: string;
@@ -66,7 +70,7 @@ For more details on creating collections, see the [collection](/collections) ove
 
 ```ts
 const db = new Spacetime({ defaultNamespace: "your-namespace" })
-await db.collection('Cities').doc('new-york').set({ 
+await db.collection('cities').doc('new-york').set({ 
   name: 'New York',
   country: 'USA'
 })
@@ -80,7 +84,7 @@ Now go view the collection in the [Explorer](https://explorer.testnet.spacetime.
 
 ```ts
 const db = new Spacetime({ defaultNamespace: "your-namespace" })
-const data = await db.collection('Cities').doc('new-york').get()
+const data = await db.collection('cities').doc('new-york').get()
 ```
 
 ## Next steps
