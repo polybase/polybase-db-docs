@@ -50,7 +50,7 @@ The above would allow you to insert a document with a `name` property of type `s
 
 ### Fields
 
-You can specify the fields that are allowed in your collection. These should be at the 
+You can specify the fields that are allowed in your collection. These should be at the top most part of your contract.
 
 ```graphql
 collection colname {
@@ -110,7 +110,7 @@ Additional annotations will be added soon.
 
 ### Functions
 
-If you need to enforce custom rules, you can define functions that allow you to perform custom updates and validation.
+If you need more flexibility to enforce custom rules you can define functions:
 
 
 ```graphql
