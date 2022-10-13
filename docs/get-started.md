@@ -19,10 +19,10 @@ Blockchains are not built for scalable structured data storage so we built Polyb
 ## Install Polybase
 
 ```bash
-npm install @polybasexyz/client
+npm install @polybase/client
 ```
 ```bash
-yarn add @polybasexyz/client
+yarn add @polybase/client
 ```
 
 
