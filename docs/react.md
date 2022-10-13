@@ -5,33 +5,33 @@ sidebar_position: 5
 
 # React
 
-React hooks for Spacetime.
+React hooks for Polybase.
 
 
-## Install Spacetime
+## Install Polybase
 
 ```bash
-npm install @spacetimexyz/react
+npm install @polybasexyz/react
 ```
 ```bash
-yarn add @spacetimexyz/react
+yarn add @polybasexyz/react
 ```
 
 
-## Add Spacetime Provider
+## Add Polybase Provider
 
 ```tsx
 import * as React from 'react'
-import { SpacetimeProvider } from '@spacetimexyz/react'
-import { Spacetime } from '@spacetimexyz/client/web'
+import { PolybaseProvider } from '@polybase/react'
+import { Polybase } from '@polybase/client/web'
 
-const spacetime = new Spacetime()
+const polybase = new Polybase()
 
 export const App = () => {
   return (
-    <SpacetimeProvider spacetime={spacetime}>
+    <PolybaseProvider polybase={polybase}>
       {/* ... your app routes */}
-    </SpacetimeProvider>
+    </PolybaseProvider>
   )
 }
 ```
@@ -40,11 +40,11 @@ export const App = () => {
 
 ```tsx
 import * as React from 'react'
-import { useSpacetime, useDocument } from '@spacetimexyz/react'
+import { usePolybase, useDocument } from '@polybase/react'
 
 export const Component = () => {
-  const spacetime = useSpacetime()
-  const { data, error, loading } = useDocument<OptionalCustomType>(spacetime.collection('users').doc('id'))
+  const polybase = usePolybase()
+  const { data, error, loading } = useDocument<OptionalCustomType>(polybase.collection('users').doc('id'))
 
   return data.data.name
 }
@@ -55,11 +55,11 @@ export const Component = () => {
 
 ```tsx
 import * as React from 'react'
-import { useSpacetime, useCollection } from '@spacetimexyz/react'
+import { usePolybase, useCollection } from '@polybase/react'
 
 export const Component = () => {
-  const spacetime = useSpacetime()
-  const { data, error, loading } = useCollection<OptionalCustomType>(spacetime.collection('users'))
+  const polybase = usePolybase()
+  const { data, error, loading } = useCollection<OptionalCustomType>(polybase.collection('users'))
 
   const usersEl = map(data, ({ data }) => {
     return (

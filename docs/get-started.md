@@ -5,33 +5,33 @@ sidebar_position: 1
 
 # Get Started
 
-## Why Spacetime?
+## Why Polybase?
 
-Spacetime is the database for all of humanity’s data. Fast, decentralized and designed from the ground up to scale beyond 1M transactions per second. 
+Polybase is the database for all of humanity’s data. Fast, decentralized and designed from the ground up to scale beyond 1M transactions per second. 
 
-Spacetime is better than using a centralized database like Firebase 🔥 or Postgres 🐘 because you can encrypt data using wallets 💳 for "user owned data" and verifiably query Spacetime from smart contracts 📜 (coming soon).
+Polybase is better than using a centralized database like Firebase 🔥 or Postgres 🐘 because you can encrypt data using wallets 💳 for "user owned data" and verifiably query Polybase from smart contracts 📜 (coming soon).
 
-Spacetime is better than storing data on-chain ⛓ because it's 1000 to a million times cheaper than on-chain storage. For example, storing 1MB on Ethereum costs around $64,000 💸. 
+Polybase is better than storing data on-chain ⛓ because it's 1000 to a million times cheaper than on-chain storage. For example, storing 1MB on Ethereum costs around $64,000 💸. 
 
 
-Blockchains are not built for scalable structured data storage so we built Spacetime to combine the best attributes of web2 databases and blockchains 🤗.
+Blockchains are not built for scalable structured data storage so we built Polybase to combine the best attributes of web2 databases and blockchains 🤗.
 
-## Install Spacetime
+## Install Polybase
 
 ```bash
-npm install @spacetimexyz/client
+npm install @polybasexyz/client
 ```
 ```bash
-yarn add @spacetimexyz/client
+yarn add @polybasexyz/client
 ```
 
 
 ## Initialize the library
 
 ```ts
-import { Spacetime } from '@spacetimexyz/client'
+import { Polybase } from '@polybase/client'
 
-const db = new Spacetime({
+const db = new Polybase({
   defaultNamespace: "your-namespace"
 })
 ```
@@ -49,7 +49,7 @@ Namespace must be used for collections.
 You can create a collection using the library:
 
 :::info
-Creating a collection via the [Spacetime Explorer](https://explorer.testnet.spacetime.xyz) is coming soon.
+Creating a collection via the [Polybase Explorer](https://explorer.testnet.polybase.xyz) is coming soon.
 :::
 
 ```ts
@@ -69,7 +69,7 @@ For more details on creating collections, see the [collection](/collections) ove
 ## Write data to a collection
 
 ```ts
-const db = new Spacetime({ defaultNamespace: "your-namespace" })
+const db = new Polybase({ defaultNamespace: "your-namespace" })
 await db.collection('cities').doc('new-york').set({ 
   name: 'New York',
   country: 'USA'
@@ -77,18 +77,18 @@ await db.collection('cities').doc('new-york').set({
 ```
 
 :::note
-Now go view the collection in the [Explorer](https://explorer.testnet.spacetime.xyz).
+Now go view the collection in the [Explorer](https://explorer.testnet.polybase.xyz).
 :::
 
 ## Read a document
 
 ```ts
-const db = new Spacetime({ defaultNamespace: "your-namespace" })
+const db = new Polybase({ defaultNamespace: "your-namespace" })
 const data = await db.collection('cities').doc('new-york').get()
 ```
 
 ## Next steps
 
-* Read the [Spacetime Whitepaper](https://bit.ly/spctmwp)
+* Read the [Polybase Whitepaper](https://bit.ly/spctmwp)
 * [Understand Collections](/collections)
 * [Known Issues](/known-issues)

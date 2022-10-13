@@ -2,14 +2,14 @@
 sidebar_position: 1
 ---
 
-# Spacetime Social
+# Polybase Social
 
-Spacetime Social is a sample app that shows how a lightweight social media app like Twitter can be built with Spacetime.
+Polybase Social is a sample app that shows how a lightweight social media app like Twitter can be built with Polybase.
 
 ## Deployed app
 
-View a deployed version of the app: [Spacetime Social](https://social.testnet.spacetime.xyz/)
+View a deployed version of the app: [Polybase Social](https://social.testnet.polybase.xyz/)
 
 ## Code
 
-View the code on Github: [Spacetime Social Github](https://github.com/spacetimehq/social)
+View the code on Github: [Polybase Social Github](https://github.com/polybasehq/social)

@@ -8,7 +8,7 @@ sidebar_position: 3
 You can perform a set by calling `.set(data)` on a specific document. You must [define a collection](/collections) before writing data.
 
 ```ts
-const db = new Spacetime({ defaultNamespace: "your-namespace" })
+const db = new Polybase({ defaultNamespace: "your-namespace" })
 const collectionReference = db.collection("cities")
 const doc = await collectionReference.doc("london").set({
   name: "London",
@@ -20,12 +20,12 @@ const doc = await collectionReference.doc("london").set({
 `$` is not allowed at the start of field names, as this is reserved for internal use.
 :::
 
-You can view our example app [Spacetime Social](https://social.testnet.spacetime.xyz) to see it working in action.
+You can view our example app [Polybase Social](https://social.testnet.polybase.xyz) to see it working in action.
 
 
 ## Permissions
 
-You can control who is allowed to make changes to a document by providing a publicKey when calling `.set(data, publicKey)`. Once a publicKey is set on a doc, changes to the doc must be accompanied by a signature created using that publicKey. You can provide a `.signer(data)` function to the Spacetime client library that will be used to create the signature.
+You can control who is allowed to make changes to a document by providing a publicKey when calling `.set(data, publicKey)`. Once a publicKey is set on a doc, changes to the doc must be accompanied by a signature created using that publicKey. You can provide a `.signer(data)` function to the Polybase client library that will be used to create the signature.
 
 :::info
 More granular permissions will be released soon.
@@ -38,11 +38,11 @@ More granular permissions will be released soon.
 Using the signing process provided by a user's browser extension (every write must be signed individually).
 
 ```ts
-import { Spacetime } from '@spacetimexyz/client/web'
-import * as eth from '@spacetimexyz/eth'
+import { Polybase } from '@polybase/client/web'
+import * as eth from '@polybase/eth'
 
 // Init
-const db = new Spacetime({ defaultNamespace: "your-namespace" })
+const db = new Polybase({ defaultNamespace: "your-namespace" })
 
 // Set data with publicKey
 await db.collection("user-info").doc("user-1").set({
@@ -73,14 +73,14 @@ If you want to manage the wallet/privateKey yourself, you must ensure you store 
 
 ```ts
 import Wallet from 'ethereumjs-wallet'
-import { Spacetime } from '@spacetimexyz/client/web'
-import { ethPersonalSign } from '@spacetimexyz/eth'
+import { Polybase } from '@polybase/client/web'
+import { ethPersonalSign } from '@polybase/eth'
 
 // First time the user signs up to your dapp
 const wallet = Wallet.generate()
 const publicKey = wallet.getPublicKey()
 
-const db = new Spacetime({ defaultNamespace: "your-namespace" })
+const db = new Polybase({ defaultNamespace: "your-namespace" })
 
 // Add data with publicKey that will own the doc
 db.collection('your-namespace/cities').doc('london').set({
@@ -97,7 +97,7 @@ db.signer(async (data: string) => {
 
 ## Encrypt data
 
-All data on Spacetime is publicly accessible (like a blockchain). Therefore it is important to ensure private information is encrypted. You can encrypt data however you like, including using a user wallet's public key.
+All data on Polybase is publicly accessible (like a blockchain). Therefore it is important to ensure private information is encrypted. You can encrypt data however you like, including using a user wallet's public key.
 
 
 ### Using wallet through an extension
@@ -109,11 +109,11 @@ This can result in a poor user experience if there are a number of different val
 Here is an example:
 
 ```ts
-import { Spacetime } from '@spacetimexyz/client/web'
-import * as eth from '@spacetimexyz/eth'
+import { Polybase } from '@polybase/client/web'
+import * as eth from '@polybase/eth'
 
 // Init
-const db = new Spacetime({ defaultNamespace: "your-namespace" })
+const db = new Polybase({ defaultNamespace: "your-namespace" })
 
  // A permission dialog will be presented to the user
 const accounts = await eth.requestAccounts()
@@ -132,7 +132,7 @@ await db.collection("user-info").doc("user-1").set({
 
 // Later...
 
-// Get the data from Spacetime as normal
+// Get the data from Polybase as normal
 const userData = await db.collection("user-info").doc("user-1").get()
 
 // Get the encrypted value
@@ -154,11 +154,11 @@ Here is an example:
 
 ```ts
 import Wallet from 'ethereumjs-wallet'
-import { Spacetime } from '@spacetimexyz/client/web'
-import { encryptToHex, decryptFromHex } from '@spacetimexyz/util'
+import { Polybase } from '@polybase/client/web'
+import { encryptToHex, decryptFromHex } from '@polybase/util'
 
 // Init
-const db = new Spacetime({ defaultNamespace: "your-namespace" })
+const db = new Polybase({ defaultNamespace: "your-namespace" })
 
 // First time the user signs up to your dapp
 const wallet = Wallet.generate()
@@ -177,7 +177,7 @@ await db.collection("user-info").doc("user-1").set({
 
 // Later...
 
-// Get the data from Spacetime as normal
+// Get the data from Polybase as normal
 const userData = await db.collection("user-info").doc("user-1").get()
 
 // Get the encrypted value
@@ -194,6 +194,6 @@ There are a number of different places to store the encrypted private key that l
 You could store the encrypted private key locally on the browser device (e.g. in local storage). The tradeoff is that the private key could easily become lost if the user resets their browser (which would make all data unavailable and there would be no recovery method), and it would be difficult for users to work across devices. 
 
 
-#### Store on Spacetime
+#### Store on Polybase
 
-You could store the encrypted private key on Spacetime, this allow the encrypted private key to obtained by the user and then decrypted on any device.
+You could store the encrypted private key on Polybase, this allow the encrypted private key to obtained by the user and then decrypted on any device.

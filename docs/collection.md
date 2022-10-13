@@ -5,13 +5,13 @@ sidebar_position: 2
 
 # Collections
 
-Collections allow you to store and retrieve data in Spacetime. They are conceptually similar to a database table.
+Collections allow you to store and retrieve data in Polybase. They are conceptually similar to a database table.
 
-You can view our example app [Spacetime Social](https://social.testnet.spacetime.xyz) to see it working in action.
+You can view our example app [Polybase Social](https://social.testnet.polybase.xyz) to see it working in action.
 
 ## Create a Collection
 
-You can create a collection in the [Spacetime Explorer](https://explorer.testnet.spacetime.xyz) or using the client library.
+You can create a collection in the [Polybase Explorer](https://explorer.testnet.polybase.xyz) or using the client library.
 
 ```ts
 const createResponse = await db.applySchema(`
@@ -27,7 +27,7 @@ const createResponse = await db.applySchema(`
 
 ## Define a Collection
 
-Collections are defined using the Spacetime Schema Language (SSL), they allow you define the rules and indexes for your collection. The following is a valid collection definition.
+Collections are defined using the Polybase Schema Language (SSL), they allow you define the rules and indexes for your collection. The following is a valid collection definition.
 
 ```graphql
 collection colname {
@@ -141,7 +141,7 @@ collection account {
 You can call your custom functions using:
 
 ```ts
-const db = new Spacetime({ defaultNamespace: "your-namespace" })
+const db = new Polybase({ defaultNamespace: "your-namespace" })
 const col = db.collection("account")
 await col.call('transfer', [c.doc('id1'), c.doc('id2') 10], pk)
 ```
@@ -156,7 +156,7 @@ Functions override any field level `@` validation annotations. You must re-apply
 Indexes are a list of fields in addition to the document's `id` field that should be indexed. You need to ensure that all fields that are included in a `where` or `sort` clause are included in the indexes.
 
 ```ts
-const db = new Spacetime({ defaultNamespace: "your-namespace" })
+const db = new Polybase({ defaultNamespace: "your-namespace" })
 const collectionReference = db.collection("cities")
 const docs = await collectionReference.where("name", "==", "abc").get()
 ```
@@ -174,7 +174,7 @@ collection cities {
 If you want to order your results, you also need to include that in the index:
 
 ```ts
-const db = new Spacetime({ defaultNamespace: "your-namespace" })
+const db = new Polybase({ defaultNamespace: "your-namespace" })
 const collectionReference = db.collection("cities")
 const docs = await collectionReference
   .where("name", "==", "abc")
@@ -197,7 +197,7 @@ collection cities {
 
 ## Get a collection
 
-To reference a collection, you can call `.collection("collection-name")` on your Spacetime instance. The returned collection instance relates to a specific collection of data and allows you [`.write()`](/write) and [`.read()`](/read) data from Spacetime.
+To reference a collection, you can call `.collection("collection-name")` on your Polybase instance. The returned collection instance relates to a specific collection of data and allows you [`.write()`](/write) and [`.read()`](/read) data from Polybase.
 
 
 #### Relative Path (with default namespace)
@@ -205,7 +205,7 @@ To reference a collection, you can call `.collection("collection-name")` on your
 The following would return a collection with path: `your-namespace/cities`:
 
 ```ts
-const db = new Spacetime({ defaultNamespace: "your-namespace" })
+const db = new Polybase({ defaultNamespace: "your-namespace" })
 const collection = db.collection('cities')
 ```
 
@@ -214,7 +214,7 @@ const collection = db.collection('cities')
 The following would return a collection with path: `your-namespace/cities`:
 
 ```ts
-const db = new Spacetime()
+const db = new Polybase()
 const collection = db.collection('your-namespace/cities')
 ```
 
@@ -225,7 +225,7 @@ To override the default namespace, you can use an absolute path by specifying a 
 The following would return a collection with path: `alt-namespace/cities`:
 
 ```ts
-const db = new Spacetime({ defaultNamespace: "your-namespace" })
+const db = new Polybase({ defaultNamespace: "your-namespace" })
 const collection = db.collection('/alt-namespace/cities')
 ```
 
