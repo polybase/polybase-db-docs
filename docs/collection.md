@@ -68,58 +68,18 @@ Additional types such as arrays, maps and dates will be added soon.
 Required fields are specified by appending an exclamation mark (`!`) after the field type, such as `number!`. If a field is not marked as required, then it is optional.
 
 
-### Validation
-
-Validation rules can be applied to a field by using the `@` annotation.
-
-```graphql
-collection colname {
-  # These rules would only apply when calling collection(col).doc(id).set()
-  id: string!;
-  name: string @regex(/^Cool.*/);
-  age: number @min(18) @max(100);
-  pk: string @creator;
-}
-```
-
-The following annotations are available:
-
-#### String
-
- * `@regex(str)` - a regex that must match the string
- * `@min(num)` - minimum length of the string
- * `@max(num)` - maximum length of the string
-
-
-#### Number
-
- * `@min(num)` - minimum number
- * `@max(num)` - minimum number
-
-
-#### Permissions
-
- * `@creator` - automatically set to public key of the creator when record is created, cannot be edited thereafter
- * `@readonly` - value cannot be changed using .set()
-
-
-:::info
-Additional annotations will be added soon.
-:::
-
-
 ### Functions
 
-If you need more flexibility to enforce custom rules you can define functions:
+Field values can only be modified using functions.
 
 
 ```graphql
 collection account {
   # These @ rules only apply when calling .set()
-  name: string @regex(/^Cool.*/)
-  age: number @min(10)
-  balance: number @readonly @min(0)
-  publicKey: string @creator
+  name: string;
+  age: number;
+  balance: number;
+  publicKey: string;
 
   # Fn ignores all above rules, so anything needed must be reimplemented
   function transfer (a: record, b: record, amount: number) {
