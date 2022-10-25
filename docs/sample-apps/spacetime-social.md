@@ -12,4 +12,4 @@ View a deployed version of the app: [Polybase Social](https://social.testnet.pol
 
 ## Code
 
-View the code on Github: [Polybase Social Github](https://github.com/polybasehq/social)
+View the code on Github: [Polybase Social Github](https://github.com/polybase/social)

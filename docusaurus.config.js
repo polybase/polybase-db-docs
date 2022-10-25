@@ -77,7 +77,7 @@ const config = {
             position: 'right',
           },
           {
-            href: 'https://github.com/polybasehq',
+            href: 'https://github.com/polybase',
             label: 'GitHub',
             position: 'right',
           },
