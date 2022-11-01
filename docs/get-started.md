@@ -96,7 +96,7 @@ You can update records by calling methods defined on your contract.
 
 ```ts
 const db = new Polybase({ defaultNamespace: "your-namespace" })
-await db.contract('City').call('setCountry', ['USA])
+await db.contract('City').call('setCountry', ['USA'])
 ```
 
 
