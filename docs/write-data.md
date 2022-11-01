@@ -54,7 +54,32 @@ You can view our example app [Polybase Social](https://social.testnet.polybase.x
 
 ## Updating a record
 
+You can update contract data using the contract methods defined in the contract.
 
+
+```ts
+const db = new Polybase({ defaultNamespace: "your-namespace" })
+const contractReference = db.contract("City")
+const docData = await contractReference.doc('new-york').call("updateName", ["New York"])
+```
+
+Would require the following contract:
+
+```graphql
+contract City {
+  id: string;
+  name: string;
+
+  constructor (id: string, name: string) {
+    this.id = id;
+    this.name = name;
+  }
+
+  updateName(name: string) {
+    this.name = name;
+  }
+}
+```
 
 
 ## Permissions
@@ -79,10 +104,7 @@ import * as eth from '@polybase/eth'
 const db = new Polybase({ defaultNamespace: "your-namespace" })
 
 // Set data with publicKey
-await db.contract("user-info").doc("user-1").set({
-  name: "Awesome User",
-  secretInfo: encryptedValue
-}, publicKey)
+await db.contract("user-info").doc("user-1").call("contractFn", ["Awesome User", encryptedValue], publicKey)
 
 // Add signer fn
 db.signer(async (data: string) => {
@@ -117,10 +139,10 @@ const publicKey = wallet.getPublicKey()
 const db = new Polybase({ defaultNamespace: "your-namespace" })
 
 // Add data with publicKey that will own the doc
-db.contract('your-namespace/cities').doc('london').set({
+db.contract('your-namespace/City').doc('london').call("set", [{
   name: 'London',
   country: 'UK',
-}, publicKey)
+}], publicKey)
 
 // Add signer fn
 db.signer(async (data: string) => {
@@ -204,10 +226,10 @@ const privateKey = wallet.getPrivateKey()
 // Encrypted value will be returned as a hex string 0x...
 const encryptedValueAsHexStr = encryptToHex(publicKey, "top secret info")
 
-await db.contract("user-info").doc("user-1").set({
+await db.contract("user-info").doc("user-1").call("set", [{
   name: "Awesome User",
   secretInfo: encryptedValueAsHexStr
-})
+}])
 
 // Later...
 
