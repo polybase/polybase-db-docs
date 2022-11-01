@@ -9,12 +9,11 @@ sidebar_position: 1
 
 Polybase is the database for all of humanity’s data. Fast, decentralized and designed from the ground up to scale beyond 1M transactions per second. 
 
-Polybase is better than using a centralized database like Firebase 🔥 or Postgres 🐘 because you can encrypt data using wallets 💳 for "user owned data" and verifiably query Polybase from smart contracts 📜 (coming soon).
+Polybase is better than using a centralized database like Firebase or Postgres because you can encrypt data using wallets for "self sovereign data" and verifiably query Polybase from smart contracts (coming soon).
 
-Polybase is better than storing data on-chain ⛓ because it's 1000 to a million times cheaper than on-chain storage. For example, storing 1MB on Ethereum costs around $64,000 💸. 
+Polybase is better than storing data on-chain because it's 1000 to a million times cheaper than on-chain storage. For example, storing 1MB on Ethereum costs around $64,000. 
 
-
-Blockchains are not built for scalable structured data storage so we built Polybase to combine the best attributes of web2 databases and blockchains 🤗.
+Blockchains are not built for scalable structured data storage so we built Polybase to combine the best attributes of web2 databases and blockchains.
 
 ## Install Polybase
 
