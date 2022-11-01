@@ -15,7 +15,7 @@ You can view our example app [Polybase Social](https://social.testnet.polybase.x
 
 ## Create a Contract
 
-You can create a contract in the [Polybase Explorer](https://explorer.testnet.polybase.xyz) or using the client library.
+You can create a contract using the client library.
 
 ```ts
 const createResponse = await db.applySchema(`
