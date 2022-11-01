@@ -5,15 +5,44 @@ sidebar_position: 3
 
 # Write Data
 
-You can perform a set by calling `.set(data)` on a specific document. You must [define a collection](/collections) before writing data.
+You must [define a contract](/contracts) before writing data to Polybase.
+
+
+## Creating a record
+
+You can create a new record for a contract by calling `.create(args)` on your contract. This will call the `constructor` function of your contract, and if the assigned `this.id` has not already been used, then a new record will be created.
 
 ```ts
 const db = new Polybase({ defaultNamespace: "your-namespace" })
-const collectionReference = db.collection("cities")
-const doc = await collectionReference.doc("london").set({
-  name: "London",
-  country: "UK",
-})
+const contractReference = db.contract("City")
+const docData = await contractReference.create(["new-york", "New York"])
+```
+
+The data returned would look like this:
+
+```json
+{
+  "block": { "hash": "...", ... },
+  "data": {
+    "id": "new-york",
+    "name": "New York",
+  }
+}
+```
+
+
+And your contract might look like:
+
+```graphql
+contract City {
+  id: string;
+  name: string;
+
+  constructor (id: string, name: string) {
+    this.id = id;
+    this.name = name;
+  }
+}
 ```
 
 :::caution
@@ -21,6 +50,11 @@ const doc = await collectionReference.doc("london").set({
 :::
 
 You can view our example app [Polybase Social](https://social.testnet.polybase.xyz) to see it working in action.
+
+
+## Updating a record
+
+
 
 
 ## Permissions
@@ -45,7 +79,7 @@ import * as eth from '@polybase/eth'
 const db = new Polybase({ defaultNamespace: "your-namespace" })
 
 // Set data with publicKey
-await db.collection("user-info").doc("user-1").set({
+await db.contract("user-info").doc("user-1").set({
   name: "Awesome User",
   secretInfo: encryptedValue
 }, publicKey)
@@ -83,7 +117,7 @@ const publicKey = wallet.getPublicKey()
 const db = new Polybase({ defaultNamespace: "your-namespace" })
 
 // Add data with publicKey that will own the doc
-db.collection('your-namespace/cities').doc('london').set({
+db.contract('your-namespace/cities').doc('london').set({
   name: 'London',
   country: 'UK',
 }, publicKey)
@@ -125,7 +159,7 @@ const account = accounts[0]
 // A permission dialog will be presented to the user
 const encryptedValue = await eth.encrypt(account, "top secret info")
 
-await db.collection("user-info").doc("user-1").set({
+await db.contract("user-info").doc("user-1").set({
   name: "Awesome User",
   secretInfo: encryptedValue
 })
@@ -133,7 +167,7 @@ await db.collection("user-info").doc("user-1").set({
 // Later...
 
 // Get the data from Polybase as normal
-const userData = await db.collection("user-info").doc("user-1").get()
+const userData = await db.contract("user-info").doc("user-1").get()
 
 // Get the encrypted value
 const encryptedValue = userData.data.secretInfo
@@ -170,7 +204,7 @@ const privateKey = wallet.getPrivateKey()
 // Encrypted value will be returned as a hex string 0x...
 const encryptedValueAsHexStr = encryptToHex(publicKey, "top secret info")
 
-await db.collection("user-info").doc("user-1").set({
+await db.contract("user-info").doc("user-1").set({
   name: "Awesome User",
   secretInfo: encryptedValueAsHexStr
 })
@@ -178,7 +212,7 @@ await db.collection("user-info").doc("user-1").set({
 // Later...
 
 // Get the data from Polybase as normal
-const userData = await db.collection("user-info").doc("user-1").get()
+const userData = await db.contract("user-info").doc("user-1").get()
 
 // Get the encrypted value
 const encryptedValue = userData.data.secretInfo

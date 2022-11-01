@@ -11,10 +11,10 @@ React hooks for Polybase.
 ## Install Polybase
 
 ```bash
-npm install @polybasexyz/react
+npm install @polybase/react
 ```
 ```bash
-yarn add @polybasexyz/react
+yarn add @polybase/react
 ```
 
 
@@ -44,22 +44,22 @@ import { usePolybase, useDocument } from '@polybase/react'
 
 export const Component = () => {
   const polybase = usePolybase()
-  const { data, error, loading } = useDocument<OptionalCustomType>(polybase.collection('users').doc('id'))
+  const { data, error, loading } = useDocument<OptionalCustomType>(polybase.contract('users').doc('id'))
 
   return data.data.name
 }
 ```
 
 
-## Read a collection (with updates)
+## List contract records (with updates)
 
 ```tsx
 import * as React from 'react'
-import { usePolybase, useCollection } from '@polybase/react'
+import { usePolybase, useContract } from '@polybase/react'
 
 export const Component = () => {
   const polybase = usePolybase()
-  const { data, error, loading } = useCollection<OptionalCustomType>(polybase.collection('users'))
+  const { data, error, loading } = useContract<OptionalCustomType>(polybase.contract('users'))
 
   const usersEl = map(data, ({ data }) => {
     return (

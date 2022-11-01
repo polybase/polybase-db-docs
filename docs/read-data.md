@@ -15,12 +15,12 @@ You can view our example app [Polybase Social](https://social.testnet.polybase.x
 
 ## Get a single document
 
-You can read data once, by calling `.doc(id: string).get()` on a collection.
+You can read data once, by calling `.doc(id: string).get()` on a contract.
 
 ```ts
 const db = new Polybase({ defaultNamespace: "your-namespace" })
-const collectionReference = db.collection("cities")
-const { data, block } = await collectionReference.doc("id").get()
+const contractReference = db.contract("cities")
+const { data, block } = await contractReference.doc("id").get()
 ```
 
 
@@ -30,7 +30,7 @@ The `.onSnapshot()` handler is called on every update for the doc after the writ
 
 ```ts
 const db = new Polybase({ defaultNamespace: "your-namespace" })
-const collectionReference = db.collection("cities").doc("id")
+const contractReference = db.contract("cities").doc("id")
 .onSnapshot((newDoc) => {
   // Handle the change
 }, (err) => { 
@@ -38,30 +38,30 @@ const collectionReference = db.collection("cities").doc("id")
 })
 ```
 
-## List documents in a collection
+## List documents in a contract
 
 ```ts
 const db = new Polybase({ defaultNamespace: "your-namespace" })
-const collectionReference = db.collection("cities")
-const docs = await collectionReference.get()
+const contractReference = db.contract("cities")
+const docs = await contractReference.get()
 ```
 
 ## Filter documents
 
-To use the `where()` filter, you must have a corresponding index specified on the collection.
+To use the `where()` filter, you must have a corresponding index specified on the contract.
 
 ```ts
 const db = new Polybase({ defaultNamespace: "your-namespace" })
-const collectionReference = db.collection("cities")
-const docs = await collectionReference.where("country", "==", "UK").get()
+const contractReference = db.contract("cities")
+const docs = await contractReference.where("country", "==", "UK").get()
 ```
 
 
-## Listen for updates on a collection
+## Listen for updates on a contract
 
 ```ts
 const db = new Polybase({ defaultNamespace: "your-namespace" })
-const collectionReference = db.collection("cities")
+const contractReference = db.contract("cities")
 .onSnapshot((newDoc) => {
   // Handle the change
 }, (err) => { 
@@ -73,7 +73,7 @@ You can also watch for changes on a filtered query.
 
 ```ts
 const db = new Polybase({ defaultNamespace: "your-namespace" })
-const collectionReference = db.collection("cities")
+const contractReference = db.contract("cities")
 .where("country", "==", "UK")
 .onSnapshot((newDoc) => {
   // Handle the change

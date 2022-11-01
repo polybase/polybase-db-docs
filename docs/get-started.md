@@ -37,58 +37,78 @@ const db = new Polybase({
 ```
 
 :::caution
-Namespace must be used for collections.
+Namespace must be used for contracts.
 :::
 
 :::info
- If you specify a defaultNamespace, it will be automatically added for you when you [create a collection instance](/collections#get-a-collection).
+ If you specify a defaultNamespace, it will be automatically added for you when you [create a contract instance](/contracts#get-a-contract).
 :::
 
-## Create a collection
+## Create a contract
 
-You can create a collection using the library:
+You can create a contract using the library. 
+
+A Polybase contract describes the rules for a collection of data, not just a single record (as is the case with other smart contract languages).
 
 :::info
-Creating a collection via the [Polybase Explorer](https://explorer.testnet.polybase.xyz) is coming soon.
+Creating a contract via the [Polybase Explorer](https://explorer.testnet.polybase.xyz) is coming soon.
 :::
 
 ```ts
 const createResponse = await db.applySchema(`
-  collection cities {
-    id: string!;
+  contract City {
+    id: string;
     name: string;
-    country: string;
+    country?: string;
 
     @index(name);
+
+    constructor (id: string, name: string) {
+      this.id = id;
+      this.name = name;
+    }
+
+    setCountry (country: string) {
+      this.country = country;
+    }
   }
 `, 'your-namespace') // your-namespace is optional if you have defined a default namespace
 ```
 
-For more details on creating collections, see the [collection](/collections) overview.
+For more details on creating contracts, see the [contract](/contracts) overview.
 
-## Write data to a collection
+## Create a contract record
+
+When you create a new record, the `constructor` fn in your contract is called with the parameters you provide.
 
 ```ts
 const db = new Polybase({ defaultNamespace: "your-namespace" })
-await db.collection('cities').doc('new-york').set({ 
-  name: 'New York',
-  country: 'USA'
-})
+await db.contract('City').create('new-york', 'New York')
 ```
 
 :::note
-Now go view the collection in the [Explorer](https://explorer.testnet.polybase.xyz).
+Now go view the contract in the [Explorer](https://explorer.testnet.polybase.xyz).
 :::
+
+## Update a contract record
+
+You can update records by calling methods defined on your contract.
+
+```ts
+const db = new Polybase({ defaultNamespace: "your-namespace" })
+await db.contract('City').call('setCountry', ['USA])
+```
+
 
 ## Read a document
 
 ```ts
 const db = new Polybase({ defaultNamespace: "your-namespace" })
-const data = await db.collection('cities').doc('new-york').get()
+const data = await db.contract('City').doc('new-york').get()
 ```
 
 ## Next steps
 
-* Read the [Polybase Whitepaper](https://bit.ly/spctmwp)
-* [Understand Collections](/collections)
+* Read the [Polybase Whitepaper](https://polybase.xyz/Polybase_A_Decentralised_Query_Index_and_Storage_Protocol-v2.0.pdf)
+* [Understand Contracts](/contracts)
 * [Known Issues](/known-issues)
