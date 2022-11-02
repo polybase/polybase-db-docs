@@ -17,7 +17,7 @@ During our beta rollout, minor updates in the semantic versioning represent brea
 
  - Update to namespace assignment and 
  - Improved `id` system
- - Allow maps/objects to be passed into contract functions 
+ - Allow maps/objects to be passed into collection functions 
  - Integration with libp2p
  - Ethereum bridge
 
@@ -26,23 +26,22 @@ During our beta rollout, minor updates in the semantic versioning represent brea
 
 ### Added
 
- - `.create()` can be called on a contract to create a new record - e.g. `db.contract('HelloWorld').create(["id1"])`
+ - `.create()` can be called on a collection to create a new record - e.g. `db.collection('HelloWorld').create(["id1"])`
  - Changelog added to documentation
 
 
 ### Removed
 
- - `doc.set()` - replaced by creating specific contract functions that can be called using `doc.call("fn", args)`
- - `doc.delete()` - replaced by `selfdestruct()`, which should be called within a smart contract function
+ - `doc.set()` - replaced by creating specific collection functions that can be called using `doc.call("fn", args)`
+ - `doc.delete()` - replaced by `selfdestruct()`, which should be called within a smart collection function
  - Field directives (e.g. `@max()`, `@min()`, etc) have been removed
 
 
 ### Deprecated
 
- - `collection Name { ... }` has been renamed to `contract Name { ... }` when [defining a contract](/contracts)
  - The following URL endpoints have been deprecated from our hosted service:
-   - `GET /v0/collections/{contractId}/records` replaced by `GET /v0/contracts/{contractId}`
-   - `GET /v0/collections/{contractId}/records/{recId}` replaced by `GET /v0/contracts/{contractId}/{recId}`
+   - `GET /v0/collections/{collectionId}/records` replaced by `GET /v0/collections/{collectionId}`
+   - `GET /v0/collections/{collectionId}/records/{recId}` replaced by `GET /v0/collections/{collectionId}/{recId}`
 
 
 

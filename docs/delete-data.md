@@ -5,12 +5,12 @@ sidebar_position: 5
 
 # Delete Data
 
-To delete data on Polybase, you must implement a function on your contract that calls `selfdestruct()`. By convention, this should be a function called `del()`.
+To delete data on Polybase, you must implement a function on your collection that calls `selfdestruct()`. By convention, this should be a function called `del()`.
 
 The following provides an example of a delete function that only allows the owner of the record to delete it.
 
 ```graphql
-contract Place {
+collection Place {
   country: string;
   owner: id;
 

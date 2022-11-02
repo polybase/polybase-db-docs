@@ -5,17 +5,17 @@ sidebar_position: 3
 
 # Write Data
 
-You must [define a contract](/contracts) before writing data to Polybase.
+You must [define a collection](/collections) before writing data to Polybase.
 
 
 ## Creating a record
 
-You can create a new record for a contract by calling `.create(args)` on your contract. This will call the `constructor` function of your contract, and if the assigned `this.id` has not already been used, then a new record will be created.
+You can create a new record for a collection by calling `.create(args)` on your collection. This will call the `constructor` function of your collection, and if the assigned `this.id` has not already been used, then a new record will be created.
 
 ```ts
 const db = new Polybase({ defaultNamespace: "your-namespace" })
-const contractReference = db.contract("City")
-const docData = await contractReference.create(["new-york", "New York"])
+const collectionReference = db.collection("City")
+const docData = await collectionReference.create(["new-york", "New York"])
 ```
 
 The data returned would look like this:
@@ -31,10 +31,10 @@ The data returned would look like this:
 ```
 
 
-And your contract might look like:
+And your collection might look like:
 
 ```graphql
-contract City {
+collection City {
   id: string;
   name: string;
 
@@ -54,19 +54,19 @@ You can view our example app [Polybase Social](https://social.testnet.polybase.x
 
 ## Updating a record
 
-You can update contract data using the contract methods defined in the contract.
+You can update collection data using the collection methods defined in the collection.
 
 
 ```ts
 const db = new Polybase({ defaultNamespace: "your-namespace" })
-const contractReference = db.contract("City")
-const docData = await contractReference.doc('new-york').call("updateName", ["New York"])
+const collectionReference = db.collection("City")
+const docData = await collectionReference.doc('new-york').call("updateName", ["New York"])
 ```
 
-Would require the following contract:
+Would require the following collection:
 
 ```graphql
-contract City {
+collection City {
   id: string;
   name: string;
 
@@ -104,7 +104,7 @@ import * as eth from '@polybase/eth'
 const db = new Polybase({ defaultNamespace: "your-namespace" })
 
 // Set data with publicKey
-await db.contract("user-info").doc("user-1").call("contractFn", ["Awesome User", encryptedValue], publicKey)
+await db.collection("user-info").doc("user-1").call("collectionFn", ["Awesome User", encryptedValue], publicKey)
 
 // Add signer fn
 db.signer(async (data: string) => {
@@ -139,7 +139,7 @@ const publicKey = wallet.getPublicKey()
 const db = new Polybase({ defaultNamespace: "your-namespace" })
 
 // Add data with publicKey that will own the doc
-db.contract('your-namespace/City').doc('london').call("set", [{
+db.collection('your-namespace/City').doc('london').call("set", [{
   name: 'London',
   country: 'UK',
 }], publicKey)
@@ -181,7 +181,7 @@ const account = accounts[0]
 // A permission dialog will be presented to the user
 const encryptedValue = await eth.encrypt(account, "top secret info")
 
-await db.contract("user-info").doc("user-1").set({
+await db.collection("user-info").doc("user-1").set({
   name: "Awesome User",
   secretInfo: encryptedValue
 })
@@ -189,7 +189,7 @@ await db.contract("user-info").doc("user-1").set({
 // Later...
 
 // Get the data from Polybase as normal
-const userData = await db.contract("user-info").doc("user-1").get()
+const userData = await db.collection("user-info").doc("user-1").get()
 
 // Get the encrypted value
 const encryptedValue = userData.data.secretInfo
@@ -226,7 +226,7 @@ const privateKey = wallet.getPrivateKey()
 // Encrypted value will be returned as a hex string 0x...
 const encryptedValueAsHexStr = encryptToHex(publicKey, "top secret info")
 
-await db.contract("user-info").doc("user-1").call("set", [{
+await db.collection("user-info").doc("user-1").call("set", [{
   name: "Awesome User",
   secretInfo: encryptedValueAsHexStr
 }])
@@ -234,7 +234,7 @@ await db.contract("user-info").doc("user-1").call("set", [{
 // Later...
 
 // Get the data from Polybase as normal
-const userData = await db.contract("user-info").doc("user-1").get()
+const userData = await db.collection("user-info").doc("user-1").get()
 
 // Get the encrypted value
 const encryptedValue = userData.data.secretInfo
