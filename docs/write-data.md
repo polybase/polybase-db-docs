@@ -10,7 +10,7 @@ You must [define a collection](/collections) before writing data to Polybase.
 
 ## Creating a record
 
-You can create a new record for a collection by calling `.create(args)` on your collection. This will call the `constructor` function of your collection, and if the assigned `this.id` has not already been used, then a new record will be created.
+You can create a new record for a collection by calling `.create(args)` on your collection. This will call the `constructor` function of your collection, and create a new record (as long as the `id` of the record does not already exist).
 
 ```ts
 const db = new Polybase({ defaultNamespace: "your-namespace" })
@@ -46,10 +46,6 @@ collection City {
   }
 }
 ```
-
-:::caution
-`$` is not allowed at the start of field names, as this is reserved for internal use.
-:::
 
 You can view our example app [Polybase Social](https://social.testnet.polybase.xyz) to see it working in action.
 
@@ -88,9 +84,11 @@ collection City {
 
 ## Permissions
 
-You can control who is allowed to make changes to a document by using the `ctx.publicKey` which is set whenever a user sends a signed request. 
+You can control who is allowed to make changes to a document by using the `ctx.publicKey` which is set to the publicKey of the user that signed the request.
 
-A common use case is to store the `ctx.publicKey` of the user who created the contract, for example:
+A common use case is to store the `ctx.publicKey` of the user who created the collection, and then use this to determine if the change is valid.
+
+For example:
 
 
 ```typescript
@@ -106,7 +104,7 @@ collection CollectionName () {
   }
 
   setName (name: string) {
-    if (this.publicKey != ctx.pulicKey) {
+    if (this.publicKey != ctx.publicKey) {
       throw error('invalid public key');
     }
     this.name = name;
@@ -114,12 +112,10 @@ collection CollectionName () {
 }
 ```
 
-You can provide a signer function to the Polybase client library that will be used to create the signature.
-
 
 ### Signing Requests
 
-To sign requests from the client, you must define a signer function that will be called for every request. If you want to skip signing for specific requests you can return null to skip the signing process.
+To sign requests from the client, you must define a signer function that will be called for every request.
 
 ```typescript
 // Add signer fn
@@ -137,11 +133,12 @@ db.signer(async (data: string, req: Request) => {
 })
 ```
 
+ If you want to skip signing for specific requests you can return `null` to skip the signing process.
 
 
 ### Using wallet through an extension
 
-Using the signing process provided by a user's browser extension (every write must be signed individually).
+You can use the signing process provided by a user's browser extension (e.g. Metamask). Using this approach, every write must be individually approved by the user (i.e. a dialog will appear for them to approve), which may not be an optimal user experience.
 
 ```ts
 import { Polybase } from '@polybase/client/web'
@@ -171,7 +168,9 @@ db.signer(async (data: string) => {
 
 ### Creating your own wallet
 
-If you want to manage the wallet/privateKey yourself, you must ensure you store the private key safely.
+To improve the user experience, you can create your own app-owned wallet (public/private key pair), allowing you to sign requests without asking the user every time. The wallet/privateKey can then be encrypted using the browser extension, and stored locally or any other storage system.
+
+That means you only need to ask the user a single time for permission to decrypt the private key, and then use that private key to sign every subsequent request.
 
 
 ```ts
@@ -249,9 +248,9 @@ const decryptedValue = await eth.decrypt(account, encryptedValue)
 
 ### Creating your own wallet
 
-You can create your own app-owned wallet (public/private key) allowing you to encrypt/decrypt values without having to ask the user for explicit permission each time. The private key should still be encrypted using a users existing wallet or a password, but rather than encrypting a specific value, you encrypt the private key. 
+You can create your own app-owned wallet (public/private key) allowing you to encrypt/decrypt values without having to ask the user for explicit permission each time. The private key should be encrypted using a users existing wallet or a password, but rather than encrypting a specific value, you encrypt the new private key. 
 
-That means you only need to ask the user a single time for permission to decrypt their private key, and then use that private key to decrypt all other received values. It is then your responsibility to ensure that the encrypted private key is kept safe.
+That means you only need to ask the user a single time for permission to decrypt the private key, and then use that private key to decrypt all other values. It is then your responsibility to ensure that the encrypted private key is kept safe, which could be either stored locally in browser storage or in Polybase.
 
 Here is an example:
 

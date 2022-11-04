@@ -26,12 +26,12 @@ During our beta rollout, minor updates in the semantic versioning represent brea
 
 ### Removed
 
- - `.call(functionName, args, pk)` and `.create(args, pk)` no longer accept a public key (pk) as the final parameter
+ - `pk` (publicKey) is no longer accepted as the final parameter of .call(functionName, args, ~~pk~~)` and .create(args, ~~pk~~)
 
 ### Changed
 
- - `Signer` function has new type specification: `type Signer = (data: string, req: Request) => Promise<SignerResponse|null>`
-   - Additional parameter `req: Request`is passed as the second parameter
+ - Signer function has new type specification: `type Signer = (data: string, req: Request) => Promise<SignerResponse|null>`
+   - Additional parameter `req: Request` is passed as the second parameter
    - If provided, `signer()` is called for every request
    - You can return null on `Signer` function if you do not want to provide a signature for a given request
  - Dependencies updates
@@ -41,7 +41,7 @@ During our beta rollout, minor updates in the semantic versioning represent brea
 
 ### Fixed
 
- - `.applySchema()` now allows upsert commands. If the contract does not exist, it is created, otherwise it is updated.
+ - `.applySchema()` now upsert the provided code. If the collection does not exist, it is created, otherwise it is updated.
 
 ## [0.3.1] - 2022-11-01
 

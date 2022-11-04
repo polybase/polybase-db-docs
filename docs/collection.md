@@ -5,9 +5,9 @@ sidebar_position: 2
 
 # Collections
 
-You must create a collection before adding data to Polybase. 
+You must create a collection before adding data to Polybase.
 
-Collections define the rules around a collection of records. All records created by a collection are guaranteed to follow the rules of that collection. This is in contrast to other smart collection languages, where only a single record can be associated with a collection.
+Collections (aka database tables) define the fields and rules for a collection of records. All records created by a collection are guaranteed to follow the rules of that collection. This is in contrast to other smart collection languages, where only a single record can be associated with a collection.
 
 Each Polybase record within a collection has its own unique identifier `id`.
 
@@ -43,7 +43,7 @@ const createResponse = await db.applySchema(`
 
 ## Define a Collection
 
-Collections are defined using Polylang (the language for Polybase), it is very similar to Javascript/Typescript. Collections allow you define the rules and indexes for your collection records. The following is a valid collection definition.
+Collections are defined using Polylang (the language for Polybase), that is very similar to Javascript/Typescript. Collections allow you define the rules and indexes for your collection records. The following is a valid collection definition.
 
 ```graphql
 collection CollectionName {
@@ -59,18 +59,12 @@ collection CollectionName {
 }
 ```
 
-The above would allow you to insert a document with a `name` property of type `string`. For example:
-
-```json
-{
-  "name": "London",
-}
-```
+The above would allow you to insert a document with a `name` property of type `string`.
 
 
 ### Fields
 
-You can specify the fields that are allowed in your collection. These should be at the top most part of your collection.
+You can specify the fields that are allowed in your collection. These should be at the top most part of your collection. A collection should always have an `id` field.
 
 ```graphql
 collection CollectionName {
@@ -139,7 +133,7 @@ collection Account {
 }
 ```
 
-You can call your custom functions using:
+You can call your custom functions using `.call(functionName, args)`:
 
 ```ts
 const db = new Polybase({ defaultNamespace: "your-namespace" })
@@ -194,7 +188,7 @@ collection cities {
 ```
 
 
-## Get a collection
+## Reference a collection
 
 To reference a collection, you can call `.collection("collection-name")` on your Polybase instance. The returned collection instance relates to a specific collection of data and allows you [`.write()`](/write) and [`.read()`](/read) data from Polybase.
 
