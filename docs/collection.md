@@ -24,7 +24,7 @@ const createResponse = await db.applySchema(`
     country?: string;
     publicKey?: string;
 
-    @index(name);
+    @index(country);
 
     constructor (id: string, country: string) {
       this.id = id;
@@ -119,10 +119,12 @@ collection Account {
   }
 
   # Fn ignores all above rules, so anything needed must be reimplemented
-  function transfer (b: record, amount: number) {
-    # $auth is in global scope of fn
+  transfer (b: record, amount: number) {
+    # ctx is in global scope of fn
     # error() is in global scope of fn
-    if (this.publicKey == $auth.publicKey) throw error('invalid user')
+    if (this.publicKey == ctx.publicKey) {
+       throw error('invalid user');
+    }
 
     # can edit both records
     this.balance -= amount
@@ -130,7 +132,9 @@ collection Account {
 
     # min has to be reimplemented/declared b/c field @ rules do not apply
     # inside fns
-    if (a.balance < 0) throw error('insufficient balance')
+    if (a.balance < 0) {
+      throw error('insufficient balance');
+    }
   }
 }
 ```
@@ -140,7 +144,7 @@ You can call your custom functions using:
 ```ts
 const db = new Polybase({ defaultNamespace: "your-namespace" })
 const col = db.collection("account")
-await col.doc('id1').call('transfer', [c.doc('id2') 10], pk)
+await col.doc('id1').call('transfer', [c.doc('id2') 10])
 ```
 
 

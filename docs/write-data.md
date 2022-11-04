@@ -15,10 +15,12 @@ You can create a new record for a collection by calling `.create(args)` on your 
 ```ts
 const db = new Polybase({ defaultNamespace: "your-namespace" })
 const collectionReference = db.collection("City")
+
+// .create(args) args array is defined by the constructor fn
 const docData = await collectionReference.create(["new-york", "New York"])
 ```
 
-The data returned would look like this:
+The data returned would be:
 
 ```json
 {
@@ -31,7 +33,7 @@ The data returned would look like this:
 ```
 
 
-And your collection might look like:
+And your collection schema might look like:
 
 ```graphql
 collection City {
@@ -60,10 +62,12 @@ You can update collection data using the collection methods defined in the colle
 ```ts
 const db = new Polybase({ defaultNamespace: "your-namespace" })
 const collectionReference = db.collection("City")
+
+// .create(functionName, args) args array is defined by the updateName fn in collection schema
 const docData = await collectionReference.doc('new-york').call("updateName", ["New York"])
 ```
 
-Would require the following collection:
+Would require the following collection schema:
 
 ```graphql
 collection City {
@@ -84,11 +88,54 @@ collection City {
 
 ## Permissions
 
-You can control who is allowed to make changes to a document by providing a publicKey when calling `.set(data, publicKey)`. Once a publicKey is set on a doc, changes to the doc must be accompanied by a signature created using that publicKey. You can provide a `.signer(data)` function to the Polybase client library that will be used to create the signature.
+You can control who is allowed to make changes to a document by using the `ctx.publicKey` which is set whenever a user sends a signed request. 
 
-:::info
-More granular permissions will be released soon.
-:::
+A common use case is to store the `ctx.publicKey` of the user who created the contract, for example:
+
+
+```typescript
+collection CollectionName () {
+  id: string;
+  name: string;
+  publicKey: string;
+
+  constructor (id: string, name: string) {
+    this.id = id;
+    this.name = name;
+    this.publicKey = ctx.publicKey;
+  }
+
+  setName (name: string) {
+    if (this.publicKey != ctx.pulicKey) {
+      throw error('invalid public key');
+    }
+    this.name = name;
+  }
+}
+```
+
+You can provide a signer function to the Polybase client library that will be used to create the signature.
+
+
+### Signing Requests
+
+To sign requests from the client, you must define a signer function that will be called for every request. If you want to skip signing for specific requests you can return null to skip the signing process.
+
+```typescript
+// Add signer fn
+db.signer(async (data: string, req: Request) => {
+   // A permission dialog will be presented to the user
+  const accounts = await eth.requestAccounts()
+
+  // If there is more than one account, you may wish to ask the user which 
+  // account they would like to use
+  const account = accounts[0]
+
+  const sig = await eth.sign(data, account)
+
+  return {  h: 'eth-personal-sign', sig }
+})
+```
 
 
 
