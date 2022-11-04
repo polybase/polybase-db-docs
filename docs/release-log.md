@@ -22,6 +22,21 @@ During our beta rollout, minor updates in the semantic versioning represent brea
  - Ethereum bridge
 
 
+## [0.3.3] - 2022-11-04
+
+### Removed
+
+ - `.call(functionName, args, pk)` and `.create(args, pk)` no longer accept a public key (pk) as the final parameter
+
+### Changed
+
+ - `Signer` function has new type specification: `type Signer = (data: string, req: Request) => Promise<SignerResponse|null>`
+   - Additional parameter `req: Request`is passed as the second parameter
+   - If provided, `signer()` is called for every request
+   - You can return null on `Signer` function if you do not want to provide a signature for a given request
+ - Dependencies updates
+
+
 ## [0.3.2] - 2022-11-04
 
 ### Fixed
