@@ -22,7 +22,13 @@ During our beta rollout, minor updates in the semantic versioning represent brea
  - Ethereum bridge
 
 
-## [0.3.0] - 2022-11-01
+## [0.3.2] - 2022-11-04
+
+### Fixed
+
+ - `.applySchema()` now allows upsert commands. If the contract does not exist, it is created, otherwise it is updated.
+
+## [0.3.1] - 2022-11-01
 
 ### Added
 
