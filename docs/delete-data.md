@@ -1,6 +1,7 @@
 ---
 slug: /delete
 sidebar_position: 5
+description: To delete data on Polybase, you must implement a function on your collection that calls `selfdestruct()`. By convention, this should be a function called `del()`.
 ---
 
 # Delete Data

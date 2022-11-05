@@ -1,6 +1,7 @@
 ---
 slug: /
 sidebar_position: 1
+description: Polybase is the database for all of humanity’s data. Fast, decentralized and designed from the ground up to scale beyond 1M transactions per second.
 ---
 
 # Get Started

@@ -1,6 +1,7 @@
 ---
 slug: /react
 sidebar_position: 5
+description: React hooks for Polybase to make reading data in React applications simple and easy. You can listen to changes and have your component update on every change.
 ---
 
 # React

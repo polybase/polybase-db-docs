@@ -1,6 +1,7 @@
 ---
 slug: /read
 sidebar_position: 4
+description: There are two ways to retrieve data in Polybase. You can either fetch data once using .get(), or subscribe for changes using .onSnapshot().
 ---
 
 # Read Data

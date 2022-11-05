@@ -1,6 +1,7 @@
 ---
 slug: /collections
 sidebar_position: 2
+description: You must create a collection before adding data to Polybase. Collections (aka database tables) define the fields and rules for a collection of records.
 ---
 
 # Collections

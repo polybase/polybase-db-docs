@@ -1,6 +1,7 @@
 ---
 slug: /write
 sidebar_position: 3
+description: Write data to your Polybase database collection using either .create() or .call(). You must collection before writing data to Polybase.
 ---
 
 # Write Data

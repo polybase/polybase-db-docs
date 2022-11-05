@@ -1,6 +1,7 @@
 ---
 slug: /changelog
 sidebar_position: 6
+description: All notable changes to this project will be documented in this file. Polybase adheres to Semantic Versioning.
 ---
 
 # Changelog
