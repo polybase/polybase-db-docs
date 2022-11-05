@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'Polybase Docs',
   tagline: 'Polybase is the decentralized storage, index and query protocol for structured data.',
-  url: 'https://polybase.xyz',
+  url: 'https://docs.polybase.xyz',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
