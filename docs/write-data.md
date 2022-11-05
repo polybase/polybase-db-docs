@@ -228,10 +228,7 @@ const account = accounts[0]
 // A permission dialog will be presented to the user
 const encryptedValue = await eth.encrypt(account, "top secret info")
 
-await db.collection("user-info").doc("user-1").set({
-  name: "Awesome User",
-  secretInfo: encryptedValue
-})
+await db.collection("user-info").doc("user-1").call("functionName", [encryptedValue])
 
 // Later...
 
