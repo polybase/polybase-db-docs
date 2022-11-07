@@ -24,7 +24,7 @@ yarn add @polybase/react
 ```tsx
 import * as React from 'react'
 import { PolybaseProvider } from '@polybase/react'
-import { Polybase } from '@polybase/client/web'
+import { Polybase } from '@polybase/client'
 
 const polybase = new Polybase()
 

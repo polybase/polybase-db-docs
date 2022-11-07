@@ -139,7 +139,7 @@ You can call your custom functions using `.call(functionName, args)`:
 ```ts
 const db = new Polybase({ defaultNamespace: "your-namespace" })
 const col = db.collection("account")
-await col.doc('id1').call('transfer', [c.doc('id2') 10])
+await col.doc('id1').call('transfer', [c.doc('id2'), 10])
 ```
 
 

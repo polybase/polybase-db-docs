@@ -142,7 +142,7 @@ db.signer(async (data: string, req: Request) => {
 You can use the signing process provided by a user's browser extension (e.g. Metamask). Using this approach, every write must be individually approved by the user (i.e. a dialog will appear for them to approve), which may not be an optimal user experience.
 
 ```ts
-import { Polybase } from '@polybase/client/web'
+import { Polybase } from '@polybase/client'
 import * as eth from '@polybase/eth'
 
 // Init
@@ -176,7 +176,7 @@ That means you only need to ask the user a single time for permission to decrypt
 
 ```ts
 import Wallet from 'ethereumjs-wallet'
-import { Polybase } from '@polybase/client/web'
+import { Polybase } from '@polybase/client'
 import { ethPersonalSign } from '@polybase/eth'
 
 // First time the user signs up to your dapp
@@ -212,7 +212,7 @@ This can result in a poor user experience if there are a number of different val
 Here is an example:
 
 ```ts
-import { Polybase } from '@polybase/client/web'
+import { Polybase } from '@polybase/client'
 import * as eth from '@polybase/eth'
 
 // Init
@@ -254,7 +254,7 @@ Here is an example:
 
 ```ts
 import Wallet from 'ethereumjs-wallet'
-import { Polybase } from '@polybase/client/web'
+import { Polybase } from '@polybase/client'
 import { encryptToHex, decryptFromHex } from '@polybase/util'
 
 // Init
