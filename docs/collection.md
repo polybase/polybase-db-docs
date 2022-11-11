@@ -19,6 +19,15 @@ You can view our example app [Polybase Social](https://social.testnet.polybase.x
 You can create a collection using the client library.
 
 ```ts
+// If you want to edit the contract code in the future, 
+// you must sign the request when calling applySchema for the first time
+db.signer((data) => {
+  return { 
+    h: 'eth-personal-sign', 
+    sig: ethPersonalSign(wallet.privateKey()), data)
+  }
+})
+
 const createResponse = await db.applySchema(`
   collection CollectionName {
     id: string;
@@ -37,6 +46,10 @@ const createResponse = await db.applySchema(`
   }
 `, 'your-namespace') // your-namespace is optional if you have defined a default namespace
 ```
+
+:::info
+If you want your contract code to be updatable, then you need to ensure that you [sign the request](https://docs.polybase.xyz/write#signing-requests) when creating the contract (the first time you call `.applySchema()`)
+:::
 
 :::caution
 `id` field is mandatory on all collections, and you must assign an `id` using `this.id = ...` within the `constructor` function.

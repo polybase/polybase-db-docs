@@ -193,7 +193,7 @@ db.collection('your-namespace/City').record('london').call("set", [{
 
 // Add signer fn
 db.signer(async (data: string) => {
-  return {  h: 'eth-personal-sign', sig: ethPersonalSign(wallet.privateKey()), data) }
+  return { h: 'eth-personal-sign', sig: ethPersonalSign(wallet.privateKey()), data) }
 })
 ```
 
