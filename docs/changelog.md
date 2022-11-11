@@ -23,6 +23,38 @@ During our beta rollout, minor updates in the semantic versioning represent brea
  - Ethereum bridge
 
 
+## [0.3.6] - 2022-11-11
+
+### Deprecated
+
+ - `collection.doc()` has been deprecated in favour of `collection.record()` on the `Collection` class
+ - `Doc` class has been deprecated in favour of `CollectionRecord` class
+ - The following URL endpoints have been deprecated from our hosted service:
+   - `POST /v0/collections/{collectionId}/documents` replaced by `POST /v0/collections/{collectionId}/records` 
+   - `GET /v0/collections/{collectionId}/documents` replaced by `GET /v0/collections/{collectionId}/records`
+   - `GET /v0/collections/{collectionId}/documents/{recId}` replaced by `GET /v0/collections/{collectionId}/records/{recId}`
+   - `POST /v0/collections/{collectionId}/documents/{recId}/call/{function}` replaced by `POST /v0/collections/{collectionId}/records/{recId}/call/{function}`
+
+### Changed
+  - Nomenclature for a record/document within a collection has been changed from document -> record
+  - Error `reason` codes returned from the server have been updated to the follows:
+    - `record/not-found`
+    - `index/missing-index`
+    - `index/unique-constraint-violation`
+    - `constructor/no-id-assigned`
+    - `function/invalidated-id`
+    - `function/not-found`
+    - `function/invalid-args`
+    - `function/invalid-call`
+    - `collection/id-exists`
+    - `collection/invalid-id`
+    - `collection/invalid-schema`
+
+### Added
+ - Tests for each of the user error codes
+
+
+
 ## [0.3.3] - 2022-11-04
 
 ### Removed
