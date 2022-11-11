@@ -18,7 +18,7 @@ const db = new Polybase({ defaultNamespace: "your-namespace" })
 const collectionReference = db.collection("City")
 
 // .create(args) args array is defined by the constructor fn
-const docData = await collectionReference.create(["new-york", "New York"])
+const recordData = await collectionReference.create(["new-york", "New York"])
 ```
 
 The data returned would be:
@@ -61,7 +61,7 @@ const db = new Polybase({ defaultNamespace: "your-namespace" })
 const collectionReference = db.collection("City")
 
 // .create(functionName, args) args array is defined by the updateName fn in collection schema
-const docData = await collectionReference.doc('new-york').call("updateName", ["New York"])
+const recordData = await collectionReference.record('new-york').call("updateName", ["New York"])
 ```
 
 Would require the following collection schema:
@@ -85,7 +85,7 @@ collection City {
 
 ## Permissions
 
-You can control who is allowed to make changes to a document by using the `ctx.publicKey` which is set to the publicKey of the user that signed the request.
+You can control who is allowed to make changes to a record by using the `ctx.publicKey` which is set to the publicKey of the user that signed the request.
 
 A common use case is to store the `ctx.publicKey` of the user who created the collection, and then use this to determine if the change is valid.
 
@@ -149,7 +149,7 @@ import * as eth from '@polybase/eth'
 const db = new Polybase({ defaultNamespace: "your-namespace" })
 
 // Set data with publicKey
-await db.collection("user-info").doc("user-1").call("collectionFn", ["Awesome User", encryptedValue], publicKey)
+await db.collection("user-info").record("user-1").call("collectionFn", ["Awesome User", encryptedValue], publicKey)
 
 // Add signer fn
 db.signer(async (data: string) => {
@@ -185,8 +185,8 @@ const publicKey = wallet.getPublicKey()
 
 const db = new Polybase({ defaultNamespace: "your-namespace" })
 
-// Add data with publicKey that will own the doc
-db.collection('your-namespace/City').doc('london').call("set", [{
+// Add data with publicKey that will own the record
+db.collection('your-namespace/City').record('london').call("set", [{
   name: 'London',
   country: 'UK',
 }], publicKey)
@@ -228,12 +228,12 @@ const account = accounts[0]
 // A permission dialog will be presented to the user
 const encryptedValue = await eth.encrypt(account, "top secret info")
 
-await db.collection("user-info").doc("user-1").call("functionName", [encryptedValue])
+await db.collection("user-info").record("user-1").call("functionName", [encryptedValue])
 
 // Later...
 
 // Get the data from Polybase as normal
-const userData = await db.collection("user-info").doc("user-1").get()
+const userData = await db.collection("user-info").record("user-1").get()
 
 // Get the encrypted value
 const encryptedValue = userData.data.secretInfo
@@ -270,7 +270,7 @@ const privateKey = wallet.getPrivateKey()
 // Encrypted value will be returned as a hex string 0x...
 const encryptedValueAsHexStr = encryptToHex(publicKey, "top secret info")
 
-await db.collection("user-info").doc("user-1").call("set", [{
+await db.collection("user-info").record("user-1").call("set", [{
   name: "Awesome User",
   secretInfo: encryptedValueAsHexStr
 }])
@@ -278,7 +278,7 @@ await db.collection("user-info").doc("user-1").call("set", [{
 // Later...
 
 // Get the data from Polybase as normal
-const userData = await db.collection("user-info").doc("user-1").get()
+const userData = await db.collection("user-info").record("user-1").get()
 
 // Get the encrypted value
 const encryptedValue = userData.data.secretInfo

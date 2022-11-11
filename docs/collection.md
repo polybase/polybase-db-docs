@@ -8,7 +8,7 @@ description: You must create a collection before adding data to Polybase. Collec
 
 You must create a collection before adding data to Polybase.
 
-Collections (aka database tables) define the fields and rules for a collection of records. All records created by a collection are guaranteed to follow the rules of that collection. This is in contrast to other smart collection languages, where only a single record can be associated with a collection.
+Collections (aka database tables) define the fields and rules for a collection of records. All records created by a collection are guaranteed to follow the rules of that collection. This is in contrast to other smart contract languages, where only a single record can be associated with a collection.
 
 Each Polybase record within a collection has its own unique identifier `id`.
 
@@ -60,7 +60,7 @@ collection CollectionName {
 }
 ```
 
-The above would allow you to insert a document with a `name` property of type `string`.
+The above would allow you to insert a record with a `name` property of type `string`.
 
 
 ### Fields
@@ -139,18 +139,18 @@ You can call your custom functions using `.call(functionName, args)`:
 ```ts
 const db = new Polybase({ defaultNamespace: "your-namespace" })
 const col = db.collection("account")
-await col.doc('id1').call('transfer', [c.doc('id2'), 10])
+await col.record('id1').call('transfer', [c.record('id2'), 10])
 ```
 
 
 ### Indexes
 
-Indexes are a list of fields in addition to the document's `id` field that should be indexed. You need to ensure that all fields that are included in a `where` or `sort` clause are included in the indexes.
+Indexes are a list of fields in addition to the record's `id` field that should be indexed. You need to ensure that all fields that are included in a `where` or `sort` clause are included in the indexes.
 
 ```ts
 const db = new Polybase({ defaultNamespace: "your-namespace" })
 const collectionReference = db.collection("cities")
-const docs = await collectionReference.where("name", "==", "abc").get()
+const records = await collectionReference.where("name", "==", "abc").get()
 ```
 
 You would need the following schema:
@@ -170,7 +170,7 @@ If you want to order your results, you also need to include that in the index:
 ```ts
 const db = new Polybase({ defaultNamespace: "your-namespace" })
 const collectionReference = db.collection("cities")
-const docs = await collectionReference
+const records = await collectionReference
   .where("name", "==", "abc")
   .sort('population', 'desc')
   .get()

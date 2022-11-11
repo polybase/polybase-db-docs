@@ -14,24 +14,24 @@ There are two ways to retrieve data in Polybase.
 You can view our example app [Polybase Social](https://social.testnet.polybase.xyz) to see it working in action.
 
 
-## Get a single document
+## Get a single record
 
-You can read data once, by calling `.doc(id: string).get()` on a collection.
+You can read data once, by calling `.record(id: string).get()` on a collection.
 
 ```ts
 const db = new Polybase({ defaultNamespace: "your-namespace" })
 const collectionReference = db.collection("cities")
-const { data, block } = await collectionReference.doc("id").get()
+const { data, block } = await collectionReference.record("id").get()
 ```
 
 
-## Listen for updates on a document
+## Listen for updates on a record
 
-The `.onSnapshot()` handler is called on every update for the doc after the write is confirmed.
+The `.onSnapshot()` handler is called on every update for the record after the write is confirmed.
 
 ```ts
 const db = new Polybase({ defaultNamespace: "your-namespace" })
-const collectionReference = db.collection("cities").doc("id")
+const collectionReference = db.collection("cities").record("id")
 .onSnapshot((newDoc) => {
   // Handle the change
 }, (err) => { 
@@ -39,22 +39,22 @@ const collectionReference = db.collection("cities").doc("id")
 })
 ```
 
-## List documents in a collection
+## List records in a collection
 
 ```ts
 const db = new Polybase({ defaultNamespace: "your-namespace" })
 const collectionReference = db.collection("cities")
-const docs = await collectionReference.get()
+const records = await collectionReference.get()
 ```
 
-## Filter documents
+## Filter records
 
 To use the `where()` filter, you must have a corresponding index specified on the collection.
 
 ```ts
 const db = new Polybase({ defaultNamespace: "your-namespace" })
 const collectionReference = db.collection("cities")
-const docs = await collectionReference.where("country", "==", "UK").get()
+const records = await collectionReference.where("country", "==", "UK").get()
 ```
 
 

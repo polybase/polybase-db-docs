@@ -100,11 +100,11 @@ await db.collection('City').call('setCountry', ['USA'])
 ```
 
 
-## Read a document
+## Read a record
 
 ```ts
 const db = new Polybase({ defaultNamespace: "your-namespace" })
-const data = await db.collection('City').doc('new-york').get()
+const data = await db.collection('City').record('new-york').get()
 ```
 
 ## Next steps
