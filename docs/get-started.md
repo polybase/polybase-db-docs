@@ -83,7 +83,7 @@ When you create a new record, the `constructor` fn in your collection is called 
 
 ```ts
 const db = new Polybase({ defaultNamespace: "your-namespace" })
-await db.collection('City').create('new-york', 'New York')
+await db.collection('City').create(['new-york', 'New York'])
 ```
 
 :::note
