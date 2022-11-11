@@ -297,3 +297,23 @@ You could store the encrypted private key locally on the browser device (e.g. in
 #### Store on Polybase
 
 You could store the encrypted private key on Polybase, this allow the encrypted private key to obtained by the user and then decrypted on any device.
+
+
+## Multi User Encryption
+
+It's often useful to allow multiple users to decrypt and view data stored in Polybase.
+
+To do this, you should: 
+
+ - Create a symmetric encryption key and encrypt the data with that key
+ - Encrypt the symmetric encryption key with the public key of each user who should have read access
+
+
+ The following is an example showing how you might structure your collections if you were creating a Google Forms product:
+
+
+
+![Multi User Encryption](./img/multi-user-encryption.png)
+
+
+
