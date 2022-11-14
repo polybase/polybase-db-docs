@@ -23,6 +23,30 @@ During our beta rollout, minor updates in the semantic versioning represent brea
  - Ethereum bridge
 
 
+## [0.3.7] - 2022-11-14
+
+### Added
+ 
+ - Added symmetric encryption helpers to `@polybase/util`:
+   - `symmetricGenerateKey()`
+   - `symmetricDecryptFromHex()`
+   - `symmetricEncrypt()`
+   - `symmetricDecrypt()`
+   - `symmetricImportKey()`
+
+### Changed
+
+ - Normalized asymmetric encryption helpers in `@polybase/util`:
+   - `encryptToHex()` -> `asymmetricEncryptToHex()`
+   - `decryptFromHex()` -> `asymmetricDecryptFromHex()`
+
+### Deprecated
+
+ - Deprecated from `@polybase/util`:
+  - `encrypt()`
+  - `decrypt()`
+
+
 ## [0.3.6] - 2022-11-11
 
 ### Deprecated

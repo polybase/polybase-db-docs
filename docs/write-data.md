@@ -255,7 +255,7 @@ Here is an example:
 ```ts
 import Wallet from 'ethereumjs-wallet'
 import { Polybase } from '@polybase/client'
-import { encryptToHex, decryptFromHex } from '@polybase/util'
+import { asymmetricEncryptToHex, asymmetricDecryptFromHex } from '@polybase/util'
 
 // Init
 const db = new Polybase({ defaultNamespace: "your-namespace" })
@@ -268,7 +268,7 @@ const publicKey = wallet.getPublicKey()
 const privateKey = wallet.getPrivateKey()
 
 // Encrypted value will be returned as a hex string 0x...
-const encryptedValueAsHexStr = encryptToHex(publicKey, "top secret info")
+const encryptedValueAsHexStr = asymmetricEncryptToHex(publicKey, "top secret info")
 
 await db.collection("user-info").record("user-1").call("set", [{
   name: "Awesome User",
@@ -284,7 +284,7 @@ const userData = await db.collection("user-info").record("user-1").get()
 const encryptedValue = userData.data.secretInfo
 
 // Original value returned
-const decryptedValue = decrypt(privateKey, decryptFromHex(encryptedValue))
+const decryptedValue = asymmetricDecryptFromHex(privateKey, encryptedValue)
 ```
 
 There are a number of different places to store the encrypted private key that lead to different trade offs. You must find a tradeoff that is acceptable for your specific application.
@@ -309,11 +309,133 @@ To do this, you should:
  - Encrypt the symmetric encryption key with the public key of each user who should have read access
 
 
- The following is an example showing how you might structure your collections if you were creating a Google Forms product:
+
+### Example
+
+The following shows an example of how you might create a Google Forms product.
 
 
+#### Overview
 
 ![Multi User Encryption](./img/multi-user-encryption.png)
 
+#### Collection Schema
+
+```typescript
+collection User {
+  id: string;
+  publicKey: string;
+
+  constructor () {
+    this.id = ctx.publicKey;
+    this.publicKey = ctx.publicKey;
+  }
+}
+
+collection Response {
+  id: string;
+  data: string;
+
+  constructor (id: string, data: string) {
+    this.id = id;
+    this.data = data;
+  }
+}
+
+collection ResponseUser {
+  id: string;
+  userId: string;
+  responseId: string;
+  // symmetric key encrypted with users public key
+  encryptedSymmetricKey: string;
+
+  constructor (userId: string, responseId: string, encryptedSymmetricKey: string) {
+    this.id = userId + "-" + responseId;
+    this.userId = userId;
+    this.responseId = responseId;
+    this.encryptedSymmetricKey = encryptedSymmetricKey;
+  }
+}
+```
 
 
+#### New Form Response Code
+
+```typescript
+import { Polybase } from '@polybase/client'
+import { 
+  asymmetricEncryptToHex, 
+  symmetricEncryptToHex,
+  symmetricGenerateKey,
+} from '@polybase/util'
+
+// Init
+const db = new Polybase({ defaultNamespace: "your-namespace" })
+
+// Obtain form response
+const data = JSON.stringify({ doYouLikePenguins: true })
+
+// Upload form response
+addFormResponse(data)
+
+async function addFormResponse (data: string) {
+  // Generate a symmetric encryption key (to encrypt form response)
+  const symmetricKey = await symmetricGenerateKey()
+  const symmetricEncryptedStr = await symmetricEncryptToHex(symmetricKey, data)
+
+  // Store the encrypted response
+  await db.collection('Response').create(['resp-1', symmetricEncryptedStr])
+
+  // Get list of users who will have access to the form response
+  // (you will probably want to use a .where() here to filter for a subset
+  //  of users)
+  const users = await db.collection('Users').get()
+
+  // Encrypt with each users public key and store
+  const p = users.data.map(async (user) => {
+    const { id: userId, publicKey } = user.data
+
+    // Encrypt the symmetric key
+    const encryptedSymmetricKeyWithUsersPublicKey = asymmetricEncryptToHex(
+      publicKey, 
+      JSON.stringify(symmetricKey),
+    )
+
+    // Store the encrypted symmetric key
+    return db.collection('ResponseUser').create([
+      userId, 
+      'resp-1', 
+      encryptedSymmetricKeyWithUsersPublicKey
+    ])
+  })
+
+  await Promise.all(p)
+}
+```
+
+#### Read a response for a user who was given permission
+
+```typescript
+import { Polybase } from '@polybase/client'
+import { 
+  asymmetricDecryptFromHex, 
+  symmetricDecryptFromHex,
+} from '@polybase/util'
+
+// Init
+const db = new Polybase({ defaultNamespace: "your-namespace" })
+
+async function readFormResponse (userId: string, respId: string, userPrivateKey: string) {
+  const response = await db.collection('Response').record(respId).get()
+  const { data: encryptedData } = response.data
+
+  const responseUser = await db.collection('ResponseUser').record(userId + '-' + respId).get()
+  const { encryptedSymmetricKey } = responseUser.data
+
+  const symmetricKey = asymmetricDecryptFromHex(userPrivateKey, encryptedSymmetricKey)
+  const decrypted = await symmetricDecryptFromHex(JSON.parse(symmetricKey) as CryptoKey, encryptedData)
+  
+  // Parse JSON string into form response object
+  return JSON.parse(decrypted)
+}
+```
