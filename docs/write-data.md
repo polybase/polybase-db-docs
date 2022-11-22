@@ -255,7 +255,7 @@ Here is an example:
 ```ts
 import Wallet from 'ethereumjs-wallet'
 import { Polybase } from '@polybase/client'
-import { asymmetricEncryptToHex, asymmetricDecryptFromHex } from '@polybase/util'
+import { secp256k1 } from '@polybase/util'
 
 // Init
 const db = new Polybase({ defaultNamespace: "your-namespace" })
@@ -268,7 +268,7 @@ const publicKey = wallet.getPublicKey()
 const privateKey = wallet.getPrivateKey()
 
 // Encrypted value will be returned as a hex string 0x...
-const encryptedValueAsHexStr = asymmetricEncryptToHex(publicKey, "top secret info")
+const encryptedValueAsHexStr = secp256k1.asymmetricEncryptToEncoding(publicKey, "top secret info")
 
 await db.collection("user-info").record("user-1").call("set", [{
   name: "Awesome User",
@@ -284,7 +284,7 @@ const userData = await db.collection("user-info").record("user-1").get()
 const encryptedValue = userData.data.secretInfo
 
 // Original value returned
-const decryptedValue = asymmetricDecryptFromHex(privateKey, encryptedValue)
+const decryptedValue = secp256k1.asymmetricDecryptFromEncoding(privateKey, encryptedValue)
 ```
 
 There are a number of different places to store the encrypted private key that lead to different trade offs. You must find a tradeoff that is acceptable for your specific application.
@@ -364,9 +364,8 @@ collection ResponseUser {
 ```typescript
 import { Polybase } from '@polybase/client'
 import { 
-  asymmetricEncryptToHex, 
-  symmetricEncryptToHex,
-  symmetricGenerateKey,
+  secp256k1,
+  aescbc,
 } from '@polybase/util'
 
 // Init
@@ -380,8 +379,8 @@ addFormResponse(data)
 
 async function addFormResponse (data: string) {
   // Generate a symmetric encryption key (to encrypt form response)
-  const symmetricKey = await symmetricGenerateKey()
-  const symmetricEncryptedStr = await symmetricEncryptToHex(symmetricKey, data)
+  const symmetricKey = await aescbc.generateSecretKey()
+  const symmetricEncryptedStr = await aescbc.symmetricEncryptToEncoding(symmetricKey, data, 'base64')
 
   // Store the encrypted response
   await db.collection('Response').create(['resp-1', symmetricEncryptedStr])
@@ -396,16 +395,17 @@ async function addFormResponse (data: string) {
     const { id: userId, publicKey } = user.data
 
     // Encrypt the symmetric key
-    const encryptedSymmetricKeyWithUsersPublicKey = asymmetricEncryptToHex(
+    const encryptedSymmetricKeyWithUsersPublicKeyStr = secp256k1.asymmetricEncryptToEncoding(
       publicKey, 
-      JSON.stringify(symmetricKey),
+      symmetricKey,
+      'base64',
     )
 
     // Store the encrypted symmetric key
     return db.collection('ResponseUser').create([
       userId, 
       'resp-1', 
-      encryptedSymmetricKeyWithUsersPublicKey
+      encryptedSymmetricKeyWithUsersPublicKeyStr
     ])
   })
 
@@ -418,8 +418,8 @@ async function addFormResponse (data: string) {
 ```typescript
 import { Polybase } from '@polybase/client'
 import { 
-  asymmetricDecryptFromHex, 
-  symmetricDecryptFromHex,
+  secp256k1,
+  aescbc
 } from '@polybase/util'
 
 // Init
@@ -432,8 +432,8 @@ async function readFormResponse (userId: string, respId: string, userPrivateKey:
   const responseUser = await db.collection('ResponseUser').record(userId + '-' + respId).get()
   const { encryptedSymmetricKey } = responseUser.data
 
-  const symmetricKey = asymmetricDecryptFromHex(userPrivateKey, encryptedSymmetricKey)
-  const decrypted = await symmetricDecryptFromHex(JSON.parse(symmetricKey) as CryptoKey, encryptedData)
+  const symmetricKey = secp256k1.asymmetricDecryptFromEncoding(userPrivateKey, encryptedSymmetricKey, 'base64')
+  const decrypted = await aescbc256.symmetricDecryptFromEncoding(symmetricKey, encryptedData, 'base64')
   
   // Parse JSON string into form response object
   return JSON.parse(decrypted)
