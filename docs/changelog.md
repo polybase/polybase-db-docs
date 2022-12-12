@@ -1,6 +1,6 @@
 ---
 slug: /changelog
-sidebar_position: 6
+sidebar_position: 7
 description: All notable changes to this project will be documented in this file. Polybase adheres to Semantic Versioning.
 ---
 
@@ -21,6 +21,29 @@ During our beta rollout, minor updates in the semantic versioning represent brea
  - Allow maps/objects to be passed into collection functions 
  - Integration with libp2p
  - Ethereum bridge
+
+## [0.3.10] - 2022-11-23
+
+### Added
+
+  - Added additional encryption algorithems:
+    - aes-cbc (symmetric encryption)
+    - secp256k1 (Ethereum signing/asymmetric encryption)
+    - x25519-xsalsa20-poly1305 (MetaMask encryption)
+
+
+### Changed
+
+ - Utility fns should now be imported by algorithm name: e.g `import { aescbc, secp256k1, x25519xsalsa20poly1305 } from '@polybase/util'`
+
+
+### Deprecated
+
+ - Default export of encryption functions (these fns can now be imported using the algorithm specific import - see above):
+    - `import { asymmetricEncrypt, asymmetricDecrypt } from '@polybase/client'`
+    - `import { encryptToHex, decryptFromHex } from '@polybase/client'`
+    - `import { asymmetricEncryptToHex, asymmetricDecryptFromHex } from '@polybase/client'`
+    - `import { sign } from '@polybase/client'`
 
 
 ## [0.3.7] - 2022-11-14
