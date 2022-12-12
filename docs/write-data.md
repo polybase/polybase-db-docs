@@ -175,13 +175,12 @@ That means you only need to ask the user a single time for permission to decrypt
 
 
 ```ts
-import Wallet from 'ethereumjs-wallet'
 import { Polybase } from '@polybase/client'
 import { ethPersonalSign } from '@polybase/eth'
+import { secp256k1 } from '@polybase/util'
 
-// First time the user signs up to your dapp
-const wallet = Wallet.generate()
-const publicKey = wallet.getPublicKey()
+// First time the user signs up to your dapp (generate key AKA wallet)
+const { privateKey, publicKey } = await secp256k1.generatePrivateKey()
 
 const db = new Polybase({ defaultNamespace: "your-namespace" })
 
@@ -193,7 +192,7 @@ db.collection('your-namespace/City').record('london').call("set", [{
 
 // Add signer fn
 db.signer(async (data: string) => {
-  return { h: 'eth-personal-sign', sig: ethPersonalSign(wallet.privateKey()), data) }
+  return { h: 'eth-personal-sign', sig: ethPersonalSign(privateKey), data) }
 })
 ```
 
@@ -253,19 +252,15 @@ That means you only need to ask the user a single time for permission to decrypt
 Here is an example:
 
 ```ts
-import Wallet from 'ethereumjs-wallet'
+
 import { Polybase } from '@polybase/client'
 import { secp256k1 } from '@polybase/util'
 
 // Init
 const db = new Polybase({ defaultNamespace: "your-namespace" })
 
-// First time the user signs up to your dapp
-const wallet = Wallet.generate()
-const publicKey = wallet.getPublicKey()
-
-// Encrypt (e.g. using approach above) and save the private key somewhere safe 
-const privateKey = wallet.getPrivateKey()
+// First time the user signs up to your dapp (generate key pair AKA wallet)
+const { privateKey, publicKey } = await secp256k1.generatePrivateKey()
 
 // Encrypted value will be returned as a hex string 0x...
 const encryptedValueAsHexStr = secp256k1.asymmetricEncryptToEncoding(publicKey, "top secret info")
