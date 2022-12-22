@@ -1,0 +1,78 @@
+{
+  "name": "Polybase",
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "favicon": "/favicon.png",
+  "colors": {
+    "primary": "#AD31A1",
+    "light": "#E93380",
+    "dark": "#712EC2",
+    "ultraLight": "#FFC0DB",
+    "ultraDark": "#3E1273",
+    "anchors": {
+      "from": "#E93380",
+      "to": "#712EC2"
+    }
+  },
+  "topbarLinks": [
+    {
+      "name": "Whitepaper",
+      "url": "https://polybase.xyz/whitepaper"
+    },
+    {
+      "name": "Home",
+      "url": "https://polybase.xyz"
+    }
+  ],
+  "anchors": [
+    {
+      "name": "Twitter",
+      "icon": "twitter",
+      "url": "https://twitter.com/polybase_xyz"
+    },
+    {
+      "name": "Community",
+      "icon": "discord",
+      "url": "https://discord.com/invite/DrXkRpCFDX"
+    },
+    {
+      "name": "Blog",
+      "icon": "newspaper",
+      "url": "https://polybase.xyz/blog"
+    },
+    {
+      "name": "Contact Us",
+      "icon": "envelope",
+      "url": "mailto:hello@polybase.xyz"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Guides",
+      "pages": [
+        "get-started",
+        "collections",
+        "write-data",
+        "read",
+        "delete-data",
+        "react",
+        "faq",
+        "changelog",
+        "known-issues",
+        "indexer-network",
+        "indexers",
+        {
+          "group": "Examples",
+          "pages": ["polybase-social"]
+        }
+      ]
+    }
+  ],
+  "backgroundImage": "/images/background.png",
+  "footerSocials": {
+    "twitter": "https://twitter.com/polybase_xyz",
+    "discord": "https://discord.com/invite/DrXkRpCFDX"
+  }
+}
