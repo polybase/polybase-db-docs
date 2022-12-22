@@ -1,41 +1,32 @@
-# Website
+# Polybase Docs
 
-This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+This repo powers the documentation for [Polybase](https://polybase.xyz), currently available at [polybase.xyz/docs](https://polybase.xyz/docs)
 
-### Installation
+### 🚀 Setup
 
-```
-$ yarn
-```
+Simply merge in this PR and your documentation will be connected!
 
-### Local Development
+### 👩‍💻 Development
 
-```
-$ yarn start
-```
-
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
-
-### Build
+Install the [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview the documentation changes locally. To install, use the following command
 
 ```
-$ yarn build
+npm i mintlify -g
 ```
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
-### Deployment
-
-Using SSH:
+Run the following command at the root of your documentation (where mint.json is)
 
 ```
-$ USE_SSH=true yarn deploy
+mintlify dev
 ```
 
-Not using SSH:
+### 😎 Publishing Changes
 
-```
-$ GIT_USER=<Your GitHub username> yarn deploy
-```
+Changes will be deployed to production automatically after pushing to the default branch.
 
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+You can also preview changes using PRs, which generates a preview link of the docs.
+
+#### Troubleshooting
+
+- Mintlify dev isn't running - Run `mintlify install` it'll re-install dependencies.
+- Mintlify dev is updating really slowly - Run `mintlify clear` to clear the cache.
