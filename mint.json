@@ -28,6 +28,11 @@
   ],
   "anchors": [
     {
+      "name": "API Reference",
+      "icon": "square-terminal",
+      "url": "api-reference"
+    },
+    {
       "name": "Twitter",
       "icon": "twitter",
       "url": "https://twitter.com/polybase_xyz"
@@ -67,6 +72,16 @@
           "group": "Examples",
           "pages": ["polybase-social"]
         }
+      ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "api-reference/overview",
+        "api-reference/create-record",
+        "api-reference/get-record",
+        "api-reference/list-records",
+        "api-reference/call-function"
       ]
     }
   ],

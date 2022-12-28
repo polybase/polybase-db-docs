@@ -1,0 +1,35 @@
+---
+title: "Call a function"
+api: "POST https://testnet.polybase.xyz/v0/collections/<collection_path>/records/<record_id>/call/<function_name>"
+---
+ 
+<RequestExample>
+
+```bash Bash
+curl --request POST \
+     --url https://testnet.polybase.xyz/v0/collections/polybase%2Fcore%2Fusers/records/id123/call/functionName\
+     --header 'Accept: application/json'
+```
+
+</RequestExample>
+
+## Path Params
+
+<ParamField path="collection_path" type="string" required>
+  The path to the collection holding the record. This must be URL encoded, so a collection path of `polybase/core/users` would be requested as `polybase%2Fcore%2Fusers`.
+</ParamField>
+
+<ParamField path="record_id" type="string" required>
+  A unique identifier for the record, as defined by the collection `constructor` function.
+</ParamField>
+
+<ParamField path="function_name" type="string" required>
+  The name of the function that is defined on the collection that should be called.
+</ParamField>
+
+
+## Body Params
+
+<ParamField body="args" type="array" required>
+  An array of arguments that should be passed to the the function being called on the collection, as defined in the collection schema.
+</ParamField>
