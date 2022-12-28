@@ -1,0 +1,24 @@
+---
+title: "Get record"
+api: "GET https://testnet.polybase.xyz/v0/collections/<collection_path>/records/<record_id>"
+---
+ 
+<RequestExample>
+
+```bash Bash
+curl --request GET \
+     --url https://testnet.polybase.xyz/v0/collections/polybase%2Fcore%2Fusers/records/id123\
+     --header 'Accept: application/json'
+```
+
+</RequestExample>
+
+## Path Params
+
+<ParamField path="collection_path" type="string" required>
+  The path to the collection holding the record. This must be URL encoded, so a collection path of `polybase/core/users` would be requested as `polybase%2Fcore%2Fusers`.
+</ParamField>
+
+<ParamField path="record_id" type="string" required>
+  A unique identifier for the record, as defined by the collection `constructor` function.
+</ParamField>

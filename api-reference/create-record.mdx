@@ -1,0 +1,26 @@
+---
+title: "Create a record"
+api: "POST https://testnet.polybase.xyz/v0/collections/<collection_path>/records"
+---
+ 
+<RequestExample>
+
+```bash Bash
+curl --request POST \
+     --url https://testnet.polybase.xyz/v0/collections/polybase%2Fcore%2Fusers/records\
+     --header 'Accept: application/json'
+```
+
+</RequestExample>
+
+## Path Params
+
+<ParamField path="collection_path" type="string" required>
+  The path to the collection holding the record. This must be URL encoded, so a collection path of `polybase/core/users` would be requested as `polybase%2Fcore%2Fusers`.
+</ParamField>
+
+## Body Params
+
+<ParamField body="args" type="array" required>
+  An array of arguments that should be passed to the the constructor of the collection, as defined in the collection schema.
+</ParamField>
