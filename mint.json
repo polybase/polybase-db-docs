@@ -89,5 +89,11 @@
   "footerSocials": {
     "twitter": "https://twitter.com/polybase_xyz",
     "discord": "https://discord.com/invite/DrXkRpCFDX"
+  },
+  "analytics": {
+    "posthog": {
+      "apiKey": "phc_DBZY8MbRdRIIwSwX4ZSwTAjy5ogdQPDMVdPObOuQQf",
+      "apiHost": "https://app.posthog.com"
+    }
   }
 }
