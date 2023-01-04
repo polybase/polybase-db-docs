@@ -96,9 +96,6 @@ The constructor function must assign `this.id` and any additional required field
 record with the assinged `id` is provided.
 
 
-
-
-
 ### Fields
 
 You can specify the fields that are allowed in your collection. These should be
@@ -149,7 +146,7 @@ collection Account {
     this.balance = 0;
   }
 
-  # Fn ignores all above rules, so anything needed must be reimplemented
+  // Fn ignores all above rules, so anything needed must be reimplemented
   transfer (b: record, amount: number) {
     # ctx is in global scope of fn
     # error() is in global scope of fn
@@ -161,8 +158,8 @@ collection Account {
     this.balance -= amount
     b.balance += amount
 
-    # min has to be reimplemented/declared b/c field @ rules do not apply
-    # inside fns
+    // min has to be reimplemented/declared b/c field @ rules do not apply
+    // inside fns
     if (a.balance < 0) {
       throw error('insufficient balance');
     }
@@ -177,6 +174,38 @@ const db = new Polybase({ defaultNamespace: "your-namespace" });
 const col = db.collection("account");
 await col.record("id1").call("transfer", [c.record("id2"), 10]);
 ```
+
+### Calling other collections
+
+You can define a parameter of a function to accept a record from another collection, allowing you 
+to perform atomic updates to multiple records from different collections.
+
+```js 
+collection Account {
+  id: string;
+  name?: string;
+
+  constructor (id: string, counter: Counter) {
+    this.id = ctx.publicKey;
+    counter.incr()
+  }
+}
+
+collection Counter {
+  id: string;
+  count: number;
+
+  constructor (id: string) {
+    this.id = id;
+    this.count = 0;
+  }
+
+  incr () {
+    this.count += 1;
+  }
+}
+```
+
 
 ### Indexes
 
