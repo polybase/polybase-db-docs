@@ -13,13 +13,58 @@ breaking changes.
 
 ## \[Unreleased\]
 
-- Update to namespace assignment and
+- Update to namespace assignment
 - Improved `id` system
-- Allow maps/objects to be passed into collection functions
 - Integration with libp2p
 - Ethereum bridge
-- Allow records from other collections in the same scope to be passed to functions
-- Allow calling methods on records from other collections
+
+
+
+## \[0.3.16\] - 2022-12-30
+
+### Fixed
+
+  - Fix creating a new collection with `applySchema`
+
+## \[0.3.15\] - 2022-12-30
+
+### Fixed
+
+  - Change global namespace for `@polybase/client` to `polybase` when importing using the global namespace (i.e when using a CDN). It was incorrectly set to `polybase_util`
+
+### Added
+ 
+  - Allow records from other collections in the same scope to be passed to functions
+  - Allow calling methods on records from other collections
+
+
+## \[0.3.14\] - 2022-12-30
+
+### Added
+
+ - Added `map` and `array` type to Polylang, collections can now have a map and array field when defining the collection.
+
+
+## \[0.3.13\] - 2022-12-30
+
+### Added
+
+ - Export minified umd format for cdn import
+
+## \[0.3.12\] - 2022-12-20
+
+### Changed
+
+ - Update dependencies
+
+
+## \[0.3.11\] - 2022-12-20
+
+### Changed
+
+ - Only call signer function (fn provided by `.signer(fn)`) for write requests (previously the signer fn was called for both read and write requests, 
+ which led to a poor user experience if using metamask to sign requests).
+
 
 ## \[0.3.10\] \- 2022-11-23
 
