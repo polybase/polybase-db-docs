@@ -212,11 +212,16 @@ collection Counter {
 Indexes are a list of fields in addition to the record's `id` field that should
 be indexed. You need to ensure that all fields that are included in a `where` or
 `sort` clause are included in the indexes.
+All collection fields are automatically indexed, which means
+you only need to specify multi-field indexes.
 
 ```js
 const db = new Polybase({ defaultNamespace: "your-namespace" });
 const collectionReference = db.collection("cities");
-const records = await collectionReference.where("name", "==", "abc").get();
+const records = await collectionReference
+  .where("name", "==", "abc")
+  .where("country", "==", "UK")
+  .get();
 ```
 
 You would need the following schema:
@@ -224,8 +229,9 @@ You would need the following schema:
 ```js
 collection cities {
   name: string;
+  country: string;
 
-  @index(name);
+  @index(name, country);
 
   ...
 }
@@ -247,6 +253,7 @@ You would need the following schema:
 ```js
 collection cities {
   name: string;
+  country: string;
   population: number;
 
   @index(name, [population, desc]);
