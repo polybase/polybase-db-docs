@@ -145,31 +145,31 @@ user (i.e. a dialog will appear for them to approve), which may not be an
 optimal user experience.
 
 ```js
-import { Polybase } from "@polybase/client";
-import * as eth from "@polybase/eth";
+import { Polybase } from "@polybase/client"
+import * as eth from "@polybase/eth"
 
 // Init
-const db = new Polybase({ defaultNamespace: "your-namespace" });
+const db = new Polybase({ defaultNamespace: "your-namespace" })
 
 // Set data with publicKey
 await db
   .collection("user-info")
   .record("user-1")
-  .call("collectionFn", ["Awesome User", encryptedValue], publicKey);
+  .call("collectionFn", ["Awesome User", encryptedValue], publicKey)
 
 // Add signer fn
 db.signer(async (data: string) => {
   // A permission dialog will be presented to the user
-  const accounts = await eth.requestAccounts();
+  const accounts = await eth.requestAccounts()
 
   // If there is more than one account, you may wish to ask the user which
   // account they would like to use
-  const account = accounts[0];
+  const account = accounts[0]
 
-  const sig = await eth.sign(data, account);
+  const sig = await eth.sign(data, account)
 
-  return { h: "eth-personal-sign", sig };
-});
+  return { h: "eth-personal-sign", sig }
+})
 ```
 
 ### Creating your own wallet

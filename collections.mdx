@@ -2,7 +2,8 @@
 title: "Collections"
 ---
 
-You must create a collection before adding data to Polybase.
+Collections are similar to a table in a traditional database.
+You must create a collection before adding data to Polybase. 
 
 Collections (aka database tables) define the fields and rules for a collection
 of records. All records created by a collection are guaranteed to follow the
@@ -17,9 +18,13 @@ action.
 
 ## Create a collection
 
-You can create a collection using the client library.
+You can create a collection using the client library and calling the `applySchema` method on your 
 
 ```js
+import { Polybase } from "@polybase/client"
+
+const db = new Polybase({ defaultNamespace: "your-namespace" })
+
 // If you want to edit the contract code in the future,
 // you must sign the request when calling applySchema for the first time
 db.signer((data) => {
@@ -83,11 +88,22 @@ collection CollectionName {
 The above would allow you to insert a record with a `name` property of type
 `string`.
 
+
+### Constructor
+
+The collection `constructor` function is called whenever you add new records to the the database. 
+The constructor function must assign `this.id` and any additional required fields defined in your collection.. An error will be returned if A
+record with the assinged `id` is provided.
+
+
+
+
+
 ### Fields
 
 You can specify the fields that are allowed in your collection. These should be
 at the top most part of your collection. A collection should always have an `id`
-field.
+field. By default, all fields are required.
 
 ```js
 collection CollectionName {

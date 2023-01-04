@@ -57,6 +57,7 @@
     {
       "group": "Guides",
       "pages": [
+        "introduction",
         "get-started",
         "collections",
         "write-data",
