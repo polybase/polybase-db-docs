@@ -16,9 +16,14 @@ action.
 You can read data once, by calling `.record(id: string).get()` on a collection.
 
 ```js
+import { Polybase } from "@polybase/client"
+
 const db = new Polybase({ defaultNamespace: "your-namespace" });
 const collectionReference = db.collection("cities");
-const { data, block } = await collectionReference.record("id").get();
+
+async function getRecord () {
+  const { data, block } = await collectionReference.record("id").get();
+}
 ```
 
 ## Listen for updates on a record
@@ -27,6 +32,8 @@ The `.onSnapshot()` handler is called on every update for the record after the
 write is confirmed.
 
 ```js
+import { Polybase } from "@polybase/client"
+
 const db = new Polybase({ defaultNamespace: "your-namespace" });
 const collectionReference = db
   .collection("cities")
@@ -44,9 +51,14 @@ const collectionReference = db
 ## List records in a collection
 
 ```js
+import { Polybase } from "@polybase/client"
+
 const db = new Polybase({ defaultNamespace: "your-namespace" });
 const collectionReference = db.collection("cities");
-const records = await collectionReference.get();
+
+export async function listRecords () {
+  const records = await collectionReference.get();
+}
 ```
 
 ## Filter records
@@ -55,14 +67,22 @@ To use the `where()` filter, you must have a corresponding index specified on
 the collection.
 
 ```js
+import { Polybase } from "@polybase/client"
+
 const db = new Polybase({ defaultNamespace: "your-namespace" });
 const collectionReference = db.collection("cities");
-const records = await collectionReference.where("country", "==", "UK").get();
+
+export async function listRecordsWithFilter () {
+  const records = await collectionReference.where("country", "==", "UK").get();
+}
+
 ```
 
 ## Listen for updates on a collection
 
 ```js
+import { Polybase } from "@polybase/client"
+
 const db = new Polybase({ defaultNamespace: "your-namespace" });
 const collectionReference = db.collection("cities").onSnapshot(
   (newDoc) => {

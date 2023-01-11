@@ -78,6 +78,8 @@ When you create a new record, the `constructor` fn in your collection is called
 with the parameters you provide.
 
 ```js
+import { Polybase } from "@polybase/client";
+
 const db = new Polybase({ defaultNamespace: "your-namespace" });
 await db.collection("City").create(["new-york", "New York"]);
 ```
@@ -92,6 +94,8 @@ await db.collection("City").create(["new-york", "New York"]);
 You can update records by calling methods defined on your collection.
 
 ```js
+import { Polybase } from "@polybase/client";
+
 const db = new Polybase({ defaultNamespace: "your-namespace" });
 await db.collection("City").call("setCountry", ["USA"]);
 ```
@@ -99,6 +103,8 @@ await db.collection("City").call("setCountry", ["USA"]);
 ## Read a record
 
 ```js
+import { Polybase } from "@polybase/client";
+
 const db = new Polybase({ defaultNamespace: "your-namespace" });
 const data = await db.collection("City").record("new-york").get();
 ```

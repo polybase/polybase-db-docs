@@ -11,11 +11,15 @@ collection. This will call the `constructor` function of your collection, and
 create a new record (as long as the `id` of the record does not already exist).
 
 ```js
+import { Polybase } from "@polybase/client"
+
 const db = new Polybase({ defaultNamespace: "your-namespace" });
 const collectionReference = db.collection("City");
 
-// .create(args) args array is defined by the constructor fn
-const recordData = await collectionReference.create(["new-york", "New York"]);
+async function createRecord () {
+  // .create(args) args array is defined by the constructor fn
+  const recordData = await collectionReference.create(["new-york", "New York"]);
+}
 ```
 
 The data returned would be:
@@ -54,13 +58,19 @@ You can update collection data using the collection methods defined in the
 collection.
 
 ```js
+import { Polybase } from "@polybase/client"
+
 const db = new Polybase({ defaultNamespace: "your-namespace" });
 const collectionReference = db.collection("City");
 
-// .create(functionName, args) args array is defined by the updateName fn in collection schema
-const recordData = await collectionReference
-  .record("new-york")
-  .call("updateName", ["New York"]);
+async function updateRecord () {
+  // .create(functionName, args) args array is defined by the updateName fn in collection schema
+  const recordData = await collectionReference
+    .record("new-york")
+    .call("updateName", ["New York"]);
+}
+
+
 ```
 
 Would require the following collection schema:
@@ -119,8 +129,14 @@ To sign requests from the client, you must define a signer function that will be
 called for every request.
 
 ```jsx
+import { Polybase } from "@polybase/client"
+import * as eth from "@polybase/eth"
+
+// Init
+const db = new Polybase({ defaultNamespace: "your-namespace" })
+
 // Add signer fn
-db.signer(async (data: string, req: Request) => {
+db.signer(async (data: string) => {
   // A permission dialog will be presented to the user
   const accounts = await eth.requestAccounts();
 
@@ -131,7 +147,7 @@ db.signer(async (data: string, req: Request) => {
   const sig = await eth.sign(data, account);
 
   return { h: "eth-personal-sign", sig };
-});
+})
 ```
 
 If you want to skip signing for specific requests you can return `null` to skip
@@ -151,25 +167,27 @@ import * as eth from "@polybase/eth"
 // Init
 const db = new Polybase({ defaultNamespace: "your-namespace" })
 
-// Set data with publicKey
-await db
-  .collection("user-info")
-  .record("user-1")
-  .call("collectionFn", ["Awesome User", encryptedValue], publicKey)
+async function createWalletUsingExtension () {
+  // Set data with publicKey
+  await db
+    .collection("user-info")
+    .record("user-1")
+    .call("collectionFn", ["Awesome User"])
 
-// Add signer fn
-db.signer(async (data: string) => {
-  // A permission dialog will be presented to the user
-  const accounts = await eth.requestAccounts()
+  // Add signer fn
+  db.signer(async (data: string) => {
+    // A permission dialog will be presented to the user
+    const accounts = await eth.requestAccounts()
 
-  // If there is more than one account, you may wish to ask the user which
-  // account they would like to use
-  const account = accounts[0]
+    // If there is more than one account, you may wish to ask the user which
+    // account they would like to use
+    const account = accounts[0]
 
-  const sig = await eth.sign(data, account)
+    const sig = await eth.sign(data, account)
 
-  return { h: "eth-personal-sign", sig }
-})
+    return { h: "eth-personal-sign", sig }
+  })
+}
 ```
 
 ### Creating your own wallet
@@ -187,21 +205,25 @@ import { Polybase } from '@polybase/client'
 import { ethPersonalSign } from '@polybase/eth'
 import { secp256k1 } from '@polybase/util'
 
-// First time the user signs up to your dapp (generate key AKA wallet)
-const { privateKey, publicKey } = await secp256k1.generatePrivateKey()
+async function createWallet () {
+  // First time the user signs up to your dapp (generate key AKA wallet)
+  const { privateKey, publicKey } = await secp256k1.generateKeyPair()
 
-const db = new Polybase({ defaultNamespace: "your-namespace" })
+  const db = new Polybase({ defaultNamespace: "your-namespace" })
 
-// Add data with publicKey that will own the record
-db.collection('your-namespace/City').record('london').call("set", [{
-  name: 'London',
-  country: 'UK',
-}], publicKey)
+  // Add data with publicKey that will own the record
+  db.collection('your-namespace/City').record('london').call("set", [{
+    name: 'London',
+    country: 'UK',
+  }])
 
-// Add signer fn
-db.signer(async (data: string) => {
-  return { h: 'eth-personal-sign', sig: ethPersonalSign(privateKey), data) }
-})
+  // Add signer fn
+  db.signer(async (data: string) => {
+    return { h: 'eth-personal-sign', sig: ethPersonalSign(privateKey, data) }
+  })
+
+  return { privateKey, publicKey }
+}
 ```
 
 ## Encrypt data
@@ -230,32 +252,34 @@ import * as eth from "@polybase/eth";
 // Init
 const db = new Polybase({ defaultNamespace: "your-namespace" });
 
-// A permission dialog will be presented to the user
-const accounts = await eth.requestAccounts();
+async function encryptUsingExtension () {
+    // A permission dialog will be presented to the user
+  const accounts = await eth.requestAccounts();
 
-// If there is more than one account, you may wish to ask the user which
-// account they would like to use
-const account = accounts[0];
+  // If there is more than one account, you may wish to ask the user which
+  // account they would like to use
+  const account = accounts[0];
 
-// A permission dialog will be presented to the user
-const encryptedValue = await eth.encrypt(account, "top secret info");
+  // A permission dialog will be presented to the user
+  const encryptedValue = await eth.encrypt("top secret info", account);
 
-await db
-  .collection("user-info")
-  .record("user-1")
-  .call("functionName", [encryptedValue]);
+  await db
+    .collection("user-info")
+    .record("user-1")
+    .call("functionName", [encryptedValue]);
 
-// Later...
+  // Later...
 
-// Get the data from Polybase as normal
-const userData = await db.collection("user-info").record("user-1").get();
+  // Get the data from Polybase as normal
+  const userData = await db.collection("user-info").record("user-1").get();
 
-// Get the encrypted value
-const encryptedValue = userData.data.secretInfo;
+  // Get the encrypted value
+  const encryptedValueForUser = userData.data.encryptedValue;
 
-// A permission dialog will be presented to the user every time this method
-// is called
-const decryptedValue = await eth.decrypt(account, encryptedValue);
+  // A permission dialog will be presented to the user every time this method
+  // is called
+  const decryptedValue = await eth.decrypt(encryptedValueForUser, account);
+}
 ```
 
 ### Creating your own wallet
@@ -280,38 +304,35 @@ import { secp256k1 } from "@polybase/util";
 // Init
 const db = new Polybase({ defaultNamespace: "your-namespace" });
 
-// First time the user signs up to your dapp (generate key pair AKA wallet)
-const { privateKey, publicKey } = await secp256k1.generatePrivateKey();
+async function createWallet () {
+  // First time the user signs up to your dapp (generate key pair AKA wallet)
+  const { privateKey, publicKey } = await secp256k1.generateKeyPair();
 
-// Encrypted value will be returned as a hex string 0x...
-const encryptedValueAsHexStr = secp256k1.asymmetricEncryptToEncoding(
-  publicKey,
-  "top secret info"
-);
+  // Encrypted value will be returned as a hex string 0x...
+  const encryptedValueAsHexStr = await secp256k1.asymmetricEncryptToEncoding(
+    publicKey,
+    "top secret info"
+  );
 
-await db
-  .collection("user-info")
-  .record("user-1")
-  .call("set", [
-    {
-      name: "Awesome User",
-      secretInfo: encryptedValueAsHexStr,
-    },
-  ]);
+  await db
+    .collection("user-info")
+    .record("user-1")
+    .call("set", ["Awesome User", encryptedValueAsHexStr]);
 
-// Later...
+  // Later...
 
-// Get the data from Polybase as normal
-const userData = await db.collection("user-info").record("user-1").get();
+  // Get the data from Polybase as normal
+  const userData = await db.collection("user-info").record("user-1").get();
 
-// Get the encrypted value
-const encryptedValue = userData.data.secretInfo;
+  // Get the encrypted value
+  const encryptedValue = userData.data.secretInfo;
 
-// Original value returned
-const decryptedValue = secp256k1.asymmetricDecryptFromEncoding(
-  privateKey,
-  encryptedValue
-);
+  // Original value returned
+  const decryptedValue = secp256k1.asymmetricDecryptFromEncoding(
+    privateKey,
+    encryptedValue
+  );
+}
 ```
 
 There are a number of different places to store the encrypted private key that
@@ -393,7 +414,7 @@ collection ResponseUser {
 
 ```js
 import { Polybase } from "@polybase/client";
-import { secp256k1, aescbc } from "@polybase/util";
+import { secp256k1, aescbc, encodeToString } from "@polybase/util";
 
 // Init
 const db = new Polybase({ defaultNamespace: "your-namespace" });
@@ -427,7 +448,11 @@ async function addFormResponse(data: string) {
 
     // Encrypt the symmetric key
     const encryptedSymmetricKeyWithUsersPublicKeyStr =
-      secp256k1.asymmetricEncryptToEncoding(publicKey, symmetricKey, "base64");
+      secp256k1.asymmetricEncryptToEncoding(
+        publicKey, 
+        encodeToString(symmetricKey, "base64"),
+        "base64"
+      );
 
     // Store the encrypted symmetric key
     return db
@@ -443,7 +468,7 @@ async function addFormResponse(data: string) {
 
 ```js
 import { Polybase } from "@polybase/client";
-import { secp256k1, aescbc } from "@polybase/util";
+import { secp256k1, aescbc, decodeFromString } from "@polybase/util";
 
 // Init
 const db = new Polybase({ defaultNamespace: "your-namespace" });
@@ -451,7 +476,10 @@ const db = new Polybase({ defaultNamespace: "your-namespace" });
 async function readFormResponse(
   userId: string,
   respId: string,
-  userPrivateKey: string
+
+  // If your private key is stored as a string, you can
+  // use decodeFromString to convert it to Uint8Array
+  userPrivateKey: Uint8Array
 ) {
   const response = await db.collection("Response").record(respId).get();
   const { data: encryptedData } = response.data;
@@ -460,15 +488,16 @@ async function readFormResponse(
     .collection("ResponseUser")
     .record(userId + "-" + respId)
     .get();
+
   const { encryptedSymmetricKey } = responseUser.data;
 
-  const symmetricKey = secp256k1.asymmetricDecryptFromEncoding(
+  const symmetricKey = await secp256k1.asymmetricDecryptFromEncoding(
     userPrivateKey,
     encryptedSymmetricKey,
     "base64"
   );
-  const decrypted = await aescbc256.symmetricDecryptFromEncoding(
-    symmetricKey,
+  const decrypted = await aescbc.symmetricDecryptFromEncoding(
+    decodeFromString(symmetricKey, "base64"),
     encryptedData,
     "base64"
   );
