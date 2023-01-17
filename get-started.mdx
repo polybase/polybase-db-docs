@@ -41,13 +41,13 @@ A Polybase collection describes the rules for a collection of data, not just a
 single record (as is the case with other smart collection languages).
 
 <Info>
-  Creating a collection via the [Polybase
-  Explorer](https://explorer.testnet.polybase.xyz) is coming soon.
+  You can also create a collection via the [Polybase
+  Explorer](https://explorer.testnet.polybase.xyz). You will need to first login 
+  and create an account.
 </Info>
 
 ```js
-const createResponse = await db.applySchema(
-  `
+const createResponse = await db.applySchema(`
   collection City {
     id: string;
     name: string;
