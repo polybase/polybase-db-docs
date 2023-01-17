@@ -63,6 +63,7 @@
         "write-data",
         "read",
         "delete-data",
+        "encrypt-data",
         "react",
         "faq",
         "changelog",
