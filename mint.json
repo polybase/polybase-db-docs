@@ -54,7 +54,6 @@
       "pages": [
         "introduction",
         "get-started",
-        "how-it-works",
         "collections",
         "write-data",
         "read",
@@ -63,8 +62,8 @@
         "react",
         "faq",
         "changelog",
+        "how-it-works",
         "known-issues",
-        "indexer-network",
         "indexers",
         {
           "group": "Examples",
