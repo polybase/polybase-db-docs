@@ -70,10 +70,7 @@
         "known-issues",
         "indexer-network",
         "indexers",
-        {
-          "group": "Resources",
-          "pages": ["cdn-links"]
-        },
+        "cdn-links",
         {
           "group": "Examples",
           "pages": ["polybase-social"]

@@ -6,23 +6,55 @@ title: CDN Links
 
 A client to connect to the Polybase decentralized database.
 
+Install: 
+
 ```html
 <script src = 'https://cdn.jsdelivr.net/npm/@polybase/client@0.3.22/dist/bundle.min.js'></script>
+```
+
+Usage:
+
+```js
+// Access methods with global variable 'polybase'
+const db = polybase.client({
+  defaultNamespace: "your-namespace",
+})
 ```
 
 ## Polybase Eth
 
 A set of ethereum helpers based on EIP-1193, to make signing requests easier on Polybase.
 
+Install: 
+
 ```html
 <script src = 'https://cdn.jsdelivr.net/npm/@polybase/eth@0.3.22/dist/bundle.min.js'></script>
+```
+
+Usage:
+
+```js
+// Access methods with global variable 'polybase_eth'
+const data = 'Some data to be encrypted'
+const address = '0xADDRESS_TO_ENCRYPT_WITH'
+const encryptedData = polybase_eth.encrypt(data,address)
 ```
 
 ## Polybase Util
 
 A utility library to help support common Polybase utility functions.
 
+Install: 
+
 ```html
 <script src = 'https://cdn.jsdelivr.net/npm/@polybase/util@0.3.22/dist/bundle.min.js'></script>
+```
+
+Usage:
+
+```js
+//Access methods with the global variable 'polybase_util'
+const encodedString = '0xSOME_ENCODED_DATA'
+const data = polybase_util.decodeFromString(encodedString, 'hex')
 ```
 
