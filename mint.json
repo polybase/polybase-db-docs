@@ -71,6 +71,10 @@
         "indexer-network",
         "indexers",
         {
+          "group": "Resources",
+          "pages": ["cdn-links"]
+        },
+        {
           "group": "Examples",
           "pages": ["polybase-social"]
         }

@@ -4,6 +4,8 @@ title: "Get Started"
 
 ## Install Polybase
 
+From Package Manager:
+
 <CodeGroup>
 
 ```bash npm
@@ -16,7 +18,15 @@ yarn add @polybase/client
 
 </CodeGroup>
 
+From CDN:
+
+```html
+<script src = 'https://cdn.jsdelivr.net/npm/@polybase/client@0.3.16/dist/bundle.min.js'></script>
+```
+
 ## Initialize the library
+
+From Package Manager:
 
 ```js
 import { Polybase } from "@polybase/client";
@@ -24,6 +34,13 @@ import { Polybase } from "@polybase/client";
 const db = new Polybase({
   defaultNamespace: "your-namespace",
 });
+```
+From CDN:
+
+```js
+const db = polybase.client({
+  defaultNamespace: "your-namespace",
+})
 ```
 
 <Warning>Namespace must be used for collections.</Warning>
