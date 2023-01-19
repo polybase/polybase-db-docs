@@ -28,11 +28,6 @@
   ],
   "anchors": [
     {
-      "name": "API Reference",
-      "icon": "square-terminal",
-      "url": "api-reference"
-    },
-    {
       "name": "Twitter",
       "icon": "twitter",
       "url": "https://twitter.com/polybase_xyz"
@@ -48,7 +43,7 @@
       "url": "https://polybase.xyz/blog"
     },
     {
-      "name": "Contact Us",
+      "name": "Email",
       "icon": "envelope",
       "url": "mailto:hello@polybase.xyz"
     }
@@ -59,6 +54,7 @@
       "pages": [
         "introduction",
         "get-started",
+        "how-it-works",
         "collections",
         "write-data",
         "read",
@@ -72,7 +68,9 @@
         "indexers",
         {
           "group": "Examples",
-          "pages": ["polybase-social"]
+          "pages": [
+            "polybase-social"
+          ]
         }
       ]
     },

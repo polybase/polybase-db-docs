@@ -29,31 +29,27 @@ const db = new Polybase({
 <Warning>Namespace must be used for collections.</Warning>
 
 <Info>
-  If you specify a defaultNamespace, it will be automatically added for you when
-  you [create a collection instance](/collections#get-a-collection).
+  If you specify a defaultNamespace, it will be automatically added for you when you [create a collection instance](/collections#get-a-collection).
 </Info>
 
 ## Create a collection
 
-You can create a collection using the JavaScript SDK.
-
-A Polybase collection describes the rules for a collection of data, not just a
-single record (as is the case with other smart collection languages).
+Create collections using [Polybase Explorer](https://explorer.testnet.polybase.xyz) or the JavaScript SDK.
 
 <Info>
-  You can also create a collection via the [Polybase
-  Explorer](https://explorer.testnet.polybase.xyz). You will need to first login 
-  and create an account.
+We suggest creating collections using [Polybase Explorer](https://explorer.testnet.polybase.xyz). You will need to first login and create an account.
 </Info>
 
+A Polybase collection describes the rules for a collection of data, not just a single record (as is the case with other smart collection languages).
+
+In this example we use the JavaScript SDK to create a collection called `City` that has `name` and `country` fields, and a `setCountry()` function.
+
 ```js
-const createResponse = await db.applySchema(`
+await db.applySchema(`
   collection City {
     id: string;
     name: string;
     country?: string;
-
-    @index(name);
 
     constructor (id: string, name: string) {
       this.id = id;
@@ -69,24 +65,22 @@ const createResponse = await db.applySchema(`
 ); // your-namespace is optional if you have defined a default namespace
 ```
 
-For more details on creating collections, see the [collection](/collections)
-overview.
+For more details on creating collections, see the [collection](/collections) overview.
 
 ## Create a collection record
 
-When you create a new record, the `constructor` fn in your collection is called
-with the parameters you provide.
+When you create a new record, the `constructor` function in your collection is called with the parameters you provide.
 
 ```js
 import { Polybase } from "@polybase/client";
 
 const db = new Polybase({ defaultNamespace: "your-namespace" });
-await db.collection("City").create(["new-york", "New York"]);
+await db.collection("City").create(["new-york", "New York"]); 
+// new-york is the `id`, New York is the `name`
 ```
 
 <Note>
-  Now go view the collection in the
-  [Explorer](https://explorer.testnet.polybase.xyz).
+  Now go view the collection in the [Polybase Explorer](https://explorer.testnet.polybase.xyz).
 </Note>
 
 ## Update a collection record
@@ -111,14 +105,11 @@ const data = await db.collection("City").record("new-york").get();
 
 ## Next steps
 
-<Card title="Read the Polybase Whitepaper" icon="file-lines" href="https://polybase.xyz/Polybase%5FA%5Fdecentralized%5FQuery%5FIndex%5Fand%5FStorage%5FProtocol-v2.0.pdf">
-  Click to open
-</Card>
-
 <Card title="Understand Collections" icon="table" href="/collections">
-  Learn more
 </Card>
 
-<Card title="Known Issues" icon="bug" href="/known-issues">
-  Learn more
+<Card title="FAQ" icon="question" href="/faq">
+</Card>
+
+<Card title="Read the Polybase Whitepaper" icon="file-lines" href="https://polybase.xyz/Polybase%5FA%5Fdecentralized%5FQuery%5FIndex%5Fand%5FStorage%5FProtocol-v2.0.pdf">
 </Card>

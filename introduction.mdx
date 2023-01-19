@@ -2,87 +2,14 @@
 title: "Introduction"
 ---
 
-Polybase is a privacy preserving decentralized database, built on zk-STARKs. We use a zk-rollup combined with
-native indexing to allow decentralized database rules, fast queries and scalable writes.
+Polybase is a privacy preserving decentralized database, built on zk-STARKs. We use a zk-rollup combined with native indexing to allow decentralized database rules, fast queries and scalable writes.
 
-If you [use our SDK](https://www.npmjs.com/package/@polybase/client), you can consider Polybase to be a NoSQL-like database, 
-with validation rules written in a JavaScript like language. The SDK is similar to Firestore and Supabase.
+**At a high level, Polybase is a NoSQL-like database, with validation rules written in a JavaScript like language. The SDK is similar to Firestore and Supabase.**
 
-You can [get started](/get-started) here in under 5 minutes.
+Polybase is better than using a centralized database like Firebase, Postgres or Supabase because you can encrypt data using wallets for "self sovereign data" and verifiably query Polybase from smart collections (coming soon).
 
+Polybase is better than storing data on-chain because it's 1000 to a million times cheaper than on-chain storage. For example, storing 1MB on Ethereum costs around $10,000.
 
-## Why Polybase?
+**Blockchains are not built for scalable structured data storage so we built Polybase to combine the best attributes of web2 databases and blockchains.**
 
-Polybase is better than using a centralized database like Firebase, Supabase or Postgres
-because you can encrypt data using wallets for "self sovereign data" and
-verifiably query Polybase from smart collections (coming soon).
-
-Polybase is better than storing data on-chain because it's 1000 to a million
-times cheaper than on-chain storage. For example, storing 1MB on Ethereum costs
-around $64,000.
-
-Blockchains are not built for scalable structured data storage so we built
-Polybase to combine the best attributes of web2 databases and blockchains.
-
-
-## How it Works 
-
-<Note>
-  This section is technical and understanding this section is not required to use Polybase. To use Polybase follow the [Get Started](/get-started) guide.
-</Note>
-
-Polybase is a state zk-rollup protocol, that provides native support for 
-modular data storage and indexing. 
-
-Here is an overview of the Polybase protocol architecture:
-
-<img style={{ maxWidth: "400px" }} src="/img/architecture.png" />
-
-If you want more detail, check out our [whitepaper](https://polybase.xyz/whitepaper).
-
-
-### ZK State Rollup
-
-The zk state rollup allows us to prove any record or value in the database both exists and that it is valid (according to the rules 
-of the [collection](/collections)). We can prove this with only the root hash and the zk-proof.
-
-Every record is stored as a [hash](https://en.wikipedia.org/wiki/Hash_function) (a fixed-size, random and unique representation of the record). The root hash is determined by combining the hashes for every record, and using that to create a single root hash.
-Because a hash represents the underlying data, any changes to any record would result in a change of that record's hash, which
-in turn would change the root hash (because the root hash is based on every records' hash).
-
-To make a change to a record in the database, a user must prove that a new hash is valid. To do this, a zk-proof is generated that takes the existing hash
- (representing the current state of the record), applies the change function as defined in the [collection definition](/collections), and then returns the new records hash 
- with a zk-proof, proving that the change is valid. In Polybase, the process of creating the zk-proof is performed automatically by our SDK.
-
-The user can then submit the new hash to the network with the proof. Every block, all the new hashes are updated and combined with the existing hashes to generate a new root hash. At 
-each stage of this rollup process, the network confirms that the proofs are valid.
-
-The root hash and proof are verified in a Proof of Stake blockchain, to inherit the security of the L1 blockchain.
-
-
-
-### Modular Storage and Indexing
-
-Polybase has native support for modular storage and indexing. This allows developers to choose the trade-offs that best fit their use case.
-
-For indexing, services could be created to serve, search, aggregation or machine learning use cases. As the root state proofs can be verified, indexers and aggregators can build on top of the Polybase state proofs, to provide proof that the aggregation was performed correctly.
-
-For storage, this could include local storage on the clients device (for ultra sensitive data), a decentralized storage network such as Filecoin/Arweave (for collaborative data), or even a centralized storage provider such as S3 (if you don't care about decentralisation 🥲).
-
-<Note>
-Polybase currently only supports the Polybase reference indexing and storage implementation this is based on NoSQL, but additional indexers and storage providers will be added soon that will support GraphQL and SQL.
-</Note>
-
-
-### Gateway
-
-The Polybase Gatweway allows fast and simple access to the Polybase network, but in a less decentralized way. While Polybase is in Alpha,
-this is the only way to access the Polybase network, allowing us to ensure the security of the protocol before allowing direct access. Once direct access is enabled,
-clients (browsers and mobiles) will be able to connect directly to the network using p2p, offering both performance and decentralization benefits.
-
-The following diagram shows how the Polybase Gateway interacts with the Polybase network:
-
-<img style={{ maxWidth: "400px" }} src="/img/gateway.png" />
-
-See our reference [Polybase Gateway API](/api-reference/overview) documentation.
-
+You can [get started](/get-started) in under 5 minutes.
