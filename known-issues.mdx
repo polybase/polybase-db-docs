@@ -62,7 +62,7 @@ If you have a schema such as:
 collection User {
     id: string;
     name: string;
-    details?: map<string, string>;
+    details: map<string, string>;
 }
 ```
 
@@ -76,11 +76,14 @@ const userPhone = null
 
 const collectionReference = db.collection("User")
 
-const recordData = await collectionReference.create([userName, {email: userEmail, phone: userPhone}]) // DOES NOT WORK
+// DOES NOT WORK
+const recordData = await collectionReference.create([userName, {email: userEmail, phone: userPhone}]) 
 
-const recordData = await collectionReference.create([userName, {email: userEmail, phone: ""}]) // WORKS
+// WORKS
+const recordData = await collectionReference.create([userName, {email: userEmail, phone: ""}]) 
 
-const recordData = await collectionReference.create([userName, {}]) // WORKS
+// WORKS
+const recordData = await collectionReference.create([userName, {}])
 
 ```
 
