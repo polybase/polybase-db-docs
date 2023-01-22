@@ -66,7 +66,7 @@ const createResponse = await db.applySchema(`
 </Info>
 
 <Warning>
-  `id` field is mandatory on all collections, and you must assign an `id` using
+  `id` field is unique and mandatory on all collections, and you must assign an `id` using
   `this.id = ...` within the `constructor` function.
 </Warning>
 
@@ -98,15 +98,15 @@ The above would allow you to insert a record with a `name` property of type
 ### Constructor
 
 The collection `constructor` function is called whenever you add new records to the the database. 
-The constructor function must assign `this.id` and any additional required fields defined in your collection.. An error will be returned if A
-record with the assinged `id` is provided.
+The constructor function must assign `this.id` and any additional required fields defined in your collection. An error will be returned if a
+record already exists with the assigned `id` is provided, as `id` must be unique.
 
 
 ### Fields
 
 You can specify the fields that are allowed in your collection. These should be
-at the top most part of your collection. A collection should always have an `id`
-field. By default, all fields are required.
+at the top most part of your collection. A collection should always have a `id`
+field (`id` is unique). By default, all fields are required.
 
 ```js
 collection CollectionName {
@@ -116,6 +116,10 @@ collection CollectionName {
   ...
 }
 ```
+
+#### id Field
+
+The `id` fields is required on every Polybase collection. It must be assigned in the constructor. Each record must have a unique `id` across the entire collection.
 
 #### Field Types
 
