@@ -91,6 +91,9 @@ When you create a new record, the `constructor` function in your collection is c
 import { Polybase } from "@polybase/client";
 
 const db = new Polybase({ defaultNamespace: "your-namespace" });
+
+// Based on the collection code above, "new-york" is the `id` of the new record. 
+// The `id` "new-york" must be unique (not already exist in the collection)
 await db.collection("City").create(["new-york", "New York"]); 
 // new-york is the `id`, New York is the `name`
 ```
