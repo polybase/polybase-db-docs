@@ -55,6 +55,7 @@
         "introduction",
         "get-started",
         "collections",
+        "authentication",
         "write-data",
         "read",
         "delete-data",

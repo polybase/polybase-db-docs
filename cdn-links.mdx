@@ -16,10 +16,31 @@ Usage:
 
 ```js
 // Access methods with global variable 'polybase'
-const db = polybase.client({
+const db = new polybase.Polybase({
   defaultNamespace: "your-namespace",
 })
 ```
+
+## Polybase Auth
+
+Allow users to sign in to your app using web3 wallets and web2 emails.
+
+Install: 
+
+```html
+<script src = 'https://cdn.jsdelivr.net/npm/@polybase/auth@0.3/dist/bundle.min.js'></script>
+```
+
+Usage:
+
+```js
+// Access methods with global variable 'polybase'
+const auth = new polybase_auth.Auth()
+
+// Show the user the login modal
+const state = await auth.signIn()
+```
+
 
 ## Polybase Eth
 
