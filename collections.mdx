@@ -46,8 +46,6 @@ const createResponse = await db.applySchema(`
     country?: string;
     publicKey?: string;
 
-    @index(country);
-
     constructor (id: string, country: string) {
       this.id = id;
       this.country = country;
@@ -193,6 +191,52 @@ You can call your custom functions using `.call(functionName, args)`:
 const db = new Polybase({ defaultNamespace: "your-namespace" });
 const col = db.collection("account");
 await col.record("id1").call("transfer", [c.record("id2"), 10]);
+```
+
+### Context
+
+The global variable `ctx` is available inside any Polybase function. 
+
+#### Public Key
+
+`ctx.publicKey` is populated when you provide a `signer` function to the Polybase client.
+
+```js
+import { Polybase } from '@polybase/client'
+import { ethPersonalSign } from '@polybase/eth'
+
+const db = new Polybase({
+  signer: (data) => {
+    return {
+      h: 'eth-personal-sign',
+      sig: ethPersonalSign(wallet.privateKey()), data)
+    }
+  })
+})
+```
+
+You can then use the `publicKey` of the wallet used to sign the request
+in your collection code, for example see how in `setName` we check the `ctx.publicKey` and compare 
+it against the records own `publicKey`:
+
+```js
+collection CollectionName {
+  id: string;
+  name?: string;
+  publicKey?: string;
+
+  constructor (id: string) {
+    this.id = id;
+    this.publicKey = ctx.publicKey;
+  }
+
+  setName (name: string) {
+    if (this.publicKey != ctx.publicKey) {
+      error("you do not have permission to do that");
+    }
+    this.name = name;
+  }
+}
 ```
 
 
