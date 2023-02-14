@@ -34,6 +34,10 @@ https://polybase.xyz/whitepaper
 
 ### Where is the data on Polybase stored?
 
+<Info>
+**During Alpha** Polybase runs all the nodes that store your data, but pluggable storage will be available soon.
+</Info>
+
 Storage on Polybase is pluggable, that means as a developer you can choose the
 trade offs between the various storage and indexing options.
 
@@ -50,11 +54,6 @@ Out of the box, the default SDK implementation uses the Polybase datastore,
 which is a decentralized datastore with **similar functionality to Firebase
 Firestore**.
 
-info
-
-**During Alpha** only the Polybase datastore is available, but other storage
-options will be available soon.
-
 ### If data is stored off-chain, isn’t Polybase centralized?
 
 Actually, no.
@@ -68,6 +67,10 @@ about the methodology.
 
 ### Can everyone see my data on Polybase?
 
+<Info>
+**During Alpha** Polybase runs all the nodes that store your data, and data will be publicly visible.
+</Info>
+
 It depends which storage option you choose:
 
 - **Local storage / custodial** \- no one else can see the data, only the user
@@ -78,12 +81,6 @@ It depends which storage option you choose:
 In all cases, data should be encrypted to ensure the best privacy protection.
 The Polybase SDKs provide the functionality to encrypt the data with a wallet.
 This could be a user’s Metamask wallet or a custodial wallet for the dApp.
-
-<Info>
-**During Alpha** only the Polybase datastore is available, but other storage
-options will be available soon.
-
-</Info>
 
 ### How can the data on Polybase be accessed without going through the Polybase gateway?
 
