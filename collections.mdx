@@ -295,7 +295,7 @@ Example of delegating `Response` → `Form` → `User` → `publicKey`:
 
 ```js
 collection Response {
-  @delegate
+  @read
   form: Form;
 }
 
@@ -305,7 +305,7 @@ collection Form {
 }
 
 collection User {
-  @read
+  @delegate
   publicKey: PublicKey;
 }
 ```
