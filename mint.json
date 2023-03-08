@@ -66,13 +66,13 @@
         "how-it-works",
         "known-issues",
         "indexers",
-        "cdn-links",
+        "cdn-links"
       ]
     },
     {
       "group": "Recipes",
       "pages": [
-        "nft-metadata"
+        "dynamic-nft-metadata"
       ]
     },
     {
