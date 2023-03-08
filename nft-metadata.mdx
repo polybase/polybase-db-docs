@@ -1,0 +1,47 @@
+---
+title: "NFT Metadata"
+---
+
+Go beyond static NFT metadata with dynamic, decentralized NFT metadata. With dynamic NFT metadata stored on Polybase, you can build new kinds of utility or gaming NFTs. For example, for an NFT that represents a game character's skill level, you can update the skill points every second as that character does actions in the game. Or for a verifiable credential NFT, you can update it everytime a user finishes a lesson in an educational app.
+
+Alternatives for storing NFT metadata have many limitations:
+- IPFS/Arweave: updating metadata causes CID to change, additionally the data isn't indexable and queryable.
+- Tableland: updating metadata requires an Ethereum transaction, very costly and 10-15s confirmation time.
+- Ceramic: complex schema set up, no permission rules, no private data.
+
+Storing NFT metadata in Polybase just requires 2 steps:
+- Create a collection with the fields you want
+- Use the Polybase API with a `?format=nft` flag for the [token URI](https://docs.openzeppelin.com/contracts/3.x/api/token/erc721#ERC721-_setTokenURI-uint256-string-) in your smart contract.
+
+Here's an example collection:
+
+```typescript
+// `public` means that the collection is public, anyone can view and read
+// the records in the collection. You can still implement rules on who can 
+// edit the data by defining functions on the collection.
+@public
+collection VerifiableCredentialMetadata {
+  // `id` is unique and required on all collections
+  id: string;
+
+  username: string;
+  level: number;
+  points: number;
+
+  constructor (id: string, username: string) {
+    ...
+  }
+
+  // You can add your own functions to determine rules
+  // on who can update the data
+  function setPoints (points: number) {
+    // Check if the caller is the original creator of the record.
+    if (ctx.publicKey != '0x000000000') {
+      error('You are not allowed to update the points.');
+    }
+    this.points = points;
+  }
+}
+```
+
+And the url to access the metadata would be: `https://testnet.polybase.xyz/v0/collections/example%2FVerifiableCredentialMetadata/records/<record ID>?format=nft`

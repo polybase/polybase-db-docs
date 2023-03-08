@@ -67,12 +67,18 @@
         "known-issues",
         "indexers",
         "cdn-links",
-        {
-          "group": "Examples",
-          "pages": [
-            "polybase-social"
-          ]
-        }
+      ]
+    },
+    {
+      "group": "Recipes",
+      "pages": [
+        "nft-metadata"
+      ]
+    },
+    {
+      "group": "Examples",
+      "pages": [
+        "polybase-social"
       ]
     },
     {
