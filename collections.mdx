@@ -44,14 +44,15 @@ const createResponse = await db.applySchema(`
   collection CollectionName {
     id: string;
     country?: string;
-    publicKey?: string;
+    publicKey?: PublicKey;
 
     constructor (id: string, country: string) {
       this.id = id;
       this.country = country;
 
       // Assign the public key of the user making the request to this record
-      this.publicKey = ctx.publicKey;
+      if (ctx.publicKey)
+        this.publicKey = ctx.publicKey;
     }
   }
 `, 'your-namespace') // your-namespace is optional if you have defined a default namespace
@@ -155,10 +156,10 @@ collection Account {
   id: string;
   name: string;
   balance: number;
-  publicKey: string;
+  publicKey: PublicKey;
 
   constructor (name: string) {
-    this.id = ctx.publicKey;
+    this.id = ctx.publicKey.toHex();
     this.name = name;
     this.publicKey = ctx.publicKey;
     this.balance = 0;
@@ -223,11 +224,12 @@ it against the records own `publicKey`:
 collection CollectionName {
   id: string;
   name?: string;
-  publicKey?: string;
+  publicKey?: PublicKey;
 
   constructor (id: string) {
     this.id = id;
-    this.publicKey = ctx.publicKey;
+    if (ctx.publicKey)
+      this.publicKey = ctx.publicKey;
   }
 
   setName (name: string) {

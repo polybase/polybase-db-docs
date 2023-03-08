@@ -16,7 +16,7 @@ collection Place {
 
   constructor (id: string) {
     this.id = id;
-    this.owner = this.ctx.publicKey;
+    this.owner = ctx.publicKey.toHex();
   }
 
   del () {
