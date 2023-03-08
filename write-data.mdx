@@ -37,6 +37,7 @@ The data returned would be:
 And your collection schema might look like:
 
 ```js
+@public
 collection City {
   id: string;
   name: string;
@@ -76,6 +77,7 @@ async function updateRecord () {
 Would require the following collection schema:
 
 ```js
+@public
 collection City {
   id: string;
   name: string;
@@ -374,6 +376,7 @@ The following shows an example of how you might create a Google Forms product.
 #### Collection Schema
 
 ```js
+@public
 collection User {
   id: string;
   publicKey: PublicKey;
@@ -384,6 +387,7 @@ collection User {
   }
 }
 
+@public
 collection Response {
   id: string;
   data: string;
@@ -394,6 +398,7 @@ collection Response {
   }
 }
 
+@public
 collection ResponseUser {
   id: string;
   userId: string;

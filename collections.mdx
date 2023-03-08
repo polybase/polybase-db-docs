@@ -41,6 +41,7 @@ db.signer((data) => {
 })
 
 const createResponse = await db.applySchema(`
+  @public
   collection CollectionName {
     id: string;
     country?: string;
@@ -77,6 +78,7 @@ indexes for your collection records. The following is a valid collection
 definition.
 
 ```js
+@public
 collection CollectionName {
   id: string;
   name?: string;
@@ -108,6 +110,7 @@ at the top most part of your collection. A collection should always have a `id`
 field (`id` is unique). By default, all fields are required.
 
 ```js
+@public
 collection CollectionName {
   id: string;
   age: number;
@@ -138,6 +141,7 @@ All fields are required by default, if you want to make a field optional simply
 append `?` after the field name and before the `:`. For example:
 
 ```js
+@public
 collection CollectionName {
   id: string;
   required: number;
@@ -152,6 +156,7 @@ collection CollectionName {
 Field values can only be modified using functions.
 
 ```js
+@public
 collection Account {
   id: string;
   name: string;
@@ -262,6 +267,7 @@ const records = await collectionReference
 You would need the following schema:
 
 ```js
+@public
 collection cities {
   name: string;
   country: string;
@@ -286,12 +292,71 @@ const records = await collectionReference
 You would need the following schema:
 
 ```js
+@public
 collection cities {
   name: string;
   country: string;
   population: number;
 
   @index(name, [population, desc]);
+}
+```
+
+## Authorization
+
+By default, collections in Polybase are private and their records cannot be accessed.
+To make a collection private, remove the `@public` directive.
+
+To allow users to access and manipulate their records, you can use the following directives:
+
+### `@read`
+
+Allows anyone who can sign using the specified public key to read the record.
+
+```js
+collection Response {
+  @read
+  publicKey: PublicKey;
+  ...
+}
+```
+
+### `@call`
+
+Allows anyone who can sign using the specified public key to call a given function.
+
+```js
+collection Form {
+  @read
+  creator: PublicKey;
+
+  @call(creator);
+  update ()  {
+    ...
+  }
+}
+```
+
+### `@delegate`
+
+Allows anyone who can sign using the specified public key to read the response data, via delegated permissions.
+
+Example of delegating `Response` → `Form` → `User` → `publicKey`:
+
+```js
+collection Response {
+  @read
+  form: Form;
+}
+
+collection Form {
+  @delegate
+  creator: User;
+}
+
+collection User {
+  @delegate
+  publicKey: PublicKey;
 }
 ```
 
