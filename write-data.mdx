@@ -106,7 +106,7 @@ For example:
 collection CollectionName () {
   id: string;
   name: string;
-  publicKey: string;
+  publicKey: PublicKey;
 
   constructor (id: string, name: string) {
     this.id = id;
@@ -376,10 +376,10 @@ The following shows an example of how you might create a Google Forms product.
 ```js
 collection User {
   id: string;
-  publicKey: string;
+  publicKey: PublicKey;
 
   constructor () {
-    this.id = ctx.publicKey;
+    this.id = ctx.publicKey.toHex();
     this.publicKey = ctx.publicKey;
   }
 }
