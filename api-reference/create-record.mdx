@@ -1,6 +1,6 @@
 ---
 title: "Create a record"
-api: "POST https://testnet.polybase.xyz/v0/collections/<collection_path>/records"
+api: "POST https://testnet.polybase.xyz/v0/collections/{collection_path}/records"
 ---
  
 <RequestExample>
@@ -9,6 +9,9 @@ api: "POST https://testnet.polybase.xyz/v0/collections/<collection_path>/records
 curl --request POST \
      --url https://testnet.polybase.xyz/v0/collections/polybase%2Fcore%2Fusers/records\
      --header 'Accept: application/json'
+     -d '{ "args": ["Polybase"] }' 
+     # optional (if supplied ctx.publicKey will be populated)
+     --header 'X-Polybase-Signature: v=0,t=1671884992,h=eth-personal-sign,sig=0x288db6271d92253ae19983a8e5110f1bc1bef1911210127ccbf657d85428ba9917aa9457f0f8e7f300a36b106525d3a3471e63ae265af4898742040a377e1da11c'
 ```
 
 </RequestExample>
@@ -22,5 +25,31 @@ curl --request POST \
 ## Body Params
 
 <ParamField body="args" type="array" required>
-  An array of arguments that should be passed to the the constructor of the collection, as defined in the collection schema.
+  An array of arguments that should be passed to the the `constructor` of the collection, as defined in the collection schema. For example, if the collection schema is as follows:
+
+  ```js
+    collection Users {
+      id: string;
+      name: string;
+      age: number;
+
+      constructor (name: string, age: number) {
+        this.id = PublicKey;
+        this.name = name;
+        this.age = age;
+      }
+    }
+  ```
+
+  The args would be:
+  ```json
+  {
+    args: [
+      // This is the 1st parameter name: string
+      "Polybase",
+      // This is the 2nd parameter age: number
+      1
+    ]
+  }
+  ```
 </ParamField>
