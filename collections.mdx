@@ -309,7 +309,18 @@ To make a collection private, remove the `@public` directive.
 
 To allow users to access and manipulate their records, you can use the following directives:
 
-### `@read`
+### `@read` on collections
+
+Allows anyone to read records in the collection.
+
+```js
+@read
+collection Response {
+  ...
+}
+```
+
+### `@read` on fields
 
 Allows anyone who can sign using the specified public key to read the record.
 
@@ -321,7 +332,20 @@ collection Response {
 }
 ```
 
-### `@call`
+### `@call` on collections
+
+Allows anyone to call functions that do not have a `@call` directive.
+
+```js
+@call
+collection Form {
+  ...
+
+  updateTitle (title: string) { ... }
+}
+```
+
+### `@call` on functions
 
 Allows anyone who can sign using the specified public key to call a given function.
 
@@ -336,6 +360,8 @@ collection Form {
   }
 }
 ```
+
+A `@call` directive without arguments allows anyone to call the function.
 
 ### `@delegate`
 
