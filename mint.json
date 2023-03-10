@@ -66,13 +66,19 @@
         "how-it-works",
         "known-issues",
         "indexers",
-        "cdn-links",
-        {
-          "group": "Examples",
-          "pages": [
-            "polybase-social"
-          ]
-        }
+        "cdn-links"
+      ]
+    },
+    {
+      "group": "Recipes",
+      "pages": [
+        "dynamic-nft-metadata"
+      ]
+    },
+    {
+      "group": "Examples",
+      "pages": [
+        "polybase-social"
       ]
     },
     {
