@@ -2,7 +2,7 @@
 title: "FAQ"
 ---
 
-### Alpha Release
+### Alpha Testnet Release
 
 During the alpha release, Polybase is running all the indexers (validators) on
 the network so we can ensure development velocity and network protection during
@@ -78,20 +78,92 @@ It depends which storage option you choose:
   the data to ensure only valid users can decrypt and read it
 - **Centralized storage** \- you can implement your own access controls
 
-In all cases, data should be encrypted to ensure the best privacy protection.
+In all cases, data can be encrypted to ensure the best privacy protection.
 The Polybase SDKs provide the functionality to encrypt the data with a wallet.
 This could be a user’s Metamask wallet or a custodial wallet for the dApp.
 
+### Does every write / update transaction need to be signed?
+
+Currently, yes every transaction needs to be signed (usually by the users's wallet if implemented in a non-custodial way). There's a way to create a "session key" which would be a symmetric key that is encrypted using the user's wallet. We're planning on adding utilities to the SDK to make creating a session key easier.
+
+### How do write permissions work on Polybase?
+
+Writes to a Polybase collection are performed by calling a function defined on the schema of your collection. All updates must happen via these collection functions, there is no general `.set()` function. 
+
+There are two ways to define who can call these functions (and therefore update and create records in your collection). The following examples are two ways to do the same thing.
+
+#### `@call` + code
+
+You can allow anyone to call the function and handle the permissioning logic inside the function itself using code, for example:
+
+```js
+@public   // could also be written as @read @call
+collection User {
+  id: PublicKey;
+  name: string;
+  
+  // Anyone can call constructor
+  constructor (name: string) {
+    this.id = ctx.publicKey;
+    this.name = name;
+  }
+  
+  // Anyone can call setName (you
+  setName(name: string) {
+    // Checking permissions with code
+    if (this.id != ctx.publicKey) {
+      error("Denied, not allowed");
+    }
+    this.name = name;
+  }
+}
+```
+
+
+#### `@call(<field_name>)`
+
+You can add `@call(<field>)` directive which means that only specified actors can call the function, the field should either be a PublicKey type, or another collection (if you want to use [delegate rules](/collections#delegate)).
+
+```js
+@read
+collection User {
+  id: PublicKey;
+  name: string;
+  
+  // Anyone can call constructor
+  constructor (name: string) {
+    this.id = ctx.publicKey;
+    this.name = name;
+  }
+  
+  // Only user with public key can setName
+  @call(id)
+  setName(name: string) {
+    this.name = name;
+  }
+}
+```
+
+
+### How do read permissions work on Polybase?
+
+There are two ways to define read permissions in Polybase. You can either:
+
+  1. **Encrypt the data** using our [encryption utilities](/encrypt-data) - this allows you to control who can read data by sharing a secret key with them.
+
+  2. **Add permission/authorization rules** - you can [define rules](/collections#authorization) on your schema using the `@read` and `@delegate` directives. This allows you to control who can query records.
+
+
 ### How can the data on Polybase be accessed without going through the Polybase gateway?
 
-While we are in alpha, the only way to access the Polybase network is through
+While we are in testnet alpha, the only way to access the Polybase network is through
 the gateway. Once we open the network to our community, anyone may run the
 Polybase indexer reference implementation and directly connect to the P2P
-network.
+network (or use the SDK).
 
 ### How can I verify Polybase is decentralized?
 
-While we are in alpha, there is no way to verify the decentralisation of the
+While we are in testnet alpha, there is no way to verify the decentralisation of the
 network. However, we are running the nodes behind the gateway in a way that will
 enable decentralisation as soon as we allow other participants to join the
 network.
@@ -117,7 +189,7 @@ pay for database usage.
 
 ### How much does Polybase cost?
 
-In alpha Polybase is free to use. During beta, we will charge developers to
+In testnet Polybase is free to use. For mainnet, we will charge developers to
 create collections and store data. You can expect the costs to be similar to
 Firebase Firestore.
 
