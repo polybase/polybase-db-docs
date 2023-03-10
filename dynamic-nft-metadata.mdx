@@ -14,7 +14,7 @@ For example, for an NFT that represents a game character's skill level, you can 
 
 ## Get started
 
-- Create a collection with the fields you want
+- Create a collection with the fields you want (e.g. [the NFT metadata spec](https://nftschool.dev/reference/metadata-schemas/#ethereum-and-evm-compatible-chains))
 - Use the Polybase API with a `?format=nft` flag for the [token URI](https://docs.openzeppelin.com/contracts/3.x/api/token/erc721#ERC721-_setTokenURI-uint256-string-) in your smart contract.
 
 ## Example Polybase collection
@@ -28,12 +28,20 @@ collection VerifiableCredentialMetadata {
   // `id` is unique and required on all collections
   id: string;
 
-  username: string;
+  // Use the NFT format
+  name: string;
+  // Image could link to the location of the file on IPFS, Arweave, etc.
+  image: string;
+  
+  // Any additional properties you want
   level: number;
   points: number;
 
-  constructor (id: string, username: string) {
-    ...
+  constructor (id: string, name: string, image: string) {
+    this.id = id;
+    this.name = name;
+    this.image = image;
+    this.points = 0;
   }
 
   // You can add your own functions to determine rules
