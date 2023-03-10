@@ -172,13 +172,13 @@ collection Account {
 
   // Fn ignores all above rules, so anything needed must be reimplemented
   transfer (b: record, amount: number) {
-    # ctx is in global scope of fn
-    # error() is in global scope of fn
+    //ctx is in global scope of fn
+    // error() is in global scope of fn
     if (this.publicKey == ctx.publicKey) {
        throw error('invalid user');
     }
 
-    # can edit both records
+    // can edit both records
     this.balance -= amount
     b.balance += amount
 
@@ -308,6 +308,18 @@ By default, collections in Polybase are private and their records cannot be acce
 To make a collection private, remove the `@public` directive.
 
 To allow users to access and manipulate their records, you can use the following directives:
+
+### `@public` on collections
+
+Allows anyone to read records or call functions in the collection. You can still further
+restrict write permissions by adding custom code to your [collections functions](#functions).
+
+```js
+@public
+collection Response {
+  ...
+}
+```
 
 ### `@read` on collections
 
