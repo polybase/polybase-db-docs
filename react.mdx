@@ -41,9 +41,7 @@ import { usePolybase, useDocument } from "@polybase/react";
 export const Component = () => {
   const polybase = usePolybase();
   const { data, error, loading } =
-    useDocument <
-    OptionalCustomType >
-    polybase.collection("users").record("id");
+    useDocument<OptionalCustomType>(polybase.collection("users").record("id"));
 
   return data.data.name;
 };
@@ -58,7 +56,7 @@ import { usePolybase, useCollection } from "@polybase/react";
 export const Component = () => {
   const polybase = usePolybase();
   const { data, error, loading } =
-    useCollection < OptionalCustomType > polybase.collection("users");
+    useCollection<OptionalCustomType>(polybase.collection("users"));
 
   const usersEl = map(data, ({ data }) => {
     return <div key={data.id}>{data.name}</div>;

@@ -4,6 +4,8 @@ title: "Get Started"
 
 ## Install Polybase
 
+From Package Manager:
+
 <CodeGroup>
 
 ```bash npm
@@ -14,17 +16,31 @@ npm install @polybase/client
 yarn add @polybase/client
 ```
 
+```html cdn
+<scrip src="https://cdn.jsdelivr.net/npm/@polybase/client@0.3/dist/bundle.min.js"></script>
+```
+
 </CodeGroup>
 
 ## Initialize the library
 
-```js
+<CodeGroup>
+```bash js
 import { Polybase } from "@polybase/client";
 
 const db = new Polybase({
   defaultNamespace: "your-namespace",
 });
 ```
+
+```bash html
+const db = polybase.Polybase({
+  defaultNamespace: "your-namespace",
+})
+```
+
+</CodeGroup>
+
 
 <Warning>Namespace must be used for collections.</Warning>
 
@@ -42,10 +58,12 @@ We suggest creating collections using [Polybase Explorer](https://explorer.testn
 
 A Polybase collection describes the rules for a collection of data, not just a single record (as is the case with other smart collection languages).
 
-In this example we use the JavaScript SDK to create a collection called `City` that has `name` and `country` fields, and a `setCountry()` function.
+In this example we use the JavaScript SDK to create a collection called `City` that has `name` and `country` fields, and a `setCountry()` function. You can define multiple 
+collections in a single `applySchema` call.
 
 ```js
 await db.applySchema(`
+  @public
   collection City {
     id: string;
     name: string;
@@ -58,6 +76,17 @@ await db.applySchema(`
 
     setCountry (country: string) {
       this.country = country;
+    }
+  }
+
+  @public
+  collection Country {
+    id: string;
+    name: string;
+
+    constructor (id: string, name: string) {
+      this.id = id;
+      this.name = name;
     }
   }
 `,
@@ -75,6 +104,9 @@ When you create a new record, the `constructor` function in your collection is c
 import { Polybase } from "@polybase/client";
 
 const db = new Polybase({ defaultNamespace: "your-namespace" });
+
+// Based on the collection code above, "new-york" is the `id` of the new record. 
+// The `id` "new-york" must be unique (not already exist in the collection)
 await db.collection("City").create(["new-york", "New York"]); 
 // new-york is the `id`, New York is the `name`
 ```
@@ -111,5 +143,5 @@ const data = await db.collection("City").record("new-york").get();
 <Card title="FAQ" icon="question" href="/faq">
 </Card>
 
-<Card title="Read the Polybase Whitepaper" icon="file-lines" href="https://polybase.xyz/Polybase%5FA%5Fdecentralized%5FQuery%5FIndex%5Fand%5FStorage%5FProtocol-v2.0.pdf">
+<Card title="Read the Polybase Whitepaper" icon="file-lines" href="https://polybase.xyz/whitepaper">
 </Card>

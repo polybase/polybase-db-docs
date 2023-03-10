@@ -55,6 +55,7 @@
         "introduction",
         "get-started",
         "collections",
+        "authentication",
         "write-data",
         "read",
         "delete-data",
@@ -65,12 +66,19 @@
         "how-it-works",
         "known-issues",
         "indexers",
-        {
-          "group": "Examples",
-          "pages": [
-            "polybase-social"
-          ]
-        }
+        "cdn-links"
+      ]
+    },
+    {
+      "group": "Recipes",
+      "pages": [
+        "dynamic-nft-metadata"
+      ]
+    },
+    {
+      "group": "Examples",
+      "pages": [
+        "polybase-social"
       ]
     },
     {

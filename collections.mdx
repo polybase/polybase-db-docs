@@ -41,19 +41,19 @@ db.signer((data) => {
 })
 
 const createResponse = await db.applySchema(`
+  @public
   collection CollectionName {
     id: string;
     country?: string;
-    publicKey?: string;
-
-    @index(country);
+    publicKey?: PublicKey;
 
     constructor (id: string, country: string) {
       this.id = id;
       this.country = country;
 
       // Assign the public key of the user making the request to this record
-      this.publicKey = ctx.publicKey;
+      if (ctx.publicKey)
+        this.publicKey = ctx.publicKey;
     }
   }
 `, 'your-namespace') // your-namespace is optional if you have defined a default namespace
@@ -66,7 +66,7 @@ const createResponse = await db.applySchema(`
 </Info>
 
 <Warning>
-  `id` field is mandatory on all collections, and you must assign an `id` using
+  `id` field is unique and mandatory on all collections, and you must assign an `id` using
   `this.id = ...` within the `constructor` function.
 </Warning>
 
@@ -78,6 +78,7 @@ indexes for your collection records. The following is a valid collection
 definition.
 
 ```js
+@public
 collection CollectionName {
   id: string;
   name?: string;
@@ -98,17 +99,18 @@ The above would allow you to insert a record with a `name` property of type
 ### Constructor
 
 The collection `constructor` function is called whenever you add new records to the the database. 
-The constructor function must assign `this.id` and any additional required fields defined in your collection.. An error will be returned if A
-record with the assinged `id` is provided.
+The constructor function must assign `this.id` and any additional required fields defined in your collection. An error will be returned if a
+record already exists with the assigned `id` is provided, as `id` must be unique.
 
 
 ### Fields
 
 You can specify the fields that are allowed in your collection. These should be
-at the top most part of your collection. A collection should always have an `id`
-field. By default, all fields are required.
+at the top most part of your collection. A collection should always have a `id`
+field (`id` is unique). By default, all fields are required.
 
 ```js
+@public
 collection CollectionName {
   id: string;
   age: number;
@@ -116,6 +118,10 @@ collection CollectionName {
   ...
 }
 ```
+
+#### id Field
+
+The `id` fields is required on every Polybase collection. It must be assigned in the constructor. Each record must have a unique `id` across the entire collection.
 
 #### Field Types
 
@@ -125,8 +131,10 @@ The following types are supported:
 - `number`
 - `boolean`
 - `bytes`
-- `string[]`, `number[]` and `boolean[]`
+- `string[]`, `number[]` and `boolean[]`, `CollectionName[]`
 - `map<string | number, T>`
+
+Where `CollectionName` is the name of a specific collection in the same namespace.
 
 <Info>Additional types such as dates will be added soon.</Info>
 
@@ -136,6 +144,7 @@ All fields are required by default, if you want to make a field optional simply
 append `?` after the field name and before the `:`. For example:
 
 ```js
+@public
 collection CollectionName {
   id: string;
   required: number;
@@ -150,14 +159,15 @@ collection CollectionName {
 Field values can only be modified using functions.
 
 ```js
+@public
 collection Account {
   id: string;
   name: string;
   balance: number;
-  publicKey: string;
+  publicKey: PublicKey;
 
   constructor (name: string) {
-    this.id = ctx.publicKey;
+    this.id = ctx.publicKey.toHex();
     this.name = name;
     this.publicKey = ctx.publicKey;
     this.balance = 0;
@@ -165,13 +175,13 @@ collection Account {
 
   // Fn ignores all above rules, so anything needed must be reimplemented
   transfer (b: record, amount: number) {
-    # ctx is in global scope of fn
-    # error() is in global scope of fn
+    //ctx is in global scope of fn
+    // error() is in global scope of fn
     if (this.publicKey == ctx.publicKey) {
        throw error('invalid user');
     }
 
-    # can edit both records
+    // can edit both records
     this.balance -= amount
     b.balance += amount
 
@@ -190,6 +200,53 @@ You can call your custom functions using `.call(functionName, args)`:
 const db = new Polybase({ defaultNamespace: "your-namespace" });
 const col = db.collection("account");
 await col.record("id1").call("transfer", [c.record("id2"), 10]);
+```
+
+### Context
+
+The global variable `ctx` is available inside any Polybase function. 
+
+#### Public Key
+
+`ctx.publicKey` is populated when you provide a `signer` function to the Polybase client.
+
+```js
+import { Polybase } from '@polybase/client'
+import { ethPersonalSign } from '@polybase/eth'
+
+const db = new Polybase({
+  signer: (data) => {
+    return {
+      h: 'eth-personal-sign',
+      sig: ethPersonalSign(wallet.privateKey()), data)
+    }
+  })
+})
+```
+
+You can then use the `publicKey` of the wallet used to sign the request
+in your collection code, for example see how in `setName` we check the `ctx.publicKey` and compare 
+it against the records own `publicKey`:
+
+```js
+collection CollectionName {
+  id: string;
+  name?: string;
+  publicKey?: PublicKey;
+
+  constructor (id: string) {
+    this.id = id;
+    if (ctx.publicKey)
+      this.publicKey = ctx.publicKey;
+  }
+
+  setName (name: string) {
+    if (this.publicKey != ctx.publicKey) {
+      error("you do not have permission to do that");
+    }
+    this.name = name;
+  }
+}
 ```
 
 
@@ -213,6 +270,7 @@ const records = await collectionReference
 You would need the following schema:
 
 ```js
+@public
 collection cities {
   name: string;
   country: string;
@@ -237,12 +295,109 @@ const records = await collectionReference
 You would need the following schema:
 
 ```js
+@public
 collection cities {
   name: string;
   country: string;
   population: number;
 
   @index(name, [population, desc]);
+}
+```
+
+## Authorization
+
+By default, collections in Polybase are private and their records cannot be accessed.
+To make a collection private, remove the `@public` directive.
+
+To allow users to access and manipulate their records, you can use the following directives:
+
+### `@public` on collections
+
+Allows anyone to read records or call functions in the collection. You can still further
+restrict write permissions by adding custom code to your [collections functions](#functions).
+
+```js
+@public
+collection Response {
+  ...
+}
+```
+
+### `@read` on collections
+
+Allows anyone to read records in the collection.
+
+```js
+@read
+collection Response {
+  ...
+}
+```
+
+### `@read` on fields
+
+Allows anyone who can sign using the specified public key to read the record.
+
+```js
+collection Response {
+  @read
+  publicKey: PublicKey;
+  ...
+}
+```
+
+### `@call` on collections
+
+Allows anyone to call functions that do not have a `@call` directive.
+
+```js
+@call
+collection Form {
+  ...
+
+  updateTitle (title: string) { ... }
+}
+```
+
+### `@call` on functions
+
+Allows anyone who can sign using the specified public key to call a given function.
+
+```js
+collection Form {
+  @read
+  creator: PublicKey;
+
+  @call(creator);
+  update ()  {
+    ...
+  }
+}
+```
+
+A `@call` directive without arguments allows anyone to call the function.
+
+### `@delegate`
+
+Allows anyone who can sign using the specified public key to read the response data, via delegated permissions.
+
+Example of delegating `Response` → `Form` → `User` → `publicKey`:
+
+```js
+collection Response {
+  @read
+  form: Form;
+}
+
+collection Form {
+  @delegate
+  creator: User;
+}
+
+collection User {
+  @delegate
+  publicKey: PublicKey;
 }
 ```
 
