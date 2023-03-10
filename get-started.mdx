@@ -58,7 +58,8 @@ We suggest creating collections using [Polybase Explorer](https://explorer.testn
 
 A Polybase collection describes the rules for a collection of data, not just a single record (as is the case with other smart collection languages).
 
-In this example we use the JavaScript SDK to create a collection called `City` that has `name` and `country` fields, and a `setCountry()` function.
+In this example we use the JavaScript SDK to create a collection called `City` that has `name` and `country` fields, and a `setCountry()` function. You can define multiple 
+collections in a single `applySchema` call.
 
 ```js
 await db.applySchema(`
@@ -75,6 +76,17 @@ await db.applySchema(`
 
     setCountry (country: string) {
       this.country = country;
+    }
+  }
+
+  @public
+  collection Country {
+    id: string;
+    name: string;
+
+    constructor (id: string, name: string) {
+      this.id = id;
+      this.name = name;
     }
   }
 `,
