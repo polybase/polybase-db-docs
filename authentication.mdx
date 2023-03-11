@@ -108,9 +108,17 @@ The `authState` for **Metamask** login would be:
 }
 ```
 
-<Info>
-  Metamask does not currently provide the `publicKey` directly but it can be obtained by signing a request.
-</Info>
+
+
+#### Get Public Key with Metamask
+
+Metamask does not currently provide the `publicKey` directly but it can be obtained by signing a request.
+
+```js
+const msg = 'Login to app'
+const sig = await auth.ethPersonalSign(msg)
+const publicKey = ethPersonalSignRecoverPublicKey(sig, msg)
+```
 
 
 ### Ethereum Personal Sign
