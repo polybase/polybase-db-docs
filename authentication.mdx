@@ -76,7 +76,12 @@ yarn add @polybase/auth
 ```js
 import { Auth } from '@polybase/auth'
 
-const auth = new Auth()
+const auth = new Auth({
+  // Optional: origin of the domain you will deploy your app to, we will
+  // try to calculate this automatically, but it may not always be present
+  // DO NOT add any path after the protocol/domain
+  origin: 'https://my.domain.xyz',
+})
 
 // Show the login modal, and wait for a response
 const authState = await auth.signIn()
