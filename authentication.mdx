@@ -70,18 +70,43 @@ yarn add @polybase/auth
 
 </CodeGroup>
 
+### Initialize
+
+You should only run the `new Auth` class once, and then pass it to your app.
+
+```js
+import { Auth } from '@polybase/auth'
+
+const auth = new Auth()
+
+function App () {
+  ...
+}
+```
+
+#### Next.js
+
+Next.js runs your code both server side and client side. When running server side Next.js has no `document` so Auth will fail to load. 
+Auth doesn't make sense server side, so your code should handle this scenario by skipping any auth code. Before calling auth functions (e.g. `auth.signIn()`), 
+you will need to check that auth is defined.
+
+```js
+const auth = typeof window !== "undefined" ? new Auth() : null;
+
+function App () {
+  const signIn = () => {
+      auth?.signIn()
+  }
+}
+```
+
 
 ### Sign in
 
 ```js
 import { Auth } from '@polybase/auth'
 
-const auth = new Auth({
-  // Optional: origin of the domain you will deploy your app to, we will
-  // try to calculate this automatically, but it may not always be present
-  // DO NOT add any path after the protocol/domain
-  origin: 'https://my.domain.xyz',
-})
+const auth = new Auth()
 
 // Show the login modal, and wait for a response
 const authState = await auth.signIn()
@@ -107,8 +132,6 @@ The `authState` for **Metamask** login would be:
   userId: "0xf998db2f1e53a00e9c59330b307cfcc03425b994d417a93c508def6d46ee12d8"
 }
 ```
-
-
 
 #### Get Public Key with Metamask
 
