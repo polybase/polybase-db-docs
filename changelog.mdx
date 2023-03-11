@@ -11,11 +11,19 @@ and this project adheres to
 During our beta rollout, minor updates in the semantic versioning represent
 breaking changes.
 
+## \[0.3.32] - 2023-03-11
+
+### Added
+
+  - `@polybase/eth`: added `ethPersonalSignRecoverPublicKey(sig, msg)` to easily get a public key from 
+    a signed message.
+
+
 ## \[0.3.31] - 2023-03-11
 
 ### Added
 
-  - Allow `origin` configuration property to be passed into `Auth`, this is require if `window.location.origin` is not available.
+  - `@polybase/auth`: Allow `origin` configuration property to be passed into `Auth`, this is require if `window.location.origin` is not available.
   
     For example:
     
