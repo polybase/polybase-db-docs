@@ -76,6 +76,12 @@
       ]
     },
     {
+      "group": "Tutorials",
+      "pages": [
+        "token-gated-chat"
+      ]
+    },
+    {
       "group": "Examples",
       "pages": [
         "polybase-social"
