@@ -108,7 +108,7 @@ import { Auth } from '@polybase/auth'
 
 const auth = new Auth()
 
-// Show the login modal, and wait for a response
+// Show the login modal (if not logged in), and wait for a response
 const authState = await auth.signIn()
 ```
 
@@ -141,6 +141,31 @@ Metamask does not currently provide the `publicKey` directly but it can be obtai
 const msg = 'Login to app'
 const sig = await auth.ethPersonalSign(msg)
 const publicKey = ethPersonalSignRecoverPublicKey(sig, msg)
+```
+
+
+#### Force open signIn modal
+
+By default, if the user is already logged in to your app, then the sign in modal won't open. Instead, the auth state will be returned immediately. 
+If you'd like to allow the user to change the auth/account they are logged in with, you can force open the modal by passing `{ force: true }` to the `signIn` function.
+
+```js 
+import { Auth } from '@polybase/auth'
+
+const auth = new Auth()
+
+const authState = await auth.signIn({ force: true })
+```
+
+
+### Sign out
+
+```js
+import { Auth } from '@polybase/auth'
+
+const auth = new Auth()
+
+await auth.signOut()
 ```
 
 
