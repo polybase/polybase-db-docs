@@ -11,6 +11,23 @@ and this project adheres to
 During our beta rollout, minor updates in the semantic versioning represent
 breaking changes.
 
+## \[0.3.34] - 2023-03-14
+
+### Added
+
+  - `@polybase/auth`:
+    - Added return types to `Auth` methods
+    - Added `signOut()` method, to allow apps to request the user to sign out
+    - Added optional parameter `{ force: boolean }` to `signIn` method on `Auth`. If `force` is `true`, then the login popup
+     will show to the user even if the user is already logged in.
+
+### Fixed
+
+  - `@polybase/auth`: 
+    - increased z-index of auth popup modal to max value (2147483647) to ensure it is always visible when open
+    - made internal `Auth` methods private
+
+
 ## \[0.3.33] - 2023-03-14
 
 ### Fixed
