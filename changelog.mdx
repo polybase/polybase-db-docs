@@ -11,6 +11,14 @@ and this project adheres to
 During our beta rollout, minor updates in the semantic versioning represent
 breaking changes.
 
+## \[0.3.33] - 2023-03-14
+
+### Fixed
+
+  - `@polybase/client`: fixed bug that caused the error handler function `.onSnapshot(successHandlerFn, errorHandlerFn)` to be called on snapshots when a 
+  request is cancelled (i.e. when all subscribers are removed).
+
+
 ## \[0.3.32] - 2023-03-11
 
 ### Added
