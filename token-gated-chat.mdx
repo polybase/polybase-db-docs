@@ -15,3 +15,84 @@ View a deployed version of the app:
 
 View the code on Github:
 [Token gated chat app](https://github.com/polybase/chat)
+
+
+## Schema
+
+```js
+@public
+collection User {
+  id: string;
+
+  @delegate
+  @read
+  publicKey: PublicKey;
+
+  constructor () {
+    if (!ctx.publicKey) {
+      error('You must sign the txn');
+    }
+    this.id = ctx.publicKey.toHex(); // 0x...
+    this.publicKey = ctx.publicKey;
+  }
+}
+
+@read
+collection NFT {
+  id: string;
+
+  @delegate
+  @read
+  owner: User;
+
+  constructor (id: string, owner: User) {
+    this.id = id;
+    this.owner = owner;
+  }
+}
+
+collection Chat {
+  id: string;
+  name: string;
+  
+  @delegate
+  @read
+  members: NFT[];
+
+  constructor (id: string, name: string) {
+    this.id = id;
+    this.name = name;
+    this.members = [];
+  }
+
+  @call(members)
+  addMember (nft: NFT) {
+    if (this.members.length > 5) {
+      error('Too many people in the room');
+    }
+
+    this.members.push(nft);
+  }
+
+  @call(members)
+  setName (name: string) {
+    this.name = name;
+  }
+}
+
+collection Message {
+  id: string;
+  message: string;
+  timestamp: number;
+
+  @read
+  chat: Chat;
+
+  constructor (id: string, message: string, timestamp: number, chat: Chat) {
+    this.id = id;
+    this.message = message;
+    this.timestamp = timestamp;
+    this.chat = chat;
+  }
+}
+```
