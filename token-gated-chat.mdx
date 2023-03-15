@@ -20,7 +20,6 @@ View the code on Github:
 ## Schema
 
 ```js
-@public
 collection User {
   id: string;
 
@@ -28,23 +27,32 @@ collection User {
   @read
   publicKey: PublicKey;
 
+  // Called when a new record is created db.collection('User').create([])
   constructor () {
+    // ctx.publicKey is populated if the user signs the call
     if (!ctx.publicKey) {
       error('You must sign the txn');
     }
+
+    // .toHex() converts the public key to a hex string
     this.id = ctx.publicKey.toHex(); // 0x...
+
+    // Store the public key so we can use it for permissions
     this.publicKey = ctx.publicKey;
   }
 }
 
+// Anyone can read NFT collection
 @read
 collection NFT {
   id: string;
 
+  // The NFT delegates all responsibility it is given to the owner
   @delegate
-  @read
   owner: User;
 
+  // Called when new NFT created db.collection('User')
+  //   .create(["nft-name", db.collection("User").record(userId)])
   constructor (id: string, owner: User) {
     this.id = id;
     this.owner = owner;
@@ -65,8 +73,10 @@ collection Chat {
     this.members = [];
   }
 
+  // Anyone who with an NFT in members can call this fn
   @call(members)
   addMember (nft: NFT) {
+    // Maximum of 5 members
     if (this.members.length > 5) {
       error('Too many people in the room');
     }
@@ -74,6 +84,7 @@ collection Chat {
     this.members.push(nft);
   }
 
+  // Anyone who with an NFT in members can call this fn
   @call(members)
   setName (name: string) {
     this.name = name;
@@ -83,8 +94,13 @@ collection Chat {
 collection Message {
   id: string;
   message: string;
+
+  // Currently timestamp must be passed in from the client
+  // so is untrusted
   timestamp: number;
 
+  // You can read this record, only if you are 
+  // part of the chat 
   @read
   chat: Chat;
 
