@@ -4,10 +4,14 @@ title: "Write Data"
 
 You must [define a collection](/collections) before writing data to Polybase.
 
+You can view our example app
+[Polybase Social](https://social.testnet.polybase.xyz) to see it working in
+action.
+
 ## Creating a record
 
-You can create a new record for a collection by calling `.create(args)` on your
-collection. This will call the `constructor` function of your collection, and
+You can create a new record for a collection by calling `.create([arg1, arg2, etc])` on your collection (as defined by the collection schema `constructor` function). 
+This will call the `constructor` function of your collection, and
 create a new record (as long as the `id` of the record does not already exist).
 
 ```js
@@ -18,7 +22,11 @@ const collectionReference = db.collection("City");
 
 async function createRecord () {
   // .create(args) args array is defined by the constructor fn
-  const recordData = await collectionReference.create(["new-york", "New York"]);
+  const recordData = await collectionReference.create([
+    "new-york", 
+    "New York", 
+    db.collection("Person").record("johnbmahone")
+  ]);
 }
 ```
 
@@ -38,20 +46,24 @@ And your collection schema might look like:
 
 ```js
 @public
+collection Person {
+  id: name;
+  ...
+}
+
+@public
 collection City {
   id: string;
   name: string;
+  mayor: Person;
 
-  constructor (id: string, name: string) {
+  constructor (id: string, name: string, mayor: Person) {
     this.id = id;
     this.name = name;
+    this.mayor = mayor;
   }
 }
 ```
-
-You can view our example app
-[Polybase Social](https://social.testnet.polybase.xyz) to see it working in
-action.
 
 ## Updating a record
 
@@ -68,27 +80,33 @@ async function updateRecord () {
   // .create(functionName, args) args array is defined by the updateName fn in collection schema
   const recordData = await collectionReference
     .record("new-york")
-    .call("updateName", ["New York"]);
+    .call("updateMayor", [db.collection("Person").record("johnbmahone")]);
 }
-
-
 ```
 
 Would require the following collection schema:
 
 ```js
 @public
+collection Person {
+  id: name;
+  ...
+}
+
+@public
 collection City {
   id: string;
   name: string;
+  mayor: Person;
 
-  constructor (id: string, name: string) {
+  constructor (id: string, name: string, mayor: Person) {
     this.id = id;
     this.name = name;
+    this.mayor = mayor;
   }
 
-  updateName(name: string) {
-    this.name = name;
+  updateMayor(mayor: Person) {
+    this.mayor = mayor;
   }
 }
 ```
