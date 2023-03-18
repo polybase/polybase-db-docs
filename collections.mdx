@@ -495,6 +495,15 @@ be indexed. You need to ensure that all fields that are included in a `where` or
 All collection fields are automatically indexed, which means
 you only need to specify multi-field indexes.
 
+<Note>
+  Fields of type Collection must be indexed explicitly `@index(collectionField)`.
+</Note>
+
+<Note>
+  Indexing array/map fields is currently not possible.
+</Note>
+
+
 ```js
 const db = new Polybase({ defaultNamespace: "your-namespace" });
 const collectionReference = db.collection("cities");
