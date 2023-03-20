@@ -11,6 +11,22 @@ and this project adheres to
 During our beta rollout, minor updates in the semantic versioning represent
 breaking changes.
 
+## \[0.3.37] - 2023-03-20
+
+### Added
+
+  - Throw/log error for required/optional signer
+
+### Changed
+
+  - Improved error messages when values do not match their schema types
+
+### Fixed
+
+  - Polybase Auth now supports multiple signing requests being sent at once
+  - Auth listener .onAuthUpdate is now not called until loading completes, so the first message received is the true auth (signed in/out) state
+
+
 ## \[0.3.36]- 2023-03-16
 
 ### Added
