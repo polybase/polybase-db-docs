@@ -196,7 +196,7 @@ The following types are supported:
 - `bytes`
 - `PublicKey`
 - `Collection`
-- `string[]`, `number[]`, `boolean[]`, `PublicKey[]` and `Collection*[]`
+- `string[]`, `number[]`, `boolean[]` and `Collection*[]`
 - `map<string | number, T>`
 
 Where `Collection*` is the name of a specific collection in the same namespace.
@@ -319,7 +319,7 @@ and the hexidecimal representation of the 64 byte public key.
 
 #### Arrays
 
-You can create arrays of `string`, `number`, `boolean`, `PublicKey` and `Collection` type. For example:
+You can create arrays of `string`, `number`, `boolean` and `Collection` type. For example:
 
 ```js
 @public
@@ -328,7 +328,6 @@ collection User {
   codes: string[];
   ages: number[];
   attempts: boolean[];
-  keys: PublicKey[];
   friends: User[];
 }
 ```
