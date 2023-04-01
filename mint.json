@@ -105,7 +105,8 @@
   },
   "analytics": {
     "posthog": {
-      "apiKey": "phc_DBZY8MbRdRIIwSwX4ZSwTAjy5ogdQPDMVdPObOuQQf"
+      "apiKey": "phc_DBZY8MbRdRIIwSwX4ZSwTAjy5ogdQPDMVdPObOuQQf",
+      "apiHost": "https://a.polybase.xyz"
     }
   }
 }
