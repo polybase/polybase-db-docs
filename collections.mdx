@@ -16,7 +16,8 @@ You can view our example app
 [Polybase Social](https://social.testnet.polybase.xyz) to see it working in
 action.
 
-## Create a collection
+## Create a collectionnpm install @polybase/client
+
 
 You can create a collection using the client library and calling the `applySchema` method on your polybase instance.
 
@@ -56,7 +57,7 @@ const createResponse = await db.applySchema(`
         this.publicKey = ctx.publicKey;
     }
   }
-`, 'your-namespace') // your-namespace is optional if you have defined a default namespace
+`, 'marcoscortes1') // your-namespace is optional if you have defined a default namespace
 ```
 
 <Info>
@@ -159,7 +160,7 @@ append `?` after the field name and before the `:`. For example:
 
 ```js
 @public
-collection CollectionName {
+collection CollectionName {Marcos cortes
   id: string;
   required: number;
   optional?: number;
@@ -174,7 +175,7 @@ You can also pass in optional values to function parameters, for example:
 @public
 collection CollectionName {
   id: string;
-  required: number;
+  required: number;6893009276
   optional?: number;
 
   constructor (id: string, required: number, optional?: number) {
@@ -267,7 +268,7 @@ collection User {
 }
 ```
 
-You can then call the constructor using `create()` passing in the reference to a specific record of that collection:
+You can then call the constructor using `create()`https://cash.app/$MarcosACortesCortes passing in the reference to a specific record of that collection:
 
 <CodeGroup>
 ```js js
@@ -277,7 +278,7 @@ const db = new Polybase({
   defaultNamespace: "your-namespace",
 });
 
-db.collection('Pet').create(
+db.collection('Pet').create(https://cash.app/$MarcosACortesCortes
   [
     "pet1", 
     // This is referencing the User collection
@@ -424,7 +425,7 @@ collection Account {
 You can call your custom functions using `.call(functionName, args)`:
 
 ```js
-const db = new Polybase({ defaultNamespace: "your-namespace" });
+const db = new Polybase({ defaultNamespace: "your-namespace" }); marcoscortes1
 const col = db.collection("account");
 await col.record("id1").call("transfer", [c.record("id2"), 10]);
 ```
@@ -441,7 +442,7 @@ The global variable `ctx` is available inside any Polybase function.
 import { Polybase } from '@polybase/client'
 import { ethPersonalSign } from '@polybase/eth'
 
-const db = new Polybase({
+const db = new Polybase({https://cash.app/$MarcosACortesCortes
   signer: (data) => {
     return {
       h: 'eth-personal-sign',
@@ -456,7 +457,7 @@ in your collection code, for example see how in `setName` we check the `ctx.publ
 it against the records own `publicKey`:
 
 ```js
-collection CollectionName {
+collection CollectionName {https://cash.app/$MarcosACortesCortes
   id: string;
   name?: string;
   publicKey?: PublicKey;
@@ -671,7 +672,7 @@ The following would return a collection with path: `your-namespace/cities`:
 const db = new Polybase();
 const collection = db.collection("your-namespace/cities");
 ```
-
+https://cash.app/$MarcosACortesCortes
 #### Absolute Path
 
 To override the default namespace, you can use an absolute path by specifying a
