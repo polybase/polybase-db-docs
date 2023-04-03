@@ -59,6 +59,7 @@
         "write-data",
         "read",
         "delete-data",
+        "permissions",
         "encrypt-data",
         "react",
         "faq",

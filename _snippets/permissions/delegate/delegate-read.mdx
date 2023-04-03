@@ -1,0 +1,23 @@
+Example of delegating ***read access*** to `Response` to a user with given `publicKey`:
+
+`Response` → `Form` → `User` → `publicKey`:
+
+```js
+collection Response {
+  // Delegate read permission to form/Form
+  @read
+  form: Form;
+}
+
+collection Form {
+  // Delegate read permission to User
+  @delegate
+  creator: User;
+}
+
+collection User {
+  // Delegate read permission to publicKey
+  @delegate
+  publicKey: PublicKey;
+}
+```

@@ -2,7 +2,7 @@
 title: "Encrypt data"
 ---
 
-Polybase data is publicly accessible, therefore sensitive data should be encrypted 
+Polybase can be publicly accessible (if [@public](permissions#public-on-collections) directive used). In the case of public data, sensitive data should be encrypted 
 before being written to the database. To make this process easier, Polybase has 
 created a helper library to handle common encryption tasks: 
 [`@polybase/util`](https://www.npmjs.com/package/@polybase/util)
