@@ -551,101 +551,31 @@ collection cities {
 }
 ```
 
-## Authorization
+## Permissions
 
 By default, collections in Polybase are private and their records cannot be accessed.
-To make a collection private, remove the `@public` directive.
+To make a collection public, add the `@public` directive.
 
 To allow users to access and manipulate their records, you can use the following directives:
 
-### `@public` on collections
 
-Allows anyone to read records or call functions in the collection. You can still further
-restrict write permissions by adding custom code to your [collections functions](#functions).
+<Snippet file="permissions/public-on-collections.mdx" /> 
 
-```js
-@public
-collection Response {
-  ...
-}
-```
+<Snippet file="permissions/read-on-collections.mdx" /> 
 
-### `@read` on collections
+<Snippet file="permissions/read-on-fields.mdx" /> 
 
-Allows anyone to read records in the collection.
+<Snippet file="permissions/call-on-collections.mdx" /> 
 
-```js
-@read
-collection Response {
-  ...
-}
-```
-
-### `@read` on fields
-
-Allows anyone who can sign using the specified public key to read the record.
-
-```js
-collection Response {
-  @read
-  publicKey: PublicKey;
-  ...
-}
-```
-
-### `@call` on collections
-
-Allows anyone to call functions that do not have a `@call` directive.
-
-```js
-@call
-collection Form {
-  ...
-
-  updateTitle (title: string) { ... }
-}
-```
-
-### `@call` on functions
-
-Allows anyone who can sign using the specified public key to call a given function.
-
-```js
-collection Form {
-  @read
-  creator: PublicKey;
-
-  @call(creator);
-  update ()  {
-    ...
-  }
-}
-```
-
-A `@call` directive without arguments allows anyone to call the function.
+<Snippet file="permissions/call-on-functions.mdx" /> 
 
 ### `@delegate`
 
-Allows anyone who can sign using the specified public key to read the response data, via delegated permissions.
+<Snippet file="permissions/delegate/desc.mdx" /> 
 
-Example of delegating `Response` → `Form` → `User` → `publicKey`:
+<Snippet file="permissions/delegate/delegate-read.mdx" /> 
 
-```js
-collection Response {
-  @read
-  form: Form;
-}
-
-collection Form {
-  @delegate
-  creator: User;
-}
-
-collection User {
-  @delegate
-  publicKey: PublicKey;
-}
-```
+For more on delegating permissions, see [Delegating Permissions](/permissions#delegate).
 
 ## Reference a collection
 

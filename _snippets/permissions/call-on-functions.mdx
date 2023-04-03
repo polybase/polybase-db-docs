@@ -1,0 +1,15 @@
+### `@call` on functions
+
+Allows anyone who can sign using the specified public key to call a given function.
+
+```js
+collection Form {
+  @read
+  creator: PublicKey;
+
+  @call(creator);
+  update ()  {
+    ...
+  }
+}
+```

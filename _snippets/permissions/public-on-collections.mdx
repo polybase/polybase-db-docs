@@ -1,0 +1,11 @@
+### `@public` on collections
+
+Allows anyone to read all records and call functions in the collection (it's the equivalent of adding `@read` and `@call`). 
+You can still further restrict write permissions by adding custom code to your [collections functions](#functions).
+
+```js
+@public
+collection Response {
+  ...
+}
+```

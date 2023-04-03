@@ -1,0 +1,95 @@
+
+There are four ways to control who can [read](/read) and [write](/write) data in Polybase:
+
+ 1. [Allow all](#allow-all) (read and write) - allow anyone to read data and/or call collection functions
+
+ 1. [Delegation](#delegation) (read and write) - using `@read`, `@call` and `@delegate` directives
+
+ 2. [Code](#code) (write only) - write code to check users permissions in collection functions
+ 
+ 3. [Encryption](#encryption) (read only) - data is public but encrypted, only unauthorized users can decrypt it
+
+<Note>
+  For read rules, the entire record is always returned. There is no way to define read rules for specific fields. 
+  If you need to have some restricted data, create a separate collection and create a link between the collections.
+</Note>
+
+<Warning>
+  Unless otherwise defined, all collections are private and fully restricted meaning no-one can read data or call 
+  collection functions. See [Allow all](#allow-all) to provide public access.
+</Warning>
+
+## Allow all
+
+If you want to allow anyone to read data and/or call contract data, you can add one of the following 
+directives at the top of your collection: 
+
+ - `@public` - everyone can read and call any function
+ - `@read` - everyone can read
+ - `@call` - everyone can call any function
+
+
+<Snippet file="permissions/public-on-collections.mdx" /> 
+
+<Snippet file="permissions/read-on-collections.mdx" /> 
+
+<Snippet file="permissions/call-on-collections.mdx" /> 
+
+
+## Delegation
+
+<Snippet file="permissions/delegate/desc.mdx" /> 
+
+<Snippet file="permissions/read-on-fields.mdx" />
+
+<Snippet file="permissions/call-on-functions.mdx" />
+
+### `@delegate` + `@read`
+
+<Snippet file="permissions/delegate/delegate-read.mdx" />
+
+### `@delegate` + `@call`
+
+<Snippet file="permissions/delegate/delegate-call.mdx" />
+
+
+## Code
+
+If you need more granular control over who can write data and call functions in Polybase, you can allow anyone to call
+the collection functions, but then write code to check the user's permissions in the collection functions.
+
+<Note>
+This can only be used to control call/write access to Polybase, not read access.
+</Note>
+
+```js
+@public
+collection Team {
+  id: string
+  members: string[]
+  publicKey: PublicKey;
+
+  // Anyone can call this function because of @public on collection
+  addMember (id: string) {
+    // But you must be signing using the correct key
+    if (this.publicKey == ctx.publicKey) {
+       throw error('invalid user');
+    }
+
+    // And there must not be already more than 5 members
+    if (this.members.length > 5) {
+      throw error('too many members');
+    }
+
+    // Now we have checked rules, we can write the data
+    this.members.push(id);
+  }
+}
+```
+
+## Encryption
+
+You can make your data public (using the `@public` directive) but encrypted. This means that anyone can read the data, but only authorized 
+users can decrypt it. 
+
+For more information on encrypting data, see the [Encryption](/encryption) guide.

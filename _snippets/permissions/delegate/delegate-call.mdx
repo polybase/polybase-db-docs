@@ -1,0 +1,27 @@
+Example of delegating ***call permission*** to `Response` to a user with given `publicKey`:
+
+`Response` → `Form` → `User` → `publicKey`:
+
+```js
+collection Response {
+  form: Form;
+
+  // Delegate call permission to form/Form
+  @call(form)
+  function approve () {
+
+  }
+}
+
+collection Form {
+  // Delegate call permission to User
+  @delegate
+  creator: User;
+}
+
+collection User {
+  // Delegate call permission to publicKey
+  @delegate
+  publicKey: PublicKey;
+}
+```
