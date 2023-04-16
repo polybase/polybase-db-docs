@@ -109,6 +109,10 @@ The collection `constructor` function lets you **create new records** in your co
 The constructor function must assign `this.id` and any additional required fields defined in your collection. An error will be returned if a
 record already exists with the assigned `id` is provided, as each record in a collection must have a unique `id`.
 
+<Note>
+Polybase functions have a 5 second timeout period.
+</Note>
+
 
 ### Fields
 
@@ -384,6 +388,10 @@ Map fields are not currently indexed
 ### Functions
 
 Field values can only be modified using functions.
+
+<Note>
+  Polybase functions have a 5 second timeout period.
+</Note>
 
 ```js
 @public
