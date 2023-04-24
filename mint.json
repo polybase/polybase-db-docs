@@ -46,6 +46,11 @@
       "name": "Email",
       "icon": "envelope",
       "url": "mailto:hello@polybase.xyz"
+    },
+    {
+      "name": "Changelog",
+      "icon": "arrows-rotate",
+      "url": "https://polybase.xyz/changelog"
     }
   ],
   "navigation": [
@@ -63,7 +68,6 @@
         "encrypt-data",
         "react",
         "faq",
-        "changelog",
         "how-it-works",
         "known-issues",
         "indexers",
