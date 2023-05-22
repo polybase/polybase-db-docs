@@ -22,7 +22,13 @@ const db = new Polybase({ defaultNamespace: "your-namespace" });
 const collectionReference = db.collection("cities");
 
 async function getRecord () {
-  const { data, block } = await collectionReference.record("id").get();
+  const record = await collectionReference.record("id").get();
+
+  // Get data from the record
+  const { data } = record; // or const data = record.data
+
+  // Record is CollectionRecordResponse instance, so you can also get again to refresh
+  const updatedRecord = record.get();
 }
 ```
 
@@ -74,6 +80,12 @@ const collectionReference = db.collection("cities");
 
 export async function listRecordsWithFilter () {
   const records = await collectionReference.where("country", "==", "UK").get();
+
+  // Array of records is available under the data property
+  const { data, cursor } = records;
+
+  // Records is QueryResponse, so we can use it to get the next page of results
+  await records.next();
 }
 
 ```
@@ -109,4 +121,44 @@ const collectionReference = db
       // Optional error handler
     }
   );
+```
+
+## Pagination
+
+You can paginate through your results using the cursor returned from the
+`.get()` method, or by using the built-in `.next()` 
+
+### Pagination with cursor 
+
+Use the cursor response with `.before()` and `.after()` to paginate through
+collection data.
+
+```js
+const db = new Polybase({ defaultNamespace: "your-namespace" });
+const collectionReference = await db.collection("cities");
+
+// First page
+const { data, cursor } = await collectionReference.get();
+
+// Next page
+const next = await collectionReference.after(cursor.after).get();
+
+// Previous page
+const previous = await collectionReference.before(cursor.before).get();
+```
+
+### Pagination with next() or previous()
+
+To simplify this process, a `next()` and `previous()` helper method is provided on the response.
+
+```js
+const db = new Polybase({ defaultNamespace: "your-namespace" });
+const collectionReference = await db.collection("cities");
+
+// First page
+const first = await collectionReference.get();
+
+// Next pages
+const second = await first.next();
+const third = await second.next();
 ```
