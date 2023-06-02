@@ -1,0 +1,21 @@
+---
+title: "Private Mainnet"
+---
+
+The Polybase Mainnet is currently invite-only. If you have a production use case and would like to join the private mainnet, please [apply here](https://ask.polybase.xyz/mainnet).
+
+## Configuring the SDK
+
+To connect to the Polybase Mainnet, you will need to configure the SDK with the following parameters:
+
+```typescript
+import { Polybase } from "@polybase/client";
+
+const db = new Polybase({ 
+  baseURL: "https://mainnet.polybase.xyz/v0",
+  defaultNamespace: "your-namespace" 
+});
+
+// Now you can use the SDK as normal
+await db.collection("City").call("setCountry", ["USA"]);
+```
