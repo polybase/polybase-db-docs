@@ -69,8 +69,17 @@ export async function listRecords () {
 
 ## Filter records
 
-To use the `where()` filter, you must have a corresponding index specified on
-the collection.
+Filter records using `where(name, op, value)` filters. For single field where/sort clauses, you do not need to explicitly
+define your index.
+
+Valid operators are:
+
+  - `==` - Equals
+  - `>` - Greater than
+  - `>=` - Greater than or equal to
+  - `<` - Less than
+  - `<=` - Less than or equal to
+
 
 ```js
 import { Polybase } from "@polybase/client"
@@ -87,8 +96,64 @@ export async function listRecordsWithFilter () {
   // Records is QueryResponse, so we can use it to get the next page of results
   await records.next();
 }
-
 ```
+
+### Collection filters
+
+You can filter on a field of type `Collection`, by passing a Collection Record reference to the `where` clause. Only
+`==` is supported for collection filters.
+
+<Note>
+  Fields of type Collection must be indexed explicitly `@index(collectionField)`.
+</Note>
+
+```js
+import { Polybase } from "@polybase/client"
+
+const db = new Polybase({ defaultNamespace: "your-namespace" });
+const collectionReference = db.collection("NFT");
+
+export async function listRecordsWithFilter () {
+  const collectionRecord = collectionReference.record("user_id");
+  const records = await collectionReference.where("user", "==", collectionRecord).get();
+
+  // Array of records is available under the data property
+  const { data, cursor } = records;
+
+  // Records is QueryResponse, so we can use it to get the next page of results
+  await records.next();
+}
+```
+
+You would need the following schema:
+
+```js
+@public
+collection User {
+  id: string;
+
+  ...
+}
+
+@public
+collection NFT {
+  id: string;
+  user: User;
+
+  @index(user);
+
+  ...
+}
+```
+
+
+### Multiple filters
+
+In order to use multiple where or sorts, you must specify the corresponding index.
+
+<Snippet file="indexes/multi-field-index.mdx" /> 
+
+
 
 ## Listen for updates on a collection
 
