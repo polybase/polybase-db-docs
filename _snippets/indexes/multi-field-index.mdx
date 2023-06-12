@@ -1,0 +1,46 @@
+```js
+const db = new Polybase({ defaultNamespace: "your-namespace" });
+const collectionReference = db.collection("cities");
+const records = await collectionReference
+  .where("name", "==", "abc")
+  .where("country", "==", "UK")
+  .get();
+```
+
+You would need the following schema:
+
+```js
+@public
+collection cities {
+  name: string;
+  country: string;
+
+  @index(name, country);
+
+  ...
+}
+```
+
+If you want to order your results, you also need to include that in the index:
+
+```js
+const db = new Polybase({ defaultNamespace: "your-namespace" });
+const collectionReference = db.collection("cities");
+const records = await collectionReference
+  .where("name", "==", "abc")
+  .sort("population", "desc")
+  .get();
+```
+
+You would need the following schema:
+
+```js
+@public
+collection cities {
+  name: string;
+  country: string;
+  population: number;
+
+  @index(name, [population, desc]);
+}
+```
