@@ -147,12 +147,33 @@ collection NFT {
 ```
 
 
-### Multiple filters
+### Multiple filters on different fields
 
-In order to use multiple where or sorts, you must specify the corresponding index.
+In order to use multiple `where` or `sort` clauses, you must specify the corresponding indexes in your schema. 
 
 <Snippet file="indexes/multi-field-index.mdx" /> 
 
+
+
+### Multiple filters on the same field (starts with)
+
+Multiple `where` clauses on the same field can only be applied for greater than/less than combinations (e.g. `>` or `>=` and `<` or `<=`).
+
+Using the `>=` and `<` operators, you can filter records that start with a given prefix.
+
+```js
+import { Polybase } from "@polybase/client"
+
+const db = new Polybase({ defaultNamespace: "your-namespace" });
+const collectionReference = db.collection("cities");
+
+
+// Starts with UK
+const startsWithUK = await collectionReference
+  .where("country", ">=", "UK")
+  .where("country", "<", "UK~")
+  .get();
+```
 
 
 ## Listen for updates on a collection
@@ -187,6 +208,7 @@ const collectionReference = db
     }
   );
 ```
+
 
 ## Pagination
 
