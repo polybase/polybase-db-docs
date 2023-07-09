@@ -138,9 +138,16 @@ The `authState` for **Metamask** login would be:
 Metamask does not currently provide the `publicKey` directly but it can be obtained by signing a request.
 
 ```js
+import { ethPersonalSignRecoverPublicKey } from '@polybase/eth'
+import {  } from '@polybase/util'
+
 const msg = 'Login to app'
 const sig = await auth.ethPersonalSign(msg)
-const publicKey = ethPersonalSignRecoverPublicKey(sig, msg)
+// Returns a hex string of the public key (65 bytes), you will need to convert to 64 bytes to use
+// with Polybase
+const publicKey65Bytes = ethPersonalSignRecoverPublicKey(sig, msg)
+// Now it can be used with Polybase
+const publicKey64Bytes = '0x' + publicKey65Bytes.slice(4)
 ```
 
 
