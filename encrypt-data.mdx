@@ -75,7 +75,8 @@ There are a number of different algorithms, but we recommend using `secp256k1` (
 import { secp256k1, decodeFromString, encodeToString, EncryptedDataSecp256k1 } from '@polybase/util'
 
 // Public and private key as UInt8Array
-const { publicKey, privateKey } = await secp256k1.generateKeyPair()
+const privateKey = generatePrivateKey()
+const publicKey = secp256k1.getPublicKey64()
 
 export async function asymmmetricEncryptString (publicKey: Uint8Array, str: string): Promise<EncryptedDataSecp256k1> {
 
