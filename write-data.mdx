@@ -228,7 +228,7 @@ import { secp256k1 } from '@polybase/util'
 
 async function createWallet () {
   // First time the user signs up to your dapp (generate key AKA wallet)
-  const { privateKey, publicKey } = await secp256k1.generateKeyPair()
+  const privateKey = await secp256k1.generatePrivateKey()
 
   const db = new Polybase({ defaultNamespace: "your-namespace" })
 
@@ -243,7 +243,7 @@ async function createWallet () {
     return { h: 'eth-personal-sign', sig: ethPersonalSign(privateKey, data) }
   })
 
-  return { privateKey, publicKey }
+  return { privateKey, publicKey: secp256k1.getPublicKey64(privateKey) }
 }
 ```
 
@@ -327,7 +327,8 @@ const db = new Polybase({ defaultNamespace: "your-namespace" });
 
 async function createWallet () {
   // First time the user signs up to your dapp (generate key pair AKA wallet)
-  const { privateKey, publicKey } = await secp256k1.generateKeyPair();
+  const privateKey = secp256k1.generatePrivateKey()
+  const publicKey = secp256k1.getPublicKey64(privateKey)
 
   // Encrypted value will be returned as a hex string 0x...
   const encryptedValueAsHexStr = await secp256k1.asymmetricEncryptToEncoding(
