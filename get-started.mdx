@@ -51,47 +51,14 @@ const db = polybase.Polybase({
 
 Create collections using [Polybase Explorer](https://explorer.testnet.polybase.xyz) or the JavaScript SDK.
 
+Watch Shaki create a simple collection using the Polybase Explorer. 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/EKHD7i1y4jc" title="Defining a collection in Polybase Explorer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
 <Info>
 We suggest creating collections using [Polybase Explorer](https://explorer.testnet.polybase.xyz). You will need to first login and create an account.
 </Info>
 
 A Polybase collection describes the rules for a collection of data, not just a single record (as is the case with other smart collection languages).
-
-In this example we use the JavaScript SDK to create a collection called `City` that has `name` and `country` fields, and a `setCountry()` function. You can define multiple 
-collections in a single `applySchema` call.
-
-```js
-await db.applySchema(`
-  @public
-  collection City {
-    id: string;
-    name: string;
-    country?: string;
-
-    constructor (id: string, name: string) {
-      this.id = id;
-      this.name = name;
-    }
-
-    setCountry (country: string) {
-      this.country = country;
-    }
-  }
-
-  @public
-  collection Country {
-    id: string;
-    name: string;
-
-    constructor (id: string, name: string) {
-      this.id = id;
-      this.name = name;
-    }
-  }
-`,
-  "your-namespace"
-); // your-namespace is optional if you have defined a default namespace
-```
 
 For more details on creating collections, see the [collection](/collections) overview.
 

@@ -16,7 +16,45 @@ You can view our example app
 [Polybase Social](https://social.testnet.polybase.xyz) to see it working in
 action.
 
-## Create a collection
+## Create a collection programmatically
+
+If you want to create your collection programatically, see [Creating collection with applySchema](/collections#).
+
+In this example we use the JavaScript SDK to create a collection called `City` that has `name` and `country` fields, and a `setCountry()` function. You can define multiple 
+collections in a single `applySchema` call.
+
+```js
+await db.applySchema(`
+  @public
+  collection City {
+    id: string;
+    name: string;
+    country?: string;
+
+    constructor (id: string, name: string) {
+      this.id = id;
+      this.name = name;
+    }
+
+    setCountry (country: string) {
+      this.country = country;
+    }
+  }
+
+  @public
+  collection Country {
+    id: string;
+    name: string;
+
+    constructor (id: string, name: string) {
+      this.id = id;
+      this.name = name;
+    }
+  }
+`,
+  "your-namespace"
+); // your-namespace is optional if you have defined a default namespace
+```
 
 You can create a collection using the [Explorer](https://explorer.testnet.polybase.xyz) **(recommended)** or by using the client library and calling the `applySchema` method on your polybase instance.
 
