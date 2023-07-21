@@ -94,6 +94,7 @@
     {
       "group": "Examples",
       "pages": [
+        "simple-crud",
         "polybase-social"
       ]
     },
