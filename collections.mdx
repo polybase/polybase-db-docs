@@ -16,90 +16,11 @@ You can view our example app
 [Polybase Social](https://social.testnet.polybase.xyz) to see it working in
 action.
 
-## Create a collection programmatically
-
-If you want to create your collection programatically, see [Creating collection with applySchema](/collections#).
-
-In this example we use the JavaScript SDK to create a collection called `City` that has `name` and `country` fields, and a `setCountry()` function. You can define multiple 
-collections in a single `applySchema` call.
-
-```js
-await db.applySchema(`
-  @public
-  collection City {
-    id: string;
-    name: string;
-    country?: string;
-
-    constructor (id: string, name: string) {
-      this.id = id;
-      this.name = name;
-    }
-
-    setCountry (country: string) {
-      this.country = country;
-    }
-  }
-
-  @public
-  collection Country {
-    id: string;
-    name: string;
-
-    constructor (id: string, name: string) {
-      this.id = id;
-      this.name = name;
-    }
-  }
-`,
-  "your-namespace"
-); // your-namespace is optional if you have defined a default namespace
-```
-
-You can create a collection using the [Explorer](https://explorer.testnet.polybase.xyz) **(recommended)** or by using the client library and calling the `applySchema` method on your polybase instance.
-
 <Info>
   We recommended you use [Polybase
   Explorer](https://explorer.testnet.polybase.xyz) to create your Collection. You will need to first login 
   and create an account.
 </Info>
-
-If you want to create your collection programmatically, see [Creating a collection with applySchema]
-
-In this example, we use the JavaScript SDK to create a collection called `City` that has `name` and `country` fields, and a `setCountry()` function. You can define multiple collections in a single `applySchema` call.
-
-```js
-await db.applySchema(`
-  @public
-  collection City {
-    id: string;
-    name: string;
-    country?: string;
-
-    constructor (id: string, name: string) {
-      this.id = id;
-      this.name = name;
-    }
-
-    setCountry (country: string) {
-      this.country = country;
-    }
-  }
-
-  @public
-  collection Country {
-    id: string;
-    name: string;
-
-    constructor (id: string, name: string) {
-      this.id = id;
-      this.name = name;
-    }
-  }
-`,
-  "your-namespace"
-); // your-namespace is optional if you have defined a default namespace
-```
 
 <Warning>
   If you use `applySchema` you will need to sign the request [sign the request](https://docs.polybase.xyz/write#signing-requests), and 
