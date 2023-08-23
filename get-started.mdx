@@ -49,61 +49,38 @@ const db = polybase.Polybase({
 
 ## Create a collection
 
-Create collections using [Polybase Explorer](https://explorer.testnet.polybase.xyz) or the JavaScript SDK (`@polybase/client`).
+You must create a collection before writing and reading data to Polybase. Create collections using [Polybase Explorer](https://explorer.testnet.polybase.xyz) **(recommended)** or programatically [using the JavaScript SDK](/collections#create-collection-programmatically).
+
 
 Watch Shaki create a simple collection using the Polybase Explorer. 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/EKHD7i1y4jc" title="Defining a collection in Polybase Explorer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-<Info>
-We suggest creating collections using [Polybase Explorer](https://explorer.testnet.polybase.xyz). You will need to first login and create an account.
-</Info>
-
-## Create a collection programmatically
-
-If you want to create your collection programatically, see [Creating collection with applySchema](/collections#).
-
-In this example we use the JavaScript SDK to create a collection called `City` that has `name` and `country` fields, and a `setCountry()` function. You can define multiple 
-collections in a single `applySchema` call.
+Here's an example Schema:
 
 ```js
-await db.applySchema(`
-  @public
-  collection City {
-    id: string;
-    name: string;
-    country?: string;
+@public
+collection City {
+  id: string;
+  name: string;
+  country?: string;
 
-    constructor (id: string, name: string) {
-      this.id = id;
-      this.name = name;
-    }
-
-    setCountry (country: string) {
-      this.country = country;
-    }
+  constructor (id: string, name: string) {
+    this.id = id;
+    this.name = name;
   }
 
-  @public
-  collection Country {
-    id: string;
-    name: string;
-
-    constructor (id: string, name: string) {
-      this.id = id;
-      this.name = name;
-    }
+  setCountry (country: string) {
+    this.country = country;
   }
-`,
-  "your-namespace"
-); // your-namespace is optional if you have defined a default namespace
+}
 ```
 
-You can create a collection using the [Explorer](https://explorer.testnet.polybase.xyz) **(recommended)** or by using the client library and calling the `applySchema` method on your polybase instance.
+<Note>
+A Polybase `collection` is just like an Ethereum `contract`, but instead of being for a single record, collections describes the rules for a set of records.
+</Note>
 
-A Polybase collection describes the rules for a collection of data, not just a single record (as is the case with other smart collection languages).
 
 ## Create a collection record
-
 When you create a new record, the `constructor` function in your collection is called with the parameters you provide.
 
 ```js
