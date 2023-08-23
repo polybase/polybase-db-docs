@@ -1,7 +1,7 @@
 {
   "name": "Polybase",
   "versions": [
-    "0.6.5"
+    "0.6.6"
   ],
   "logo": {
     "light": "/logo/light.svg",
@@ -94,6 +94,7 @@
     {
       "group": "Examples",
       "pages": [
+        "simple-crud",
         "polybase-social"
       ]
     },
