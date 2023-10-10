@@ -1,0 +1,163 @@
+---
+title: "Get Started"
+---
+
+import { Cards, Card, Callout, Tabs } from 'nextra/components'
+
+# Get Started
+
+## Install Polybase
+
+From Package Manager:
+
+<Tabs items={['npm', 'yarn', 'html']}>
+  <Tabs.Tab>
+  ```bash npm
+  npm install @polybase/client
+  ```
+  </Tabs.Tab>
+
+<Tabs.Tab>
+  ```bash yarn
+  yarn add @polybase/client
+  ```
+</Tabs.Tab>
+
+<Tabs.Tab>
+  ```html html
+  <script src="https://cdn.jsdelivr.net/npm/@polybase/client@latest/dist/bundle.min.js"></script>
+  ```
+</Tabs.Tab>
+</Tabs>
+
+## Initialize the library
+
+<Tabs items={['js', 'html']}>
+  <Tabs.Tab>
+```bash js
+  import { Polybase } from "@polybase/client";
+
+  const db = new Polybase({
+    defaultNamespace: "your-namespace",
+  });
+  ```
+  </Tabs.Tab>
+
+  <Tabs.Tab>
+  ```bash html
+  const db = polybase.Polybase({
+    defaultNamespace: "your-namespace",
+  })
+  ```
+  </Tabs.Tab>
+</Tabs>
+
+
+<Callout type="warning">
+  Namespace must be used for collections.
+</Callout>
+
+<Callout type="info">
+  If you specify a defaultNamespace, it will be automatically added for you when you [create a collection instance](/collections#get-a-collection).
+</Callout>
+
+## Create a collection
+
+<Callout type="warning">
+  Note that reserved words and keywords (JavaScript) may not be used as identifiers (fields, function names etc.).
+
+  Please refer to this for the full list of [reserved words](https://tc39.es/ecma262/#sec-keywords-and-reserved-words).
+</Callout>
+
+You must create a collection before writing and reading data to Polybase. Create collections using [Polybase Explorer](https://explorer.testnet.polybase.xyz) **(recommended)** or programatically [using the JavaScript SDK](/collections#create-collection-programmatically).
+
+
+Watch Shaki create a simple collection using the Polybase Explorer. 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/EKHD7i1y4jc" title="Defining a collection in Polybase Explorer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+Here's an example Schema:
+
+```typescript
+@public
+collection City {
+  id: string;
+  name: string;
+  country?: string;
+
+  constructor (id: string, name: string) {
+    this.id = id;
+    this.name = name;
+  }
+
+  setCountry (country: string) {
+    this.country = country;
+  }
+}
+```
+
+<Callout type="info" emoji="ℹ️">
+A Polybase `collection` is just like an Ethereum `contract`, but instead of being for a single record, collections describes the rules for a set of records.
+</Callout>
+
+
+## Create a collection record
+When you create a new record, the `constructor` function in your collection is called with the parameters you provide.
+
+```js
+import { Polybase } from "@polybase/client";
+
+const db = new Polybase({ defaultNamespace: "your-namespace" });
+
+// Based on the collection code above, "new-york" is the `id` of the new record. 
+// The `id` "new-york" must be unique (not already exist in the collection)
+await db.collection("City").create(["new-york", "New York"]); 
+// new-york is the `id`, New York is the `name`
+```
+
+<Callout type="info" emoji="ℹ️">
+  Now go view the collection in the [Polybase Explorer](https://explorer.testnet.polybase.xyz).
+</Callout>
+
+## Update a collection record
+
+You can update records by calling methods defined on your collection.
+
+```js
+import { Polybase } from "@polybase/client";
+
+const db = new Polybase({ defaultNamespace: "your-namespace" });
+await db.collection("City").call("setCountry", ["USA"]);
+```
+
+## Read a record
+
+```js
+import { Polybase } from "@polybase/client";
+
+const db = new Polybase({ defaultNamespace: "your-namespace" });
+const data = await db.collection("City").record("new-york").get();
+```
+
+## Live Example
+
+{/* <Snippet file="examples/client-auth.mdx" />  */}
+Open in [CodeSandbox](https://codesandbox.io/s/polybase-client-auth-vqo2ui?file=/index.html)
+
+View [Schema for example](https://explorer.testnet.polybase.xyz/collections/pk%2F0xea448a816eba719df5155f1799d014d6ce74638fc5d42780597ad7e9df046a486ba295ed1c8364d284c416b350ba6b4e4db4966faf053e98cca6cab9fd6aa266%2FTest%2FUser/schema) in explorer
+
+<iframe
+ src="https://codesandbox.io/embed/polybase-client-auth-vqo2ui?autoresize=1&fontsize=14&hidenavigation=1&theme=dark"
+  width="100%"
+  height="500px"
+  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+></iframe>
+
+
+## Next steps
+
+<Cards>
+  <Card title="Understand Collections" href="/collections" />
+  <Card title="FAQ" href="/faq" />
+  <Card title="Read the Polybase Whitepaper" href="https://polybase.xyz/whitepaper" />
+ </Cards>

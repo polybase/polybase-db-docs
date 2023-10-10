@@ -1,0 +1,103 @@
+---
+title: "Known Issues"
+---
+
+# Known Issues
+
+Polybase is currently in alpha. We appreciate your patience while we add
+functionality and address these issues. Please report any issues in
+[Discord](https://discord.gg/DrXkRpCFDX).
+
+## Function timeout
+
+Polybase functions have a 5 second timeout period.
+
+
+## Indexes on Collection fields must be explicitly defined
+
+You can index fields of type Collection but they must be explicitly defined using:
+
+`@index(collectionField)`
+
+
+## Limitation on indexing maps and arrays
+Currently, Polybase does not support indexing of elements of maps or arrays.
+This means that you will not be able to use `where` or `sort` on the elements
+in these types. 
+
+Example: 
+
+If you have a schema such as: 
+
+```js
+collection User {
+    id: string;
+    details: map<string, string>;
+    adresses: string[]
+}
+```
+
+You will not be able to add `details` or `addresses` to the index
+
+```js
+collection User {
+    id: string;
+    details: map<string, string>;
+
+    @index(details, adresses) //  DOES NOT WORK
+}
+```
+You also will not be able to add elements of `details` or `addresses`
+
+```js
+collection User {
+    id: string;
+    details: map<string, string>;
+
+    @index(details['name'], adresses[0]) //  DOES NOT WORK
+}
+```
+
+
+
+## Limitations on optional types in maps
+Currently Polybase does not support `null` values in maps.
+If you have an optional value that may not exist, you must still provide a 
+value for the key or omit the type. 
+
+Example:
+
+If you have a schema such as: 
+
+```js
+collection User {
+    id: string;
+    name: string;
+    details: map<string, string>;
+}
+```
+
+You must provide a value for all fields in details or omit it
+
+```js
+// User provided an email but not a phone number
+const userName = 'John Doe'
+const userEmail = 'john.doe@polybase.xyz'
+const userPhone = null
+
+const collectionReference = db.collection("User")
+
+// DOES NOT WORK
+const recordData = await collectionReference.create([userName, {email: userEmail, phone: userPhone}]) 
+
+// WORKS
+const recordData = await collectionReference.create([userName, {email: userEmail, phone: ""}]) 
+
+// WORKS
+const recordData = await collectionReference.create([userName, {}])
+
+```
+
+
+
+

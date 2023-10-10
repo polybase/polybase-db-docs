@@ -1,0 +1,18 @@
+{
+  "index": "Introduction",
+  "guides": "Guides",
+  "recipes": "Recipes",
+  "tutorials": "Tutorials",
+  "examples": "Examples",
+  "api-reference": "API Reference",
+  "about": {
+    "title": "About",
+    "type": "page"
+  },
+  "contact": {
+    "title": "Contact ↗",
+    "type": "page",
+    "href": "https://twitter.com/polybase_xyz",
+    "newWindow": true
+  }
+}
