@@ -9,6 +9,12 @@
     "title": "About",
     "type": "page"
   },
+  "whitepaper": {
+    "title": "Whitepaper",
+    "type": "page",
+    "href": "https://polybase.xyz/whitepaper",
+    "newWindow": true
+  },
   "contact": {
     "title": "Contact ↗",
     "type": "page",
