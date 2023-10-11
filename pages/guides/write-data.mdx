@@ -46,7 +46,7 @@ The data returned would be:
 
 And your collection schema might look like:
 
-```js
+```typescript
 @public
 collection Person {
   id: name;
@@ -88,7 +88,7 @@ async function updateRecord () {
 
 Would require the following collection schema:
 
-```js
+```typescript
 @public
 collection Person {
   id: name;
@@ -124,7 +124,7 @@ collection, and then use this to determine if the change is valid.
 
 For example:
 
-```js
+```typescript
 collection CollectionName () {
   id: string;
   name: string;

@@ -24,9 +24,7 @@ action.
 
 <Callout type="warning">
   `contract` may **not** be used as an identifier (collection name, field name, function name, etc.).
-
   Also, JavaScript reserved words and keywords may **not** be used as identifiers. 
-
   Please refer to the full list of [JavaScript reserved words](https://tc39.es/ecma262/#sec-keywords-and-reserved-words).
 </Callout>
 
@@ -132,7 +130,7 @@ similar to Javascript/TypeScript. Collections allow you define the rules and
 indexes for your collection records. The following is a valid collection
 definition.
 
-```js
+```typescript
 @public
 collection CollectionName {
   // id is mandatory on all collections and must be unique
@@ -175,7 +173,7 @@ You can specify the fields that are allowed in your collection. These should be
 at the top most part of your collection. A collection should always have a `id`
 field (`id` is unique). By default, all fields are required.
 
-```js
+```typescript
 @public
 collection CollectionName {
   id: string;
@@ -197,7 +195,7 @@ The `id` fields is required on every Polybase collection. It must be assigned in
 
 You can also define nested fields:
 
-```js
+```typescript
 @public
 collection User {
   id: string;
@@ -216,7 +214,7 @@ collection User {
 All fields are required by default, if you want to make a field optional simply
 append `?` after the field name and before the `:`. For example:
 
-```js
+```typescript
 @public
 collection CollectionName {
   id: string;
@@ -229,7 +227,7 @@ collection CollectionName {
 
 You can also pass in optional values to function parameters, for example:
 
-```js
+```typescript
 @public
 collection CollectionName {
   id: string;
@@ -332,7 +330,7 @@ You can then call the constructor using `create()` passing in the reference to a
 
 <Tabs items={['js', 'curl']}>
   <Tabs.Tab>
-  ```js js
+  ```js
   import { Polybase } from "@polybase/client";
 
   const db = new Polybase({
@@ -350,7 +348,7 @@ You can then call the constructor using `create()` passing in the reference to a
   </Tabs.Tab>
 
   <Tabs.Tab>
-  ```bash curl
+  ```bash
   curl -X POST \
     https://testnet.polybase.xyz/v0/collections/your_namespace%2FPet/records \
     -H 'Content-Type: application/json' \

@@ -2,15 +2,15 @@
 title: Gateway API Overview
 ---
 
+import { Callout } from 'nextra/components'
+
 # Gateway API Overview
 
 The Polybase Gateway REST API provides a convinent way to access the Polybase decentralized network.
 
-{/*}
-<Warning>
-While the Polybase network is in Alpha, the gateway is the only way to access the Polybase network. We will shortly be adding p2p access to the network.
-</Warning>
-/*}
+<Callout type="warning">
+  While the Polybase network is in Alpha, the gateway is the only way to access the Polybase network. We will shortly be adding p2p access to the network.
+</Callout>
 
 ## Authentication
 
@@ -40,7 +40,7 @@ To generate `sig` you must sign a string in the format `<timestamp>.<body_json>`
 
 You can use the [@polybase/util](https://www.npmjs.com/package/@polybase/util) package to generate the signature from any 32 bytes private key, and the sign function to create the signature.
 
-```typescript
+```js
 import { secp256k1 } from '@polybase/util'
 
 // You can use any 32 byte private key from any library, 

@@ -15,7 +15,7 @@ that calls `selfdestruct()`. By convention, this should be a function called
 The following provides an example of a delete function that only allows the
 owner of the record to delete it.
 
-```js
+```typescript
 @public
 collection City {
   id: string;
@@ -50,7 +50,7 @@ async function updateRecord () {
   const recordData = await collectionReference
     // the id of the record
     .record("new-york")
-    // call the function you defined in your schema to delete a record
+    // call jsjsthe function you defined in your schema to delete a record
     .call("del");
 }
 ```
