@@ -3,6 +3,8 @@ title: "Read Data"
 ---
 
 import { Callout } from 'nextra/components'
+import Examples from '../_snippets/examples/examples.mdx'
+import MultiFieldIndex from '../_snippets/indexes/multi-field-index.mdx'
 
 # Read Data
 
@@ -11,7 +13,7 @@ There are two ways to retrieve data in Polybase.
 1. Fetch data once with `.get()`
 2. Listen for real time updates with `.onSnapshot()`
 
-{/* <Snippet file="examples/examples.mdx" />  */}
+<Examples />
 
 
 ## Get a single record
@@ -154,8 +156,7 @@ collection NFT {
 
 In order to use multiple `where` or `sort` clauses, you must specify the corresponding indexes in your schema. 
 
-{/* <Snippet file="indexes/multi-field-index.mdx" />  */}
-
+<MultiFieldIndex />
 
 
 ### Multiple filters on the same field (starts with)

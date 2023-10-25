@@ -3,6 +3,7 @@ title: "Get Started"
 ---
 
 import { Cards, Card, Callout, Tabs } from 'nextra/components'
+import ClientAuth from '../_snippets/examples/client-auth.mdx'
 
 # Get Started
 
@@ -140,19 +141,7 @@ const data = await db.collection("City").record("new-york").get();
 
 ## Live Example
 
-{/* <Snippet file="examples/client-auth.mdx" />  */}
-Open in [CodeSandbox](https://codesandbox.io/s/polybase-client-auth-vqo2ui?file=/index.html)
-
-View [Schema for example](https://explorer.testnet.polybase.xyz/collections/pk%2F0xea448a816eba719df5155f1799d014d6ce74638fc5d42780597ad7e9df046a486ba295ed1c8364d284c416b350ba6b4e4db4966faf053e98cca6cab9fd6aa266%2FTest%2FUser/schema) in explorer
-
-<iframe
- src="https://codesandbox.io/embed/polybase-client-auth-vqo2ui?autoresize=1&fontsize=14&hidenavigation=1&theme=dark"
-  width="100%"
-  height="500px"
-  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
-  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-></iframe>
-
+<ClientAuth />
 
 ## Next steps
 

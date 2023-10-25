@@ -3,6 +3,14 @@ title: "Collections"
 ---
 
 import { Callout, Tabs } from 'nextra/components'
+import MultiFieldIndex from '../_snippets/indexes/multi-field-index.mdx'
+import PublicOnCollections from '../_snippets/permissions/public-on-collections.mdx'
+import ReadOnCollections from '../_snippets/permissions/read-on-collections.mdx'
+import ReadOnFields from '../_snippets/permissions/read-on-fields.mdx'
+import CallOnCollections from '../_snippets/permissions/call-on-collections.mdx'
+import CallOnFunctions from '../_snippets/permissions/call-on-functions.mdx'
+import Desc from '../_snippets/permissions/delegate/desc.mdx'
+import DelegateRead from '../_snippets/permissions/delegate/delegate-read.mdx'
 
 # Collections
 
@@ -573,53 +581,7 @@ you only need to specify multi-field indexes.
   Indexing array/map fields is currently not possible.
 </Callout>
 
-{/* <Snippet file="indexes/multi-field-index.mdx" />  */}
-```js
-const db = new Polybase({ defaultNamespace: "your-namespace" });
-const collectionReference = db.collection("cities");
-const records = await collectionReference
-  .where("name", "==", "abc")
-  .where("country", "==", "UK")
-  .get();
-```
-
-You would need the following schema:
-
-```typescript
-@public
-collection cities {
-  name: string;
-  country: string;
-
-  @index(name, country);
-
-  ...
-}
-```
-
-If you want to order your results, you also need to include that in the index:
-
-```js
-const db = new Polybase({ defaultNamespace: "your-namespace" });
-const collectionReference = db.collection("cities");
-const records = await collectionReference
-  .where("name", "==", "abc")
-  .sort("population", "desc")
-  .get();
-```
-
-You would need the following schema:
-
-```typescript
-@public
-collection cities {
-  name: string;
-  country: string;
-  population: number;
-
-  @index(name, [population, desc]);
-}
-```
+<MultiFieldIndex />
 
 ## Permissions
 
@@ -628,22 +590,16 @@ To make a collection public, add the `@public` directive.
 
 To allow users to access and manipulate their records, you can use the following directives:
 
-
-{/* <Snippet file="permissions/public-on-collections.mdx" /> 
-
-<Snippet file="permissions/read-on-collections.mdx" /> 
-
-<Snippet file="permissions/read-on-fields.mdx" /> 
-
-<Snippet file="permissions/call-on-collections.mdx" /> 
-
-<Snippet file="permissions/call-on-functions.mdx" />  */}
+<PublicOnCollections />
+<ReadOnCollections />
+<ReadOnFields />
+<CallOnCollections />
+<CallOnFunctions />
 
 ### `@delegate`
 
-{/* <Snippet file="permissions/delegate/desc.mdx" /> 
-
-<Snippet file="permissions/delegate/delegate-read.mdx" />  */}
+<Desc />
+<DelegateRead />
 
 For more on delegating permissions, see [Delegating Permissions](/permissions#delegate).
 

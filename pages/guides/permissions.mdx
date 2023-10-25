@@ -3,6 +3,14 @@ title: Permissions
 ---
 
 import { Callout } from 'nextra/components'
+import PublicOnCollections from '../_snippets/permissions/public-on-collections.mdx'
+import ReadOnCollections from '../_snippets/permissions/read-on-collections.mdx'
+import CallOnCollections from '../_snippets/permissions/call-on-collections.mdx'
+import ReadOnFields from '../_snippets/permissions/read-on-fields.mdx'
+import CallOnFunctions from '../_snippets/permissions/call-on-functions.mdx'
+import Desc from '../_snippets/permissions/delegate/desc.mdx'
+import DelegateRead from '../_snippets/permissions/delegate/delegate-read.mdx'
+import DelegateCall from '../_snippets/permissions/delegate/delegate-call.mdx'
 
 # Permissions
 
@@ -36,28 +44,28 @@ directives at the top of your collection:
  - `@call` - everyone can call any function
 
 
-{/* <Snippet file="permissions/public-on-collections.mdx" /> 
+<PublicOnCollections />
 
-<Snippet file="permissions/read-on-collections.mdx" /> 
+<ReadOnCollections />
 
-<Snippet file="permissions/call-on-collections.mdx" />  */}
+<CallOnCollections />
 
 
 ## Delegation
 
-{/* <Snippet file="permissions/delegate/desc.mdx" /> 
+<Desc />
 
-<Snippet file="permissions/read-on-fields.mdx" />
+<ReadOnFields />
 
-<Snippet file="permissions/call-on-functions.mdx" /> */}
+<CallOnFunctions />
 
 ### `@delegate` + `@read`
 
-{/* <Snippet file="permissions/delegate/delegate-read.mdx" /> */}
+<DelegateRead />
 
 ### `@delegate` + `@call`
 
-{/* <Snippet file="permissions/delegate/delegate-call.mdx" /> */}
+<DelegateCall />
 
 
 ## Code

@@ -1,8 +1,12 @@
+import { Callout } from 'nextra/components'
+
 Delegation allows you to create rules across multiple records, allowing for complex permissions to be defined.
 
-<Note>
+A Polybase `collection` is just like an Ethereum `contract`, but instead of being for a single record, collections describes the rules for a set of records.
+
+<Callout type="info" emoji="ℹ️">
   Delegation rules must always end in a [PublicKey](/collections#public-key) field. You must
    [authenticate the user with using a `signer`](/authentication) function in order to use delegation.
-</Note>
+</Callout>
 
 You can annotate your collections with `@read`, `@call` and `@delegate` directives to control who can read, call and delegate data.
