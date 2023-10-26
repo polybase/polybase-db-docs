@@ -126,7 +126,7 @@ collection User {
 
 #### `@call(<field_name>)`
 
-You can add `@call(<field>)` directive which means that only specified actors can call the function, the field should either be a PublicKey type, or another collection (if you want to use [delegate rules](/collections#delegate)).
+You can add `@call(<field>)` directive which means that only specified actors can call the function, the field should either be a PublicKey type, or another collection (if you want to use [delegate rules](/guides/collections#delegate)).
 
 ```typescript
 @read
@@ -153,9 +153,9 @@ collection User {
 
 There are two ways to define read permissions in Polybase. You can either:
 
-  1. **Encrypt the data** using our [encryption utilities](/encrypt-data) - this allows you to control who can read data by sharing a secret key with them.
+  1. **Encrypt the data** using our [encryption utilities](/guides/encrypt-data) - this allows you to control who can read data by sharing a secret key with them.
 
-  2. **Add permission/authorization rules** - you can [define rules](/collections#authorization) on your schema using the `@read` and `@delegate` directives. This allows you to control who can query records.
+  2. **Add permission/authorization rules** - you can [define rules](/guides/collections#permissions) on your schema using the `@read` and `@delegate` directives. This allows you to control who can query records.
 
 
 ### How can the data on Polybase be accessed without going through the Polybase gateway?

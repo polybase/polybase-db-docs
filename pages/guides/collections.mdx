@@ -87,7 +87,7 @@ await db.applySchema(`
 ```
 
 <Callout type="warning">
-  If you use `applySchema` you will need to sign the request [sign the request](https://docs.polybase.xyz/write-data#signing-requests), and
+  If you use `applySchema` you will need to sign the request [sign the request](/guides/write-data#signing-requests), and
   ensure that your namespace is in the format `pk/0x<hex_encoded_64_byte_public_key>/whatever-namespace-you-want`. Where the 64 byte public key
   is the public key being used to sign the request.
 </Callout>
@@ -298,8 +298,7 @@ The following primitive types are supported:
 
 The bytes type allows you to store arbitary bytes in Polybase, without having to encode the data as a string. 
 
-If you use our client library [`@polybase/client`](https://www.npmjs.com/package/@polybase/client), the bytes type will be returned as a `Uint8Array`. If this field is returned
-from the [Gateway API](/api-reference/overview), then it will be a base64 encoded string.
+If you use our client library [`@polybase/client`](https://www.npmjs.com/package/@polybase/client), the bytes type will be returned as a `Uint8Array`. 
 
 <Callout type="info" emoji="ℹ️">
 `bytes` data is currently not indexed
@@ -601,13 +600,13 @@ To allow users to access and manipulate their records, you can use the following
 <Desc />
 <DelegateRead />
 
-For more on delegating permissions, see [Delegating Permissions](/permissions#delegate).
+For more on delegating permissions, see [Delegating Permissions](/guides/permissions#delegate).
 
 ## Reference a collection
 
 To reference a collection, you can call `.collection("collection-name")` on your
 Polybase instance. The returned collection instance relates to a specific
-collection of data and allows you [.write()](/write) and [.read()](/read) data
+collection of data and allows you [.write()](/guides/write-data) and [.read()](/guides/read-data) data
 from Polybase.
 
 #### Relative Path (with default namespace)

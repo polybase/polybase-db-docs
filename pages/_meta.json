@@ -4,6 +4,7 @@
   "recipes": "Recipes",
   "tutorials": "Tutorials",
   "examples": "Examples",
+  "api-reference": "API Reference",
   "about": {
     "title": "About",
     "type": "page"

@@ -7,7 +7,7 @@ import { Tabs } from 'nextra/components'
 # Authentication
 
 You can use any authentication provider with the Polybase network. You simply need to provide a `signer` function 
-to the Polybase client. Signing a request populates the [`ctx.publicKey`](/collections#context) variable inside your collection code, allowing you to write code that 
+to the Polybase client. Signing a request populates the [`ctx.publicKey`](/guides/collections#context) variable inside your collection code, allowing you to write code that 
 restricts who can read or write to a record. 
 
 This can either be done when instantiating the client, using the `signer` configuration property:
@@ -246,5 +246,5 @@ Open in [CodeSandbox](https://codesandbox.io/s/polybase-client-auth-vqo2ui?file=
 
 ### React
 
-If you're using React, you can use our [React library `@polybase/react`](/react) to help with control authentication.
+If you're using React, you can use our [React library `@polybase/react`](/guides/react) to help with control authentication.
 

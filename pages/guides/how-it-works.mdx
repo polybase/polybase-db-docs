@@ -24,14 +24,14 @@ If you want more detail, check out our [whitepaper](https://polybase.xyz/whitepa
 ### ZK State Rollup
 
 The zk state rollup allows us to prove any record or value in the database both exists and that it is valid (according to the rules 
-of the [collection](/collections)). We can prove this with only the root hash and the zk-proof.
+of the [collection](/guides/collections)). We can prove this with only the root hash and the zk-proof.
 
 Every record is stored as a [hash](https://en.wikipedia.org/wiki/Hash_function) (a fixed-size, random and unique representation of the record). The root hash is determined by combining the hashes for every record, and using that to create a single root hash.
 Because a hash represents the underlying data, any changes to any record would result in a change of that record's hash, which
 in turn would change the root hash (because the root hash is based on every records' hash).
 
 To make a change to a record in the database, a user must prove that a new hash is valid. To do this, a zk-proof is generated that takes the existing hash
- (representing the current state of the record), applies the change function as defined in the [collection definition](/collections), and then returns the new records hash 
+ (representing the current state of the record), applies the change function as defined in the [collection definition](/guides/collections), and then returns the new records hash 
  with a zk-proof, proving that the change is valid. In Polybase, the process of creating the zk-proof is performed automatically by our SDK.
 
 The user can then submit the new hash to the network with the proof. Every block, all the new hashes are updated and combined with the existing hashes to generate a new root hash. At 
