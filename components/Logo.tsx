@@ -30,9 +30,9 @@ const polybaseLogo = (
 
 const Logo = () => {
   return (
-    <a href='https://polybase.xyz/docs' target='_blank'>
+    <div>
       {polybaseLogo}
-    </a>
+    </div>
   )
 }
 
