@@ -1,6 +1,6 @@
 # Polybase DB
 
-This is the source code for the `Polybase DB` documentation site at [Polybase DB docs](https://polybase.xyz/docs/introduction).
+This is the source code for the `Polybase DB` documentation site at [Polybase DB docs](https://polybase.xyz/docs).
 
 ## Build and Run
 
@@ -32,10 +32,6 @@ To run the project in `dev` mode to get live updates on changes:
 
 This will spin up the local development server on [localhost:3000](localhost:3000).
 
-## Contribution
-
-TBD
-
 ## LICENSE
 
-TBD
+See [LICENSE](LICENSE.md).
