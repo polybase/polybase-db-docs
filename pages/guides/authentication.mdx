@@ -1,0 +1,250 @@
+---
+title: "Authentication"
+---
+
+import { Tabs } from 'nextra/components'
+
+# Authentication
+
+You can use any authentication provider with the Polybase network. You simply need to provide a `signer` function 
+to the Polybase client. Signing a request populates the [`ctx.publicKey`](/guides/collections#context) variable inside your collection code, allowing you to write code that 
+restricts who can read or write to a record. 
+
+This can either be done when instantiating the client, using the `signer` configuration property:
+
+```js
+import { Polybase } from '@polybase/client'
+import { ethPersonalSign } from '@polybase/eth'
+
+const db = new Polybase({
+  signer: (data) => {
+    return {
+      h: 'eth-personal-sign',
+      sig: ethPersonalSign(wallet.privateKey()), data)
+    }
+  })
+})
+```
+
+Or later by passing a function to the `signer` method:
+
+```js
+import { Polybase } from '@polybase/client'
+import { ethPersonalSign } from '@polybase/eth'
+
+const db = new Polybase()
+
+db.signer((data) => {
+  return {
+    h: 'eth-personal-sign',
+    sig: ethPersonalSign(wallet.privateKey()), data)
+  }
+})
+```
+
+
+## Polybase Auth
+
+To make authentication easier, Polybase provides an authentication library that allows users to sign in to 
+your app using web3 wallets or email.
+
+The library hides the complexity of the users chosen authentication method, providing a single API for you to sign
+requests regardless of the method they use to login.
+
+<img src="/images/polybase-auth-login.png" />
+
+### Install Polybase Auth
+
+From Package Manager:
+
+<Tabs items={['npm', 'yarn', 'cdn']}>
+  <Tabs.Tab>
+  ```bash
+  npm install @polybase/auth
+  ```
+  </Tabs.Tab>
+
+  <Tabs.Tab>
+  ```bash
+  yarn add @polybase/auth
+  ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+  ```html
+  <script src="https://cdn.jsdelivr.net/npm/@polybase/auth@latest/dist/bundle.min.js"></script>
+  ```
+  </Tabs.Tab>
+</Tabs>
+
+### Initialize
+
+You should only run the `new Auth` class once, and then pass it to your app.
+
+```js
+import { Auth } from '@polybase/auth'
+
+const auth = new Auth()
+
+function App () {
+  ...
+}
+```
+
+#### Next.js
+
+Next.js runs your code both server side and client side. When running server side Next.js has no `document` so Auth will fail to load. 
+Auth doesn't make sense server side, so your code should handle this scenario by skipping any auth code. Before calling auth functions (e.g. `auth.signIn()`), 
+you will need to check that auth is defined.
+
+```js
+const auth = typeof window !== "undefined" ? new Auth() : null;
+
+function App () {
+  const signIn = () => {
+      auth?.signIn()
+  }
+}
+```
+
+
+### Sign in
+
+```js
+import { Auth } from '@polybase/auth'
+
+const auth = new Auth()
+
+// Show the login modal (if not logged in), and wait for a response
+const authState = await auth.signIn()
+```
+
+The `authState` for **email** login would be:
+
+```json
+{
+  type: "email",
+  email: "hello@polybase.xyz",
+  userId: "0xf998db2f1e53a00e9c59330b307cfcc03425b994d417a93c508def6d46ee12d8",
+  publicKey: "0xf998db2f1e53a00e9c59330b307cfcc03425b994d417a93c508def6d46ee12d893c508def6d46ee12d8"
+}
+```
+
+The `authState` for **Metamask** login would be:
+
+```json
+{
+  type: "metamask",
+  // userId is the ethereum address
+  userId: "0xf998db2f1e53a00e9c59330b307cfcc03425b994d417a93c508def6d46ee12d8"
+}
+```
+
+#### Get Public Key with Metamask
+
+Metamask does not currently provide the `publicKey` directly but it can be obtained by signing a request.
+
+```js
+import { ethPersonalSignRecoverPublicKey } from '@polybase/eth'
+import {  } from '@polybase/util'
+
+const msg = 'Login to app'
+const sig = await auth.ethPersonalSign(msg)
+// Returns a hex string of the public key (65 bytes), you will need to convert to 64 bytes to use
+// with Polybase
+const publicKey65Bytes = ethPersonalSignRecoverPublicKey(sig, msg)
+// Now it can be used with Polybase
+const publicKey64Bytes = '0x' + publicKey65Bytes.slice(4)
+```
+
+
+#### Force open signIn modal
+
+By default, if the user is already logged in to your app, then the sign in modal won't open. Instead, the auth state will be returned immediately. 
+If you'd like to allow the user to change the auth/account they are logged in with, you can force open the modal by passing `{ force: true }` to the `signIn` function.
+
+```js 
+import { Auth } from '@polybase/auth'
+
+const auth = new Auth()
+
+const authState = await auth.signIn({ force: true })
+```
+
+
+### Sign out
+
+```js
+import { Auth } from '@polybase/auth'
+
+const auth = new Auth()
+
+await auth.signOut()
+```
+
+
+### Ethereum Personal Sign
+
+Ethereum Personal Sign is the signing mechanism used by Polybase (and many other dapps) to authenticate ownership
+of a public key and to sign data.
+
+```js
+import { Auth } from '@polybase/auth'
+
+const auth = new Auth()
+
+const signatureHex = await auth.ethPersonalSign(data)
+```
+
+You can use the `auth.ethPersonalSign()` in the Polybase client `signer` function:
+
+```js
+import { Auth } from '@polybase/auth'
+
+const auth = new Auth()
+
+db.signer(async (data) => {
+  return {
+    h: 'eth-personal-sign',
+    sig: await auth.ethPersonalSign(data)
+  }
+})
+```
+
+
+### Listening for updates
+
+Your app can listen for updates in the authentication state, by adding an event listener. This can be 
+useful when a user returns to your website.
+
+```js
+import { Auth } from '@polybase/auth'
+
+const auth = new Auth()
+
+auth.onAuthUpdate((authState) => {
+  if (authState) {
+    // User is logged in, show button to dashboard
+  } else {
+    // User is NOT logged in, show login button
+  }
+})
+```
+
+
+### Example
+
+Open in [CodeSandbox](https://codesandbox.io/s/polybase-client-auth-vqo2ui?file=/index.html)
+
+<iframe
+ src="https://codesandbox.io/embed/polybase-client-auth-vqo2ui?autoresize=1&fontsize=14&hidenavigation=1&theme=dark"
+  width="100%"
+  height="500px"
+  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+></iframe>
+
+
+### React
+
+If you're using React, you can use our [React library `@polybase/react`](/guides/react) to help with control authentication.
+

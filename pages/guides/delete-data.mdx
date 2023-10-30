@@ -1,0 +1,59 @@
+---
+title: "Delete Data"
+---
+
+import Examples from '../_snippets/examples/examples.mdx'
+
+# Delete Data
+
+To delete data on Polybase, you must implement a function on your collection
+that calls `selfdestruct()`. By convention, this should be a function called
+`del()`.
+
+<Examples />
+
+### Define selfdestruct in Schema
+
+The following provides an example of a delete function that only allows the
+owner of the record to delete it.
+
+```typescript
+@public
+collection City {
+  id: string;
+  owner: PublicKey;
+
+  constructor (id: string) {
+    this.id = id;
+    this.owner = ctx.publicKey;
+  }
+
+  del () {
+    if (this.owner != ctx.publicKey) {
+      throw error("You cannot delete this record");
+    }
+    selfdestruct();
+  }
+}
+
+```
+
+### Call delete from the SDK
+
+You can now call the `del()` function:
+
+```js
+import { Polybase } from "@polybase/client"
+
+const db = new Polybase({ defaultNamespace: "your-namespace" });
+const collectionReference = db.collection("City");
+
+async function updateRecord () {
+  const recordData = await collectionReference
+    // the id of the record
+    .record("new-york")
+    // call jsjsthe function you defined in your schema to delete a record
+    .call("del");
+}
+```
+

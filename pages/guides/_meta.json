@@ -1,0 +1,18 @@
+{
+    "get-started": "Get Started",
+    "collections": "Collections",
+    "authentication": "Authentication",
+    "write-data": "Write Data",
+    "read-data": "Read Data",
+    "delete-data": "Delete Data",
+    "permissions": "Permissions",
+    "encrypt-data": "Encrypt Data",
+    "react": "React",
+    "faq": "FAQ",
+    "upgrading": "Upgrading to v0.6.0",
+    "mainnet": "Private Mainnet",
+    "how-it-works": "How It Works",
+    "known-issues": "Known Issues",
+    "indexers": "Indexer Network",
+    "cdn-links": "CDN Links"
+}

@@ -1,0 +1,162 @@
+---
+title: "React"
+---
+
+import { Callout, Tabs } from 'nextra/components'
+
+# React
+
+React hooks for Polybase.
+
+## Install Polybase React
+
+<Tabs items={['npm', 'yarn']}>
+  <Tabs.Tab>
+  ```bash
+  npm install @polybase/react
+  ```
+  </Tabs.Tab>
+
+  <Tabs.Tab>
+  ```bash
+  yarn add @polybase/react
+  ```
+  </Tabs.Tab>
+</Tabs>
+
+## React + Polybase Client
+
+There are React hooks and providers for Polybase Client, designed to be use with [`@polybase/client`](https://www.npmjs.com/package/@polybase/client).
+
+### Add Polybase Provider
+
+```js
+import * as React from "react";
+import { PolybaseProvider } from "@polybase/react";
+import { Polybase } from "@polybase/client";
+
+const polybase = new Polybase();
+
+export const App = () => {
+  return (
+    <PolybaseProvider polybase={polybase}>
+      {/* ... your app routes */}
+    </PolybaseProvider>
+  );
+};
+```
+
+### Read a record (with updates)
+
+<Callout type="info" emoji="ℹ️">
+  `<PolybaseProvider>` must be a parent component.
+</Callout>
+
+
+```js
+import * as React from "react";
+import { usePolybase, useDocument } from "@polybase/react";
+
+export const Component = () => {
+  const polybase = usePolybase();
+  const { data, error, loading } =
+    useDocument<OptionalCustomType>(polybase.collection("users").record("id"));
+
+  return data.data.name;
+};
+```
+
+### List collection records (with updates)
+
+<Callout type="info" emoji="ℹ️">
+  `<PolybaseProvider>` must be a parent component.
+</Callout>
+
+```js
+import * as React from "react";
+import { usePolybase, useCollection } from "@polybase/react";
+
+export const Component = () => {
+  const polybase = usePolybase();
+  const { data, error, loading } =
+    useCollection<OptionalCustomType>(polybase.collection("users"));
+
+  const usersEl = map(data, ({ data }) => {
+    return <div key={data.id}>{data.name}</div>;
+  });
+
+  return usersEl;
+};
+```
+
+## React + Polybase Auth
+
+There are React hooks and providers for [authentication](/guides/authentication), designed to be use with [`@polybase/auth`](https://www.npmjs.com/package/@polybase/auth).
+
+### `AuthProvider`
+
+```js
+import * as React from "react";
+import { PolybaseProvider, AuthProvider } from "@polybase/react";
+import { Polybase } from "@polybase/client";
+import { Auth } from "@polybase/auth"
+
+const polybase = new Polybase();
+const auth = new Auth()
+
+export const App = () => {
+  return (
+    <PolybaseProvider polybase={polybase}>
+      <AuthProvider auth={auth} polybase={polybase}>
+        {/* ... your app routes */}
+      </AuthProvider>
+    </PolybaseProvider>
+  );
+};
+```
+
+Once you have added `AuthProvider` as a parent component then use the following hooks.
+
+### `useAuth()`
+
+<Callout type="info" emoji="ℹ️">
+  `<AuthProvider>` must be a parent component.
+</Callout>
+
+```js
+import * as React from "react";
+import { useAuth } from "@polybase/react";
+
+export const Component = () => {
+  const { auth, state, loading } = useAuth();
+
+  // `state` is null if not logged in, or logged in state e.g. { type: "metamask", userId: "..." }
+
+  // `auth` is the prop passed to AuthProvider as auth 
+
+  return (
+    <div>
+      <button onClick={() => auth.signIn()}>Sign In</button>
+      <button onClick={() => auth.signOut()}>Sign Out</button>
+    </div>
+  )
+};
+```
+
+### `useIsAuthenticated()`
+
+<Callout type="info" emoji="ℹ️">
+  `<AuthProvider>` must be a parent component.
+</Callout>
+
+  
+```js
+import * as React from "react";
+import { useIsAuthenticated } from "@polybase/react";
+
+export const Component = () => {
+  const [isLoggedIn, loading] = useIsAuthenticated();
+
+  // ... do something with logged in state
+};
+```

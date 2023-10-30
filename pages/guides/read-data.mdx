@@ -1,0 +1,255 @@
+---
+title: "Read Data"
+---
+
+import { Callout } from 'nextra/components'
+import Examples from '../_snippets/examples/examples.mdx'
+import MultiFieldIndex from '../_snippets/indexes/multi-field-index.mdx'
+
+# Read Data
+
+There are two ways to retrieve data in Polybase.
+
+1. Fetch data once with `.get()`
+2. Listen for real time updates with `.onSnapshot()`
+
+<Examples />
+
+
+## Get a single record
+
+You can read data once, by calling `.record(id: string).get()` on a collection.
+
+```js
+import { Polybase } from "@polybase/client"
+
+const db = new Polybase({ defaultNamespace: "your-namespace" });
+const collectionReference = db.collection("cities");
+
+async function getRecord () {
+  const record = await collectionReference.record("id").get();
+
+  // Get data from the record
+  const { data } = record; // or const data = record.data
+
+  // Record is CollectionRecordResponse instance, so you can also get again to refresh
+  const updatedRecord = record.get();
+}
+```
+
+## Listen for updates on a record
+
+The `.onSnapshot()` handler is called on every update for the record after the
+write is confirmed.
+
+```js
+import { Polybase } from "@polybase/client"
+
+const db = new Polybase({ defaultNamespace: "your-namespace" });
+const collectionReference = db
+  .collection("cities")
+  .record("id")
+  .onSnapshot(
+    (newDoc) => {
+      // Handle the change
+    },
+    (err) => {
+      // Optional error handler
+    }
+  );
+```
+
+## List records in a collection
+
+```js
+import { Polybase } from "@polybase/client"
+
+const db = new Polybase({ defaultNamespace: "your-namespace" });
+const collectionReference = db.collection("cities");
+
+export async function listRecords () {
+  const records = await collectionReference.get();
+}
+```
+
+## Filter records
+
+Filter records using `where(name, op, value)` filters. For single field where/sort clauses, you do not need to explicitly
+define your index.
+
+Valid operators are:
+
+  - `==` - Equals
+  - `>` - Greater than
+  - `>=` - Greater than or equal to
+  - `<` - Less than
+  - `<=` - Less than or equal to
+
+
+```js
+import { Polybase } from "@polybase/client"
+
+const db = new Polybase({ defaultNamespace: "your-namespace" });
+const collectionReference = db.collection("cities");
+
+export async function listRecordsWithFilter () {
+  const records = await collectionReference.where("country", "==", "UK").get();
+
+  // Array of records is available under the data property
+  const { data, cursor } = records;
+
+  // Records is QueryResponse, so we can use it to get the next page of results
+  await records.next();
+}
+```
+
+### Collection filters
+
+You can filter on a field of type `Collection`, by passing a Collection Record reference to the `where` clause. Only
+`==` is supported for collection filters.
+
+<Callout type="info" emoji="ℹ️">
+  Fields of type Collection must be indexed explicitly `@index(collectionField)`.
+</Callout>
+
+```js
+import { Polybase } from "@polybase/client"
+
+const db = new Polybase({ defaultNamespace: "your-namespace" });
+const collectionReference = db.collection("NFT");
+
+export async function listRecordsWithFilter () {
+  const collectionRecord = collectionReference.record("user_id");
+  const records = await collectionReference.where("user", "==", collectionRecord).get();
+
+  // Array of records is available under the data property
+  const { data, cursor } = records;
+
+  // Records is QueryResponse, so we can use it to get the next page of results
+  await records.next();
+}
+```
+
+You would need the following schema:
+
+```typescript
+@public
+collection User {
+  id: string;
+
+  ...
+}
+
+@public
+collection NFT {
+  id: string;
+  user: User;
+
+  @index(user);
+
+  ...
+}
+```
+
+
+### Multiple filters on different fields
+
+In order to use multiple `where` or `sort` clauses, you must specify the corresponding indexes in your schema. 
+
+<MultiFieldIndex />
+
+
+### Multiple filters on the same field (starts with)
+
+Multiple `where` clauses on the same field can only be applied for greater than/less than combinations (e.g. `>` or `>=` and `<` or `<=`).
+
+Using the `>=` and `<` operators, you can filter records that start with a given prefix.
+
+```js
+import { Polybase } from "@polybase/client"
+
+const db = new Polybase({ defaultNamespace: "your-namespace" });
+const collectionReference = db.collection("cities");
+
+
+// Starts with UK
+const startsWithUK = await collectionReference
+  .where("country", ">=", "UK")
+  .where("country", "<", "UK~")
+  .get();
+```
+
+
+## Listen for updates on a collection
+
+```js
+import { Polybase } from "@polybase/client"
+
+const db = new Polybase({ defaultNamespace: "your-namespace" });
+const collectionReference = db.collection("cities").onSnapshot(
+  (newDoc) => {
+    // Handle the change
+  },
+  (err) => {
+    // Optional error handler
+  }
+);
+```
+
+You can also watch for changes on a filtered query.
+
+```js
+const db = new Polybase({ defaultNamespace: "your-namespace" });
+const collectionReference = db
+  .collection("cities")
+  .where("country", "==", "UK")
+  .onSnapshot(
+    (newDoc) => {
+      // Handle the change
+    },
+    (err) => {
+      // Optional error handler
+    }
+  );
+```
+
+
+## Pagination
+
+You can paginate through your results using the cursor returned from the
+`.get()` method, or by using the built-in `.next()` 
+
+### Pagination with cursor 
+
+Use the cursor response with `.before()` and `.after()` to paginate through
+collection data.
+
+```js
+const db = new Polybase({ defaultNamespace: "your-namespace" });
+const collectionReference = await db.collection("cities");
+
+// First page
+const { data, cursor } = await collectionReference.get();
+
+// Next page
+const next = await collectionReference.after(cursor.after).get();
+
+// Previous page
+const previous = await collectionReference.before(cursor.before).get();
+```
+
+### Pagination with next() or previous()
+
+To simplify this process, a `next()` and `previous()` helper method is provided on the response.
+
+```js
+const db = new Polybase({ defaultNamespace: "your-namespace" });
+const collectionReference = await db.collection("cities");
+
+// First page
+const first = await collectionReference.get();
+
+// Next pages
+const second = await first.next();
+const third = await second.next();
+```

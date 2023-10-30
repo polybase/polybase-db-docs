@@ -1,0 +1,44 @@
+---
+title: "Upgrading to v0.6.0"
+---
+
+# Upgrading to v0.6.0
+
+For a full list of changes, please refer to the [CHANGELOG](https://polybase.xyz/changelog).
+
+## Record not found, no longer errors
+
+The Polybase client `@polybase/client` no longer throws an error if a record is not found. Polybase now always returns a CollectionRecordResponse.
+
+If the record does not exist, the `.data` property will be `null`. You can call also use the helper method `.exists()` to check if the record exists.
+
+### Before
+
+You had to capture the error and check if it was a `PolybaseError` and if the reason was `record/not-found`.
+
+```js
+const userData = await polybase.collection<User>('User').record(publicKey).get()
+.catch(async (err) => {
+  // Previously, you would get an error if the record did not exist
+  if (err && err instanceof PolybaseError && err.reason === 'record/not-found') {
+    // Record does not exist
+    return null
+  }
+  throw err
+})
+```
+
+### After
+
+Polybase client will not error on record not found. Instead, `.data` property will be null.
+
+```js
+// userData will always return a CollectionRecordResponse (even if record does not exist)
+const userData = await polybase.collection<User>('User').record(publicKey).get()
+
+// Check if the record exists
+const exists = userData.exists()
+
+// Or check if the data is null
+const exists = userData.data === null
+```

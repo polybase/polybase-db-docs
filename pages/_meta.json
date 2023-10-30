@@ -1,0 +1,24 @@
+{
+  "index": "Introduction",
+  "guides": "Guides",
+  "recipes": "Recipes",
+  "tutorials": "Tutorials",
+  "examples": "Examples",
+  "api-reference": "API Reference",
+  "about": {
+    "title": "About",
+    "type": "page"
+  },
+  "whitepaper": {
+    "title": "Whitepaper",
+    "type": "page",
+    "href": "https://polybase.xyz/whitepaper",
+    "newWindow": true
+  },
+  "contact": {
+    "title": "Contact ↗",
+    "type": "page",
+    "href": "https://twitter.com/polybase_xyz",
+    "newWindow": true
+  }
+}

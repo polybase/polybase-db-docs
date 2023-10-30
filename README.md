@@ -1,32 +1,37 @@
-# Polybase Docs
+# Polybase DB
 
-This repo powers the documentation for [Polybase](https://polybase.xyz), currently available at [polybase.xyz/docs](https://polybase.xyz/docs)
+This is the source code for the `Polybase DB` documentation site at [Polybase DB docs](https://polybase.xyz/docs).
 
-### 🚀 Setup
+## Build and Run
 
-Simply merge in this PR and your documentation will be connected!
+Install the dependencies:
 
-### 👩‍💻 Development
-
-Install the [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview the documentation changes locally. To install, use the following command
-
-```
-npm i mintlify -g
+```bash
+  $ yarn install
 ```
 
-Run the following command at the root of your documentation (where mint.json is)
+Build the project (optimized build):
 
+```bash
+  $ yarn build
 ```
-mintlify dev
+
+Then start the server:
+
+```bash
+  $ yarn start
 ```
 
-### 😎 Publishing Changes
+### Development
 
-Changes will be deployed to production automatically after pushing to the default branch.
+To run the project in `dev` mode to get live updates on changes:
 
-You can also preview changes using PRs, which generates a preview link of the docs.
+```bash
+  $ yarn dev
+```
 
-#### Troubleshooting
+This will spin up the local development server on [localhost:3000](localhost:3000).
 
-- Mintlify dev isn't running - Run `mintlify install` it'll re-install dependencies.
-- Mintlify dev is updating really slowly - Run `mintlify clear` to clear the cache.
+## LICENSE
+
+See [LICENSE](LICENSE.md).
