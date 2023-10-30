@@ -1,3 +1,5 @@
+import { Box, HStack, Heading } from "@chakra-ui/react"
+
 const polybaseLogo = (
   <svg
     height="40"
@@ -30,9 +32,12 @@ const polybaseLogo = (
 
 const Logo = () => {
   return (
-    <div>
-      {polybaseLogo}
-    </div>
+    <HStack spacing={1}>
+      <Box w='140px'>
+        {polybaseLogo}
+      </Box>
+      <Heading position='relative' top={-1} fontSize='2xl'>DB</Heading>
+    </HStack>
   )
 }
 
