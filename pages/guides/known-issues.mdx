@@ -4,13 +4,13 @@ title: "Known Issues"
 
 # Known Issues
 
-Polybase is currently in alpha. We appreciate your patience while we add
+Polybase DB is currently in alpha. We appreciate your patience while we add
 functionality and address these issues. Please report any issues in
 [Discord](https://discord.gg/DrXkRpCFDX).
 
 ## Function timeout
 
-Polybase functions have a 5 second timeout period.
+Polybase DB functions have a 5 second timeout period.
 
 
 ## Indexes on Collection fields must be explicitly defined
@@ -21,7 +21,7 @@ You can index fields of type Collection but they must be explicitly defined usin
 
 
 ## Limitation on indexing maps and arrays
-Currently, Polybase does not support indexing of elements of maps or arrays.
+Currently, Polybase DB does not support indexing of elements of maps or arrays.
 This means that you will not be able to use `where` or `sort` on the elements
 in these types. 
 
@@ -61,7 +61,7 @@ collection User {
 
 
 ## Limitations on optional types in maps
-Currently Polybase does not support `null` values in maps.
+Currently Polybase DB does not support `null` values in maps.
 If you have an optional value that may not exist, you must still provide a 
 value for the key or omit the type. 
 

@@ -15,17 +15,17 @@ import DelegateRead from '../_snippets/permissions/delegate/delegate-read.mdx'
 # Collections
 
 Collections are similar to a table in a traditional database.
-You must create a collection before adding data to Polybase. 
+You must create a collection before adding data to Polybase DB. 
 
 Collections (aka database tables) define the fields and rules for a collection
 of records. All records created by a collection are guaranteed to follow the
 rules of that collection. This is in contrast to other smart contract languages,
 where each smart contract is equivalent to a single record.
 
-Each Polybase record within a collection has its own unique identifier `id` which must be of type `string`.
+Each Polybase DB record within a collection has its own unique identifier `id` which must be of type `string`.
 
 You can view our example app
-[Polybase Social](https://social.testnet.polybase.xyz) to see it working in
+[Polybase DB Social](https://social.testnet.polybase.xyz) to see it working in
 action.
 
 ## Create a collection
@@ -45,7 +45,7 @@ If you create a collection in the explorer, the collection will be owned by the 
 
 ### Create collection programmatically
 
-To create a schema programatically, you can use the `applySchema` method on your Polybase client instance.
+To create a schema programatically, you can use the `applySchema` method on your Polybase DB client instance.
 
 In this example, we create a collection called `City` that has `name` and `country` fields, and a `setCountry()` function. You can define multiple collections in a single `applySchema` call.
 
@@ -133,7 +133,7 @@ const createResponse = await db.applySchema(`
 
 ## Define a Collection
 
-Collections are defined using Polylang (the language for Polybase), that is very
+Collections are defined using Polylang (the language for Polybase DB), that is very
 similar to Javascript/TypeScript. Collections allow you define the rules and
 indexes for your collection records. The following is a valid collection
 definition.
@@ -171,7 +171,7 @@ The constructor function must assign `this.id` and any additional required field
 record already exists with the assigned `id` is provided, as each record in a collection must have a unique `id`.
 
 <Callout type="info" emoji="ℹ️">
-Polybase functions have a 5 second timeout period.
+Polybase DB functions have a 5 second timeout period.
 </Callout>
 
 
@@ -193,7 +193,7 @@ collection CollectionName {
 
 #### id Field
 
-The `id` fields is required on every Polybase collection. It must be assigned in the constructor. Each record must have a unique `id` across the entire collection. `id` must be of type `string`.
+The `id` fields is required on every Polybase DB collection. It must be assigned in the constructor. Each record must have a unique `id` across the entire collection. `id` must be of type `string`.
 
 <Callout type="info">
   You will soon be able to use other types as the `id` field.
@@ -296,7 +296,7 @@ The following primitive types are supported:
 
 #### Bytes
 
-The bytes type allows you to store arbitary bytes in Polybase, without having to encode the data as a string. 
+The bytes type allows you to store arbitary bytes in Polybase DB, without having to encode the data as a string. 
 
 If you use our client library [`@polybase/client`](https://www.npmjs.com/package/@polybase/client), the bytes type will be returned as a `Uint8Array`. 
 
@@ -383,7 +383,7 @@ If you need a string hex representation of the public key, you can use `this.pub
 and the hexidecimal representation of the 64 byte public key.
 
 <Callout type="info" emoji="ℹ️">
-  Public keys on Polybase use non-prefixed Public Keys, so they are 64 bytes long.
+  Public keys on Polybase DB use non-prefixed Public Keys, so they are 64 bytes long.
 </Callout>
 
 <Callout type="info">
@@ -459,7 +459,7 @@ collection User {
 Field values can only be modified using functions.
 
 <Callout type="info" emoji="ℹ️">
-  Polybase functions have a 5 second timeout period.
+  Polybase DB functions have a 5 second timeout period.
 </Callout>
 
 ```typescript
@@ -508,11 +508,11 @@ await col.record("id1").call("transfer", [c.record("id2"), 10]);
 
 ### Context
 
-The global variable `ctx` is available inside any Polybase function. 
+The global variable `ctx` is available inside any Polybase DB function. 
 
 #### Public Key
 
-`ctx.publicKey` is populated when you provide a `signer` function to the Polybase client.
+`ctx.publicKey` is populated when you provide a `signer` function to the Polybase DB client.
 
 ```js
 import { Polybase } from '@polybase/client'
@@ -559,7 +559,7 @@ If you need a string hex representation of the public key, you can use `ctx.publ
 and the hexidecimal representation of the 64 byte public key.
 
 <Callout type="info" emoji="ℹ️">
-  Public keys on Polybase use non-prefixed Public Keys, so they are 64 bytes long.
+  Public keys on Polybase DB use non-prefixed Public Keys, so they are 64 bytes long.
 </Callout>
 
 
@@ -584,7 +584,7 @@ you only need to specify multi-field indexes.
 
 ## Permissions
 
-By default, collections in Polybase are private and their records cannot be accessed.
+By default, collections in Polybase DB are private and their records cannot be accessed.
 To make a collection public, add the `@public` directive.
 
 To allow users to access and manipulate their records, you can use the following directives:
@@ -605,9 +605,9 @@ For more on delegating permissions, see [Delegating Permissions](/guides/permiss
 ## Reference a collection
 
 To reference a collection, you can call `.collection("collection-name")` on your
-Polybase instance. The returned collection instance relates to a specific
+Polybase DB instance. The returned collection instance relates to a specific
 collection of data and allows you [.write()](/guides/write-data) and [.read()](/guides/read-data) data
-from Polybase.
+from Polybase DB.
 
 #### Relative Path (with default namespace)
 

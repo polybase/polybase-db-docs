@@ -5,5 +5,5 @@ const withNextra = require('nextra')({
 })
 
 module.exports = withNextra({
-  basePath: '/db/docs'
+  basePath: '/db/docs',
 })
