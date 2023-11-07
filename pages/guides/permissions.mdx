@@ -14,7 +14,7 @@ import DelegateCall from '../_snippets/permissions/delegate/delegate-call.mdx'
 
 # Permissions
 
-There are four ways to control who can [read](/guides/read-data) and [write](/guides/write-data) data in Polybase:
+There are four ways to control who can [read](/guides/read-data) and [write](/guides/write-data) data in Polybase DB:
 
  1. [Allow all](#allow-all) (read and write) - allow anyone to read data and/or call collection functions
 
@@ -70,11 +70,11 @@ directives at the top of your collection:
 
 ## Code
 
-If you need more granular control over who can write data and call functions in Polybase, you can allow anyone to call
+If you need more granular control over who can write data and call functions in Polybase DB, you can allow anyone to call
 the collection functions, but then write code to check the user's permissions in the collection functions.
 
 <Callout type="info" emoji="ℹ️">
-This can only be used to control call/write access to Polybase, not read access.
+This can only be used to control call/write access to Polybase DB, not read access.
 </Callout>
 
 ```typescript

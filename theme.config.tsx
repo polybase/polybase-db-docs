@@ -6,12 +6,12 @@ const config: DocsThemeConfig = {
   logo: <Logo />,
   primaryHue: 314,
   project: {
-    link: 'https://github.com/polybase/docs',
+    link: 'https://github.com/polybase/polybase-db-docs',
   },
   chat: {
     link: 'https://discord.com/invite/DrXkRpCFDX',
   },
-  docsRepositoryBase: 'https://github.com/polybase/docs',
+  docsRepositoryBase: 'https://github.com/polybase/polybase-db-docs/tree/main',
   useNextSeoProps() {
     return {
       titleTemplate: '%s – Polybase DB by Polybase Labs'

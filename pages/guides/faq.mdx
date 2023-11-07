@@ -8,7 +8,7 @@ import { Callout } from 'nextra/components'
 
 ### Alpha Testnet Release
 
-During the alpha release, Polybase is running all the indexers (validators) on
+During the alpha release, Polybase DB is running all the indexers (validators) on
 the network so we can ensure development velocity and network protection during
 this early phase of the project. Therefore, all connections must be proxied by
 our testnet.polybase.xyz gateway.
@@ -20,29 +20,29 @@ useful to our community.
 
 ### What is your roadmap?
 
-Polybase is committed to moving to a fully decentralized network as soon as
+Polybase DB is committed to moving to a fully decentralized network as soon as
 possible. We have an ambitious roadmap for completing mainnet readiness.
 
-![Roadmap](/images/roadmap.webp)
+![Roadmap](/db/docs/images/roadmap.webp)
 
-### What is the Polybase architecture?
+### What is the Polybase DB architecture?
 
-Polybase is a state zk-rollup protocol, with native support for pluggable data
+Polybase DB is a state zk-rollup protocol, with native support for pluggable data
 storage and indexing. While this architecture may look complex, our SDK handles
 all of the components you need out of the box, with a Firebase-like API.
 
 The whitepaper has much more information about our architecture:
 https://polybase.xyz/whitepaper
 
-![Architecture](/images/architecture.webp)
+![Architecture](/db/docs/images/architecture.webp)
 
-### Where is the data on Polybase stored?
+### Where is the data on Polybase DB stored?
 
 <Callout type="info">
-**During Alpha** Polybase runs all the nodes that store your data, but pluggable storage will be available soon.
+**During Alpha** Polybase DB runs all the nodes that store your data, but pluggable storage will be available soon.
 </Callout>
 
-Storage on Polybase is pluggable, that means as a developer you can choose the
+Storage on Polybase DB is pluggable, that means as a developer you can choose the
 trade offs between the various storage and indexing options.
 
 Here are some options:
@@ -54,11 +54,11 @@ Here are some options:
   you use a centralized store, your data will be at risk of government
   censorship)
 
-Out of the box, the default SDK implementation uses the Polybase datastore,
+Out of the box, the default SDK implementation uses the Polybase DB datastore,
 which is a decentralized datastore with **similar functionality to Firebase
 Firestore**.
 
-### If data is stored off-chain, isn’t Polybase centralized?
+### If data is stored off-chain, isn’t Polybase DB centralized?
 
 Actually, no.
 
@@ -69,10 +69,10 @@ of a blockchain but the cost/scalability of a web2 database.
 The [whitepaper](https://polybase.xyz/whitepaper) has much more information
 about the methodology.
 
-### Can everyone see my data on Polybase?
+### Can everyone see my data on Polybase DB?
 
 <Callout type="info">
-**During Alpha** Polybase runs all the nodes that store your data, and data will be publicly visible.
+**During Alpha** Polybase DB runs all the nodes that store your data, and data will be publicly visible.
 </Callout>
 
 It depends which storage option you choose:
@@ -83,16 +83,16 @@ It depends which storage option you choose:
 - **Centralized storage** \- you can implement your own access controls
 
 In all cases, data can be encrypted to ensure the best privacy protection.
-The Polybase SDKs provide the functionality to encrypt the data with a wallet.
+The Polybase DB SDKs provide the functionality to encrypt the data with a wallet.
 This could be a user’s Metamask wallet or a custodial wallet for the dApp.
 
 ### Does every write / update transaction need to be signed?
 
 Currently, yes every transaction needs to be signed (usually by the users's wallet if implemented in a non-custodial way). There's a way to create a "session key" which would be a symmetric key that is encrypted using the user's wallet. We're planning on adding utilities to the SDK to make creating a session key easier.
 
-### How do write permissions work on Polybase?
+### How do write permissions work on Polybase DB?
 
-Writes to a Polybase collection are performed by calling a function defined on the schema of your collection. All updates must happen via these collection functions, there is no general `.set()` function. 
+Writes to a Polybase DB collection are performed by calling a function defined on the schema of your collection. All updates must happen via these collection functions, there is no general `.set()` function. 
 
 There are two ways to define who can call these functions (and therefore update and create records in your collection). The following examples are two ways to do the same thing.
 
@@ -149,37 +149,37 @@ collection User {
 ```
 
 
-### How do read permissions work on Polybase?
+### How do read permissions work on Polybase DB?
 
-There are two ways to define read permissions in Polybase. You can either:
+There are two ways to define read permissions in Polybase DB. You can either:
 
   1. **Encrypt the data** using our [encryption utilities](/guides/encrypt-data) - this allows you to control who can read data by sharing a secret key with them.
 
   2. **Add permission/authorization rules** - you can [define rules](/guides/collections#permissions) on your schema using the `@read` and `@delegate` directives. This allows you to control who can query records.
 
 
-### How can the data on Polybase be accessed without going through the Polybase gateway?
+### How can the data on Polybase DB be accessed without going through the Polybase DB gateway?
 
-While we are in testnet alpha, the only way to access the Polybase network is through
+While we are in testnet alpha, the only way to access the Polybase DB network is through
 the gateway. Once we open the network to our community, anyone may run the
-Polybase indexer reference implementation and directly connect to the P2P
+Polybase DB indexer reference implementation and directly connect to the P2P
 network (or use the SDK).
 
-### How can I verify Polybase is decentralized?
+### How can I verify Polybase DB is decentralized?
 
 While we are in testnet alpha, there is no way to verify the decentralisation of the
 network. However, we are running the nodes behind the gateway in a way that will
 enable decentralisation as soon as we allow other participants to join the
 network.
 
-### Who pays for Polybase?
+### Who pays for Polybase DB?
 
 In most cases, at least initially, we expect it will be the developer who
 creates a collection who will ensure the database usage is paid for. In the
 future, we imagine that other protocols themselves will create mechanisms to pay
-Polybase directly. For example, a social network application may generate
+Polybase DB directly. For example, a social network application may generate
 revenue (by running ads, charging a subscription, token appreciation, etc), and
-that protocol will have a mechanism to ensure that the balance on the Polybase
+that protocol will have a mechanism to ensure that the balance on the Polybase DB
 protocol is always positive.
 
 ### What happens if the developer stops paying?
@@ -188,16 +188,16 @@ Anyone who benefits from the data being maintained can choose to continue paying
 for the service. It’s similar to how ENS domains allow anyone to pay the
 registration fee even if the domain belongs to someone else.
 
-There will also be an option to stake Polybase's native token and use that to
+There will also be an option to stake Polybase DB's native token and use that to
 pay for database usage.
 
-### How much does Polybase cost?
+### How much does Polybase DB cost?
 
-In testnet Polybase is free to use. For mainnet, we will charge developers to
+In testnet Polybase DB is free to use. For mainnet, we will charge developers to
 create collections and store data. You can expect the costs to be similar to
 Firebase Firestore.
 
-### How does Polybase make money?
+### How does Polybase DB make money?
 
 When we reach mainnet, we will launch a utility token that will be used for
 payment and that token will accrue value as demand for the network grows,
@@ -229,7 +229,7 @@ to work out which functions they should use.
 
 ### What information is included in the per-block rollup posted to blockchains?
 
-We rollup the current state of the whole Polybase root database at each block.
+We rollup the current state of the whole Polybase DB root database at each block.
 
 ### What are the security (or more so validation) benefits?
 
@@ -245,4 +245,4 @@ and the proof.
 
 As everything is validated with proofs, you can prove any current (or existing
 state), making is very easy to create bridges to other blockchains (i.e. you can
-use Polybase data in your Ethereum smart contracts, etc)
+use Polybase DB data in your Ethereum smart contracts, etc)

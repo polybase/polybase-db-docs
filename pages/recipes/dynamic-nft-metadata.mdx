@@ -4,7 +4,7 @@ title: "Dynamic NFT Metadata"
 
 # Dynamic NFT Metadata
 
-With dynamic NFT metadata stored on Polybase, you can build new kinds of utility or gaming NFTs that need faster and cheaper NFT metadata updates.
+With dynamic NFT metadata stored on Polybase DB, you can build new kinds of utility or gaming NFTs that need faster and cheaper NFT metadata updates.
 
 For example, for an NFT that represents a game character's skill level, you can update the skill points every second as that character does actions in the game. Or for a verifiable credential NFT, you can update it everytime a user finishes a lesson in an educational app.
 
@@ -17,9 +17,9 @@ For example, for an NFT that represents a game character's skill level, you can 
 ## Get started
 
 - Create a collection with the fields you want (e.g. [the NFT metadata spec](https://nftschool.dev/reference/metadata-schemas/#ethereum-and-evm-compatible-chains))
-- Use the Polybase API with a `?format=nft` flag for the [token URI](https://docs.openzeppelin.com/contracts/3.x/api/token/erc721#ERC721-_setTokenURI-uint256-string-) in your smart contract.
+- Use the Polybase DB API with a `?format=nft` flag for the [token URI](https://docs.openzeppelin.com/contracts/3.x/api/token/erc721#ERC721-_setTokenURI-uint256-string-) in your smart contract.
 
-## Example Polybase collection
+## Example Polybase DB collection
 
 ```typescript
 // `public` means that the collection is public, anyone can view and read

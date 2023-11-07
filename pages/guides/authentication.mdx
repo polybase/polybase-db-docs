@@ -6,8 +6,8 @@ import { Tabs } from 'nextra/components'
 
 # Authentication
 
-You can use any authentication provider with the Polybase network. You simply need to provide a `signer` function 
-to the Polybase client. Signing a request populates the [`ctx.publicKey`](/guides/collections#context) variable inside your collection code, allowing you to write code that 
+You can use any authentication provider with the Polybase DB network. You simply need to provide a `signer` function 
+to the Polybase DB client. Signing a request populates the [`ctx.publicKey`](/guides/collections#context) variable inside your collection code, allowing you to write code that 
 restricts who can read or write to a record. 
 
 This can either be done when instantiating the client, using the `signer` configuration property:
@@ -43,15 +43,15 @@ db.signer((data) => {
 ```
 
 
-## Polybase Auth
+## Polybase DB Auth
 
-To make authentication easier, Polybase provides an authentication library that allows users to sign in to 
+To make authentication easier, Polybase DB provides an authentication library that allows users to sign in to 
 your app using web3 wallets or email.
 
 The library hides the complexity of the users chosen authentication method, providing a single API for you to sign
 requests regardless of the method they use to login.
 
-<img src="/images/polybase-auth-login.png" />
+<img src="/db/docs/images/polybase-auth-login.png" />
 
 ### Install Polybase Auth
 
@@ -150,9 +150,9 @@ import {  } from '@polybase/util'
 const msg = 'Login to app'
 const sig = await auth.ethPersonalSign(msg)
 // Returns a hex string of the public key (65 bytes), you will need to convert to 64 bytes to use
-// with Polybase
+// with Polybase DB
 const publicKey65Bytes = ethPersonalSignRecoverPublicKey(sig, msg)
-// Now it can be used with Polybase
+// Now it can be used with Polybase DB
 const publicKey64Bytes = '0x' + publicKey65Bytes.slice(4)
 ```
 
@@ -184,7 +184,7 @@ await auth.signOut()
 
 ### Ethereum Personal Sign
 
-Ethereum Personal Sign is the signing mechanism used by Polybase (and many other dapps) to authenticate ownership
+Ethereum Personal Sign is the signing mechanism used by Polybase DB (and many other dapps) to authenticate ownership
 of a public key and to sign data.
 
 ```js
@@ -195,7 +195,7 @@ const auth = new Auth()
 const signatureHex = await auth.ethPersonalSign(data)
 ```
 
-You can use the `auth.ethPersonalSign()` in the Polybase client `signer` function:
+You can use the `auth.ethPersonalSign()` in the Polybase DB client `signer` function:
 
 ```js
 import { Auth } from '@polybase/auth'

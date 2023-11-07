@@ -6,7 +6,7 @@ import Examples from '../_snippets/examples/examples.mdx'
 
 # Write Data
 
-You must [define a collection](/guides/collections) before writing data to Polybase.
+You must [define a collection](/guides/collections) before writing data to Polybase DB.
 
 <Examples />
 
@@ -251,7 +251,7 @@ async function createWallet () {
 
 ## Encrypt data
 
-All data on Polybase is publicly accessible (like a blockchain). Therefore it is
+All data on Polybase DB is publicly accessible (like a blockchain). Therefore it is
 important to ensure private information is encrypted. You can encrypt data
 however you like, including using a user wallet's public key.
 
@@ -293,7 +293,7 @@ async function encryptUsingExtension () {
 
   // Later...
 
-  // Get the data from Polybase as normal
+  // Get the data from Polybase DB as normal
   const userData = await db.collection("user-info").record("user-1").get();
 
   // Get the encrypted value
@@ -316,7 +316,7 @@ private key.
 That means you only need to ask the user a single time for permission to decrypt
 the private key, and then use that private key to decrypt all other values. It
 is then your responsibility to ensure that the encrypted private key is kept
-safe, which could be either stored locally in browser storage or in Polybase.
+safe, which could be either stored locally in browser storage or in Polybase DB.
 
 Here is an example:
 
@@ -345,7 +345,7 @@ async function createWallet () {
 
   // Later...
 
-  // Get the data from Polybase as normal
+  // Get the data from Polybase DB as normal
   const userData = await db.collection("user-info").record("user-1").get();
 
   // Get the encrypted value
@@ -371,15 +371,15 @@ the user resets their browser (which would make all data unavailable and there
 would be no recovery method), and it would be difficult for users to work across
 devices.
 
-#### Store on Polybase
+#### Store on Polybase DB
 
-You could store the encrypted private key on Polybase, this allow the encrypted
+You could store the encrypted private key on Polybase DB, this allow the encrypted
 private key to obtained by the user and then decrypted on any device.
 
 ## Multi User Encryption
 
 It's often useful to allow multiple users to decrypt and view data stored in
-Polybase.
+Polybase DB.
 
 To do this, you should:
 
@@ -393,7 +393,7 @@ The following shows an example of how you might create a Google Forms product.
 
 #### Overview
 
-![Multi User Encryption](/images/multi-user-encryption.png)
+![Multi User Encryption](/db/docs/images/multi-user-encryption.png)
 
 #### Collection Schema
 

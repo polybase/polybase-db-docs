@@ -8,15 +8,15 @@ import Image from 'next/image'
 # How it Works
 
 <Callout type="info" emoji="ℹ️">
-  Understanding the ZK rollup is not required to use Polybase since the SDK and network take care of it.
+  Understanding the ZK rollup is not required to use Polybase DB since the SDK and network take care of it.
 </Callout>
 
-Polybase is a state zk-rollup protocol, that provides native support for 
+Polybase DB is a state zk-rollup protocol, that provides native support for 
 modular data storage and indexing. 
 
-Here is an overview of the Polybase protocol architecture:
+Here is an overview of the Polybase DB protocol architecture:
 
-<img style={{ maxWidth: "400px" }} src="/images/architecture.png" />
+<img style={{ maxWidth: "400px" }} src="/db/docs/images/architecture.png" />
 
 If you want more detail, check out our [whitepaper](https://polybase.xyz/whitepaper).
 
@@ -32,7 +32,7 @@ in turn would change the root hash (because the root hash is based on every reco
 
 To make a change to a record in the database, a user must prove that a new hash is valid. To do this, a zk-proof is generated that takes the existing hash
  (representing the current state of the record), applies the change function as defined in the [collection definition](/guides/collections), and then returns the new records hash 
- with a zk-proof, proving that the change is valid. In Polybase, the process of creating the zk-proof is performed automatically by our SDK.
+ with a zk-proof, proving that the change is valid. In Polybase DB, the process of creating the zk-proof is performed automatically by our SDK.
 
 The user can then submit the new hash to the network with the proof. Every block, all the new hashes are updated and combined with the existing hashes to generate a new root hash. At 
 each stage of this rollup process, the network confirms that the proofs are valid.
@@ -43,25 +43,25 @@ The root hash and proof are verified in a Proof of Stake blockchain, to inherit 
 
 ### Modular Storage and Indexing
 
-Polybase has native support for modular storage and indexing. This allows developers to choose the trade-offs that best fit their use case.
+Polybase DB has native support for modular storage and indexing. This allows developers to choose the trade-offs that best fit their use case.
 
-For indexing, services could be created to serve, search, aggregation or machine learning use cases. As the root state proofs can be verified, indexers and aggregators can build on top of the Polybase state proofs, to provide proof that the aggregation was performed correctly.
+For indexing, services could be created to serve, search, aggregation or machine learning use cases. As the root state proofs can be verified, indexers and aggregators can build on top of the Polybase DB state proofs, to provide proof that the aggregation was performed correctly.
 
 For storage, this could include local storage on the clients device (for ultra sensitive data), a decentralized storage network such as Filecoin/Arweave (for collaborative data), or even a centralized storage provider such as S3 (if you don't care about decentralisation 🥲).
 
 <Callout type="info" emoji="ℹ️">
-Polybase currently only supports the Polybase reference indexing and storage implementation this is based on NoSQL, but additional indexers and storage providers will be added soon that will support GraphQL and SQL.
+Polybase DB currently only supports the Polybase DB reference indexing and storage implementation this is based on NoSQL, but additional indexers and storage providers will be added soon that will support GraphQL and SQL.
 </Callout>
 
 
 ### Gateway
 
-The Polybase Gatweway allows fast and simple access to the Polybase network, but in a less decentralized way. While Polybase is in Alpha,
-this is the only way to access the Polybase network, allowing us to ensure the security of the protocol before allowing direct access. Once direct access is enabled,
+The Polybase DB Gatweway allows fast and simple access to the Polybase DB network, but in a less decentralized way. While Polybase DB is in Alpha,
+this is the only way to access the Polybase DB network, allowing us to ensure the security of the protocol before allowing direct access. Once direct access is enabled,
 clients (browsers and mobiles) will be able to connect directly to the network using p2p, offering both performance and decentralization benefits.
 
-The following diagram shows how the Polybase Gateway interacts with the Polybase network:
+The following diagram shows how the Polybase DB Gateway interacts with the Polybase DB network:
 
-<img style={{ maxWidth: "400px" }} src="/images/gateway.png" />
+<img style={{ maxWidth: "400px" }} src="/db/docs/images/gateway.png" />
 
-See our reference [Polybase Gateway API](/api-reference/overview) documentation.
+See our reference [Polybase DB Gateway API](/api-reference/overview) documentation.
